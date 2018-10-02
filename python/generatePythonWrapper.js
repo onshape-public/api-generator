@@ -3,7 +3,7 @@ module.exports = {
   generatePythonWrapper: generatePythonWrapper
 };
 
-function generatePythonWrapper(apiDataPath, unfilteredOutputFolder) {
+function generatePythonWrapper(apiDataPath, unfilteredOutputFolder, includeInternal) {
   const apiData = require(apiDataPath).apiData;
   const fs = require('fs');
   const path = require('path');
@@ -91,6 +91,24 @@ function generatePythonWrapper(apiDataPath, unfilteredOutputFolder) {
       };
     };
 
+    const copyObj = function(obj) {
+      return JSON.parse(JSON.stringify(obj));
+    };
+
+    let redactedApiData;
+    if (!includeInternal) {
+      // map -> filter endpoints to only external -> filter groups to non-empty
+      redactedApiData = apiData.map(group => {
+        let newGroup = copyObj(group);
+        newGroup.endpoints = newGroup.endpoints.filter(endpoint => {
+          return endpoint.permission[0].name.includes('public');
+        });
+        return newGroup;
+      }).filter(newGroup => newGroup.endpoints.length);
+    } else {
+      redactedApiData = apiData;
+    }
+
     const appendLineToMainClass = getAppendLineFunction(mainClassFile);
     const appendLineTo__init__= getAppendLineFunction(groupsFolder + '/__init__.py');
 
@@ -146,7 +164,7 @@ function generatePythonWrapper(apiDataPath, unfilteredOutputFolder) {
     };
 
     const promises = [];
-    for (const group of apiData) {
+    for (const group of redactedApiData) {
       let camelCaseGroup = group.group[0].toLowerCase() + group.group.slice(1);
       fs.writeFileSync(`${groupsFolder}/${camelCaseGroup}.py`, '');
       const appendLineToGroups = getAppendLineFunction(`${groupsFolder}/${group.group}.py`);
