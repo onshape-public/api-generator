@@ -4,3 +4,5 @@ test.js
 .idea/*
 __pycache__*
 _keys.py
+apikey.js
+node_modules

@@ -3,9 +3,8 @@ module.exports = {
   generatePythonWrapper: generatePythonWrapper
 };
 
-function generatePythonWrapper(apiDataPath, unfilteredOutputFolder, includeInternal) {
+function generatePythonWrapper(apiData, unfilteredOutputFolder, includeInternal) {
   return new Promise(function (resolve, reject) {
-    const apiData = require(apiDataPath).apiData;
     const fs = require('fs');
     const path = require('path');
     const filesToCopy = [
@@ -46,7 +45,7 @@ function generatePythonWrapper(apiDataPath, unfilteredOutputFolder, includeInter
     const copyFiles = function (outputFolder, filesToCopy) {
       const promises = [];
       for (const file of filesToCopy) {
-        promises.push(copyFile(`./template/${file}.py`, `${outputFolder}/${file}.py`));
+        promises.push(copyFile(`.python/template/${file}.py`, `${outputFolder}/${file}.py`));
       }
       return Promise.all(promises);
     };

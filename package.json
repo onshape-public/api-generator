@@ -1,0 +1,30 @@
+{
+  "name": "api-generator",
+  "version": "0.0.0",
+  "description": "Generate wrappers for many different languages that make the Onshape API easier to use. ",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "@onshape/apikey": "^1.0.0",
+    "npm": "^6.4.1"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onshape-public/api-generator.git"
+  },
+  "keywords": [
+    "Python",
+    "Onshape"
+  ],
+  "author": "Onshape",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onshape-public/api-generator/issues"
+  },
+  "homepage": "https://github.com/onshape-public/api-generator#readme"
+}
