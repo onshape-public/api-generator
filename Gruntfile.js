@@ -16,12 +16,11 @@ module.exports = function (grunt) {
             const done = this.async();
             const opts = {
                 ...defaults,
-                ...userOpts,
-                done: done
+                ...userOpts
             };
             // Call the generator
-            const generateApiWrapper = require('./generateApiWrapper').generateApiWrapper;
-            generateApiWrapper(opts);
-
-        });
+            const buildWrapper = require('./generateApiWrapper').buildWrapper;
+            return buildWrapper(opts).then(done());
+        }
+    );
 };

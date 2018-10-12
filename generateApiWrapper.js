@@ -1,63 +1,76 @@
 // Update the default opts arg with the user-specified opts.
 const defaults = {
-    target: 'https://cad.onshape.com',
-    api_key_path: './apikey',
+    target: 'prod',
+    api_keys: require('./apikey'),
     language: 'Python',
     includeInternalString: 'both',
     data: [],
-    optionalParentDirectory: './generated',
-    // A stub function for async calls.
-    done: function () {
-    }
+    optionalParentDirectory: './generated'
 };
 
-const generateApiWrapper = function (opts) {
+function getEndpointsPromise(opts) {
     return new Promise(function (resolve, reject) {
-        // opts.language is one of: python, C#
-        // opts.includeInternalString is one of: yes, no, both
-        opts = {
-            ...defaults,
-            ...opts
-        };
-
-        opts.language = opts.language.toLowerCase();
-        opts.includeInternalString = opts.includeInternalString.toLowerCase();
-        if (!['yes', 'no', 'both'].includes(opts.includeInternalString)) {
-            // grunt.log.writeln('Include internal option invalid. It must be one of "yes", "no", "both".');
-            return;
+        if (!(opts.target in opts.api_keys)) {
+            reject(Error("The target, " + opts.target + " doesn't exist in the passed in apikeys."));
         }
-
-        const apiKey = require(opts.api_key_path);
-        apiKey.baseUrl = opts.target;
+        const apiKey = opts.api_keys[opts.target];
         const client = require('@onshape/apikey/lib/app')(apiKey);
-        client.getEndpoints(function (data) {
-            switch (opts.language) {
-                case 'python':
-                    const generatePythonWrapper = require('./python/generatePythonWrapper').generatePythonWrapper; // TODO: change this to the real absolute path
-                    const directory = './' + opts.language + '/generated';
-                    if (opts.includeInternalString === 'yes' || opts.includeInternalString === 'both') {
-                        let privateDirectory = directory;
-                        if (opts.includeInternalString === 'both') {
-                            privateDirectory = directory + '-private';
-                        }
-                        generatePythonWrapper(data, privateDirectory, true).then(opts.done())
-                    }
-                    if (opts.includeInternalString === 'no' || opts.includeInternalString === 'both') {
-                        generatePythonWrapper(data, directory, false).then(opts.done());
-                    }
-                    break;
-                default:
-                    // grunt.log.writeln('Invalid language argument passed.');
-                    return;
+        opts.data = require("./apiData");
+        resolve(opts);
+        // client.getEndpoints().then(resolve);
+    })
+}
+
+function optsCheck(opts) {
+    return new Promise(function (resolve, reject) {
+            // opts.language is one of: python, C#
+            // opts.includeInternalString is one of: yes, no, both
+            opts = {
+                ...defaults,
+                ...opts
+            };
+
+            opts.language = opts.language.toLowerCase();
+            opts.includeInternalString = opts.includeInternalString.toLowerCase();
+            if (!['yes', 'no', 'both'].includes(opts.includeInternalString)) {
+                reject(Error('Include internal option invalid. It must be one of "yes", "no", "both".'));
             }
-        });
+            resolve(opts);
 
-    };
+        }
+    );
+}
+
+function buildLanguageWrapper(opts) {
+    return new Promise(function (resolve, reject) {
+        switch (opts.language) {
+            case 'python':
+                const generatePythonWrapper = require('./python/generatePythonWrapper').generatePythonWrapper; // TODO: change this to the real absolute path
+                const directory = './' + opts.language + '/generated';
+                if (opts.includeInternalString === 'yes' || opts.includeInternalString === 'both') {
+                    let privateDirectory = directory;
+                    if (opts.includeInternalString === 'both') {
+                        privateDirectory = directory + '-private';
+                    }
+                    generatePythonWrapper(opts.data, privateDirectory, true).then(resolve("Generated private Python SDK client."))
+                }
+                if (opts.includeInternalString === 'no' || opts.includeInternalString === 'both') {
+                    generatePythonWrapper(opts.data, directory, false).then(resolve("Generated public Python SDK client."));
+                }
+                break;
+            default:
+                reject(Error('Invalid language argument passed.'));
+        }
+    });
+}
+
+function buildWrapper(opts) {
+    return new Promise(function (resolve, reject) {
+        optsCheck(opts).then(getEndpointsPromise).then(buildLanguageWrapper).then(resolve("success"));
+    })
+}
+
+module.exports = {
+    buildWrapper: buildWrapper,
+    defaults: defaults
 };
-
-    generateApiWrapper();
-
-    module.exports = {
-        generateApiWrapper: generateApiWrapper,
-        defaults: defaults
-    };
