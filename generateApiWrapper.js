@@ -10,14 +10,8 @@ const defaults = {
 
 function getEndpointsPromise(opts) {
     return new Promise(function (resolve, reject) {
-        if (!(opts.target in opts.api_keys)) {
-            reject(Error("The target, " + opts.target + " doesn't exist in the passed in apikeys."));
-        }
-        const apiKey = opts.api_keys[opts.target];
-        const client = require('@onshape/apikey/lib/app')(apiKey);
         opts.data = require("./apiData");
         resolve(opts);
-        // client.getEndpoints().then(resolve);
     })
 }
 
@@ -74,3 +68,5 @@ module.exports = {
     buildWrapper: buildWrapper,
     defaults: defaults
 };
+
+// buildWrapper(defaults).catch(function(data) {console.log(data)});

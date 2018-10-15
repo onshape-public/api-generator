@@ -1,0 +1,69 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Onshape API
+  description: Onshape API
+  termsOfService: https://www.onshape.com/legal/terms-of-use
+  contact:
+    name: Onshape API Team
+    email: ekeller@onshape.com
+    url: https://cad.onshape.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+consumes:
+  - application/json
+produces:
+  - application/json
+host: cad.onshape.com
+basePath: /api
+security:
+  - apiAccessKey: []
+    apiSecretKey: []
+paths:
+  /documents:
+    get:
+      description: Return all the documents the current user has access to.
+      responses:
+        '200':
+          description: pet response
+          schema:
+            type: object
+            properties:
+              next:
+                type: string
+              href:
+                type: string
+              items:
+                type: array
+                items:
+                  $ref: '#/definitions/Document'
+    post:
+      description: Make a new Document.
+      responses:
+        '200':
+          description: pet response
+          schema:
+            type: object
+            properties:
+              next:
+                type: string
+              href:
+                type: string
+              items:
+                type: array
+                items:
+                  $ref: '#/definitions/Document'
+definitions:
+  Document:
+    type: object
+securityDefinitions:
+  apiAccessKey:
+    type: apiKey
+    description: The HMAC-256 pattern used to verify Onshape requests.
+    in: header
+    name: ACCESS_KEY
+  apiSecretKey:
+    type: apiKey
+    in: header
+    name: SECRET_KEY

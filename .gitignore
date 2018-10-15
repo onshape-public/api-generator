@@ -6,3 +6,5 @@ __pycache__*
 _keys.py
 apikey.js
 node_modules
+python/generated
+apiData.json

@@ -45,7 +45,7 @@ function generatePythonWrapper(apiData, unfilteredOutputFolder, includeInternal)
     const copyFiles = function (outputFolder, filesToCopy) {
       const promises = [];
       for (const file of filesToCopy) {
-        promises.push(copyFile(`.python/template/${file}.py`, `${outputFolder}/${file}.py`));
+        promises.push(copyFile(`/Users/ethankeller/onshape/api-generator/python/template/${file}.py`, `${outputFolder}/${file}.py`));
       }
       return Promise.all(promises);
     };
