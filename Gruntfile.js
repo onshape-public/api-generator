@@ -51,8 +51,14 @@ module.exports = function (grunt) {
     function flagsToFields(defaults) {
         // For converting grunt flags to keys of a dictionary
         let userOpts = {};
-        for (let option in grunt.option.flags()) {
-            userOpts[option] = grunt.option(option);
+        let flags = [];
+        let x;
+        for (x in grunt.option.flags()) {
+            flags.push(grunt.option.flags()[x].split(/[-=]+/)[1]);
+        }
+        let i;
+        for (i in flags) {
+            userOpts[flags[i]] = grunt.option(flags[i]);
         }
         return {
                     ...defaults,
