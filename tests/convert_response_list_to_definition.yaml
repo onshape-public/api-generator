@@ -1,0 +1,16 @@
+confiigurationParameters:
+  required: true
+  type: array
+  items:
+    type: object
+currentConfiguration:
+  type: array
+  required: true
+  items:
+    type: object
+serializationVersion:
+  required: True
+  type: string
+sourceMicroversion:
+  required: True
+  type: string

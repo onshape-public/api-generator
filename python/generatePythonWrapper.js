@@ -12,7 +12,9 @@ function generatePythonWrapper(apiData, unfilteredOutputFolder, includeInternal)
       'groups/__init__',
       'onshape',
       'restHelpers',
-      'smokeTest'
+      'smokeTest',
+      'setup',
+      'setup'
     ];
     const selectablePathParamOptions = ['wvm', 'wv', 'cd', 'cu'];
     let outputFolder = unfilteredOutputFolder;

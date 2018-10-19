@@ -10,7 +10,7 @@ const defaults = {
 
 function getEndpointsPromise(opts) {
     return new Promise(function (resolve, reject) {
-        opts.data = require("./apiData");
+        opts.data = require("./api_data/apiData");
         resolve(opts);
     })
 }
