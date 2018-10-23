@@ -32,7 +32,9 @@ import com.onshape.api.generator.exceptions.GeneratorException;
 import com.onshape.api.generator.model.Group;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.io.File;
@@ -49,23 +51,23 @@ import javax.lang.model.element.Modifier;
  * @author Peter Harman peter.harman@cae.tech
  */
 public class JavaLibraryTarget extends LibraryTarget {
-
+    
     private final File baseDir;
     private final String basePackage;
     private String licenseString;
     private final TypeSpec.Builder typeBuilder;
-
+    
     public JavaLibraryTarget(File baseDir, String basePackage) {
         this.baseDir = baseDir;
         this.basePackage = basePackage;
         typeBuilder = TypeSpec.classBuilder("Onshape").addModifiers(Modifier.PUBLIC, Modifier.FINAL);
     }
-
+    
     @Override
     public GroupTarget group(Group group) {
         return new JavaGroupTarget(this, group);
     }
-
+    
     void write(String packageName, TypeSpec typeSpec, boolean test) throws IOException {
         if (this.licenseString == null) {
             this.licenseString = CharStreams.toString(new FileReader(new File(baseDir, "src/main/resources/LICENSE")));
@@ -75,18 +77,18 @@ public class JavaLibraryTarget extends LibraryTarget {
         target.mkdirs();
         javaFile.writeTo(target);
     }
-
+    
     void write(String packageName, TypeSpec.Builder typeSpec, boolean test) throws IOException {
         write(packageName, typeSpec.build(), test);
     }
-
+    
     static TypeName getTypeName(Class<?> t) {
         if (t.isArray()) {
             return ArrayTypeName.of(getTypeName(t.getComponentType()));
         }
         return ClassName.get(t);
     }
-
+    
     static Class<?> guessClass(String className) throws GeneratorException {
         int dim = 0;
         while (className.charAt(className.length() - 1) == ']') {
@@ -123,14 +125,14 @@ public class JavaLibraryTarget extends LibraryTarget {
         }
         return baseClass;
     }
-
+    
     static String safeName(String name) {
         if ("public".equals(name)) {
             return "isPublic";
         }
         return name.replace('-', '_');
     }
-
+    
     @Override
     public void start(OnshapeVersion buildVersion) throws GeneratorException {
         super.start(buildVersion);
@@ -142,9 +144,22 @@ public class JavaLibraryTarget extends LibraryTarget {
 //            throw new GeneratorException("Failed to copy api-base sources", ex);
 //        }
     }
-
+    
     @Override
     public void finish() throws GeneratorException {
+        // Add a method to get the build version
+        typeBuilder.addField(FieldSpec
+                .builder(OnshapeVersion.class, "buildVersion", Modifier.FINAL, Modifier.PRIVATE)
+                .initializer("new $T($S, $S, $S)",
+                        OnshapeVersion.class,
+                        getBuildVersion().getManifestVersion(),
+                        getBuildVersion().getGitCommit(),
+                        getBuildVersion().getImplementationVersion()).build())
+                .addMethod(MethodSpec.methodBuilder("getBuildVersion")
+                        .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                        .returns(OnshapeVersion.class)
+                        .addJavadoc("Get the Onshape build this API was created with.\n@return Onshape build version\n")
+                        .addStatement("return buildVersion").build());
         try {
             write("com.onshape.api", typeBuilder, false);
         } catch (IOException ex) {
@@ -152,9 +167,9 @@ public class JavaLibraryTarget extends LibraryTarget {
         }
         super.finish();
     }
-
+    
     public TypeSpec.Builder getTypeBuilder() {
         return typeBuilder;
     }
-
+    
 }

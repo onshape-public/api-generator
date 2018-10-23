@@ -40,6 +40,15 @@ public class OnshapeVersion {
     @JsonProperty("Implementation-Version")
     private String implementationVersion;
 
+    public OnshapeVersion() {
+    }
+
+    public OnshapeVersion(String manifestVersion, String gitCommit, String implementationVersion) {
+        this.manifestVersion = manifestVersion;
+        this.gitCommit = gitCommit;
+        this.implementationVersion = implementationVersion;
+    }
+
     public String getManifestVersion() {
         return manifestVersion;
     }
