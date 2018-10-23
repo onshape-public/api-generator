@@ -10,3 +10,5 @@ python/generated
 *.onshapepy*
 api_data/apiData.json
 api_data/apiData.jsonAuto.yaml
+/api-base/target/
+/api-generator/target/
