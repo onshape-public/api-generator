@@ -103,7 +103,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                     try {
                         FieldSpec.Builder fieldBuilder = FieldSpec.builder(fieldType, JavaLibraryTarget.safeName(name))
                                 .addJavadoc(Utilities.escape(description)).addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                                .addMember("value", "$S", name)
+                                .addMember("value", "$S", getFieldName(field))
                                 .build());
                         if (!field.isOptional()) {
                             fieldBuilder.addAnnotation(NotNull.class);
@@ -166,7 +166,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                 if (isOptional) {
                     FieldSpec.Builder fieldBuilder = FieldSpec.builder(JavaLibraryTarget.getTypeName(type), JavaLibraryTarget.safeName(name))
                             .addJavadoc(field.getDescription()).addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                            .addMember("value", "$S", name)
+                            .addMember("value", "$S", getFieldName(field))
                             .build());
                     requestBuilder.addField(fieldBuilder.build());
                 } else {
@@ -267,7 +267,7 @@ public class JavaEndpointTarget extends EndpointTarget {
             String fieldName = field.getKey().getField().substring((field.getKey().getField().startsWith(prefix + "0.") ? 2 : 0) + prefix.length());
             typeSpecBuilder.addField(FieldSpec.builder(field.getValue(), JavaLibraryTarget.safeName(fieldName), Modifier.PUBLIC)
                     .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                            .addMember("value", "$S", field.getKey().getField())
+                            .addMember("value", "$S", getFieldName(field.getKey()))
                             .build())
                     .addJavadoc(Utilities.escape(javadoc)).build());
         }
@@ -317,7 +317,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                     FieldSpec.Builder fieldBuilder = FieldSpec.builder(fieldType, JavaLibraryTarget.safeName(name))
                             .addJavadoc(Utilities.escape(description))
                             .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                                    .addMember("value", "$S", name)
+                                    .addMember("value", "$S", getFieldName(field))
                                     .build());
                     if (!field.isOptional()) {
                         fieldBuilder.addAnnotation(NotNull.class);
@@ -366,7 +366,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(TypeName.get(String.class))
                 .addAnnotation(Override.class)
-                .addStatement("return Onshape.toString(this)").build());
+                .addStatement("return $T.toString(this)", ClassName.get("com.onshape.api", "Onshape")).build());
     }
 
     String getFieldName(Field field) {
