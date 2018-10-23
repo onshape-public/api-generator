@@ -24,7 +24,6 @@
 package com.onshape.api.generator.java;
 
 import com.google.common.io.CharStreams;
-import com.google.common.io.Files;
 import com.onshape.api.base.types.OnshapeVersion;
 import com.onshape.api.generator.targets.GroupTarget;
 import com.onshape.api.generator.targets.LibraryTarget;

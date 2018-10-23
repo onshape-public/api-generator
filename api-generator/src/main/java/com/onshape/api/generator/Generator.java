@@ -38,7 +38,8 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- *
+ * Generator for API clients from Onshape JSON endpoint specification.
+ * 
  * @author Peter Harman peter.harman@cae.tech
  */
 public class Generator {
@@ -57,7 +58,14 @@ public class Generator {
         JavaLibraryTarget libraryTarget = new JavaLibraryTarget(new File(args[0]), "com.onshape.api");
         generator.generate(libraryTarget);
     }
-
+    
+    /**
+     * Generate code with the given target libraries.
+     * 
+     * @param targets
+     * @throws OnshapeException
+     * @throws GeneratorException 
+     */
     void generate(LibraryTarget... targets) throws OnshapeException, GeneratorException {
         String accessKey = System.getenv("ONSHAPE_API_ACCESSKEY");
         String secretKey = System.getenv("ONSHAPE_API_SECRETKEY");
@@ -77,6 +85,13 @@ public class Generator {
         }
     }
 
+    /**
+     * Generate code to access the given group of endpoints.
+     * 
+     * @param target
+     * @param group
+     * @throws GeneratorException 
+     */
     void generateGroup(LibraryTarget target, Group group) throws GeneratorException {
         GroupTarget groupTarget = target.group(group);
         groupTarget.start();
@@ -86,6 +101,14 @@ public class Generator {
         groupTarget.finish();
     }
 
+    /**
+     * Generate code to access the given endpoint.
+     * 
+     * @param groupTarget
+     * @param group
+     * @param endpoint
+     * @throws GeneratorException 
+     */
     void generateEndpoint(GroupTarget groupTarget, Group group, Endpoint endpoint) throws GeneratorException {
         EndpointTarget endpointTarget = groupTarget.endpoint(endpoint);
         endpointTarget.create();
