@@ -1,2 +1,5 @@
-/api-base/target/
 /api-generator/target/
+/api-base/target/
+/onshape-java/api-base/target/
+/onshape-java/api-generator/target/
+/onshape-java/target/
