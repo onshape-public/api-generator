@@ -17,7 +17,8 @@ class Converter:
     utility classes that can convert one small piece of json to swagger very well. As such, they have no
     dependence on the converter's instance state."""
 
-    default_config = {'visible_permissions': ['public'], 'show_deprecated': False, 'method_fixer_path': None}
+    default_config = {'visible_permissions': ['public'], 'show_deprecated': False, 'method_fixer_path': None,
+                      'include_required': False, 'include_tags': False}
     """A configuration dictionary that can get altered as needed and passed into the constructor with the 'config' 
     keyword. These are the following keys:
     
@@ -25,7 +26,10 @@ class Converter:
         swagger spec.
     'show_deprecated': a bool that if false, prevents the parsing of deprecated methods. Otherwise parse deprecated.
     'method_fixer_path': a file path that points to a YAML of a list of paths that should overwrite the parsed 
-        methods/paths."""
+        methods/paths.
+    'include_required': Whether or not to include the 'required' key in the response and parameter model description.
+        We have not consistently applied the required key in our source documentation, so we can't depend on our own
+        required flag."""
 
     def __init__(self, path="./apiData.json", template_path="onshapeOpenApiSpecTemplate.yaml", config=default_config):
         self.template_path = template_path
@@ -45,7 +49,7 @@ class Converter:
     @property
     def models_dict(self):
         """Return a dict that makes a best guess at constructing all the potential data models from the success and
-        descriptions present in the body"""
+        descriptions present in the body and the response"""
         d = {}
         for group in self.json_dict:
             for endpoint in group['endpoints']:
@@ -53,12 +57,12 @@ class Converter:
                     "fields"]:
                     model, required = Converter.convert_response_list_to_definition(
                         endpoint["success"]["fields"]["Response"])
-                    d[endpoint['name'] + endpoint['group']] = model
+                    d[Converter.name_model(endpoint, self.ModelLocations.RESPONSE_200)] = model
                 if "parameter" in endpoint and "fields" in endpoint["parameter"] and "Body" in endpoint["parameter"][
                     "fields"]:
                     model, required = Converter.convert_response_list_to_definition(
                         endpoint["parameter"]["fields"]["Body"])
-                    d[endpoint['name'] + endpoint['group']] = model
+                    d[Converter.name_model(endpoint, self.ModelLocations.BODY)] = model
         return d
 
     @property
@@ -87,7 +91,8 @@ class Converter:
                 v['operationId'] = endpoint['name'] + endpoint['group']
                 v['description'] = endpoint['description']
                 v["parameters"] = param_list
-                v["tags"] = [endpoint['group']]
+                if self.config['include_tags']:
+                    v["tags"] = [endpoint['group']]
                 for permission_dict in endpoint['permission']:
                     permission = permission_dict['name']
                     oauth = []
@@ -104,7 +109,7 @@ class Converter:
                             raise KeyError("The replacement URL should be added under {}.")
                     # Apply an x-public tag that is responsible for hiding the endpoints not marked with 'x-public'
                     # with a Swagger extension.
-                    elif 'public' in permission:
+                    elif 'public' in permission and self.config['include_tags']:
                         v['tags'].append('x-public')
                 v['security'] = [{"OAuth2": oauth}, {"apiSecretKey": []}, {"apiAccessKey": []}]
 
@@ -123,7 +128,7 @@ class Converter:
                                 v["consumes"] = ["multipart/form-data"]
                             else:
                                 body_param = {"in": "body", "name": "Body", "description": "The JSON request body."}
-                                body_param['schema'] = Converter.convert_body_list_to_body_schema(field_list)
+                                body_param['schema'] = Converter.ref_model(endpoint)
                                 v["parameters"].append(body_param)
                         else:
                             v["parameters"] += (Converter.convert_field_list_to_parameter_list(field_list))
@@ -139,15 +144,17 @@ class Converter:
                                                     'description': 'Array containing response data.',
                                                     'items': {'type': 'object', 'description': 'Endpoint object.'}}}}
                     else:
-                        schema, required = Converter.convert_response_list_to_definition(endpoint["success"]["fields"]["Response"])
                         # If the schema suggests this should really be a type 'file'
-                        if next(iter(schema.values()))['type'] == 'file':
+                        model_name = Converter.name_model(endpoint, self.ModelLocations.RESPONSE_200)
+                        model = self.models_dict[model_name]
+                        model_type = next(iter(model.values()))
+                        if model_type['type'] == 'file':
                             v["responses"] = {"200":
                                                   {"description": 'OK',
                                                    "schema":
                                                        {'type': 'file',
                                                         'description': 'A file download.'}}}
-                        elif next(iter(schema.values()))['type'] == 'binary':
+                        elif model_type['type'] == 'binary':
                             v["responses"] = {"200":
                                                   {"description": 'OK',
                                                    "schema":
@@ -157,10 +164,8 @@ class Converter:
                             v["responses"] = {"200":
                                               {"description": 'OK',
                                                "schema":
-                                                   {'type': 'object',
-                                                    'description': 'Object containing response data',
-                                                    'properties': schema,
-                                                    'required': required}}}
+                                                   {'$ref': '#/definitions/{}'.format(model_name)}}}
+
                 # If the response is not annotated, we need to generate one based on the method type
                 else:
                     if endpoint['type'] == 'delete':
@@ -203,7 +208,7 @@ class Converter:
         return d
 
     @staticmethod
-    def convert_response_list_to_definition(response_list):
+    def convert_response_list_to_definition(response_list, include_required=False):
         """Convert a response list, such as:
             [
                       {
@@ -292,7 +297,7 @@ class Converter:
             Converter.nested_set_update(d, path_list, v)
 
             # add to the required list or one level up from the path list.
-            if not response["optional"]:
+            if include_required and not response["optional"]:
                 if len(path_list) > 2:
                     two_levels_up = Converter.nested_get(d, path_list[:-2])
                     if 'type' in two_levels_up and two_levels_up['type'] == "object":
@@ -506,6 +511,23 @@ class Converter:
                 param_list.append(p)
             path = re.sub(bracket_catcher, r"{\1" + char_identifier_suffix + "}", path)
         return path, param_list
+
+    from enum import Enum
+
+    class ModelLocations(Enum):
+        BODY = "Body"
+        RESPONSE_200 = "Response200"
+
+    @staticmethod
+    def name_model(endpoint, location=ModelLocations.BODY):
+        """Takes an Onshape endpoint and provides a string that can be used to uniquely identify the method. If two
+        endpoints provide the same value under here, that is a problem."""
+        return "{group}_{name}_{location}".format(group=endpoint['group'], name=endpoint['name'], location=location)
+
+    @staticmethod
+    def ref_model(endpoint, location=ModelLocations.BODY):
+        """Make a ref, like '#/definitions/Documents_getDocuments_Body'"""
+        return "#/definitions/{}".format(Converter.name_model(endpoint, location))
 
 
 if __name__ == "__main__":
