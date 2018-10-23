@@ -12,3 +12,6 @@ api_data/apiData.json
 api_data/apiData.jsonAuto.yaml
 /api-base/target/
 /api-generator/target/
+/onshape-java/api-base/target/
+/onshape-java/api-generator/target/
+/onshape-java/target/
