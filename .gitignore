@@ -1,7 +1,7 @@
 *Data.js
 *private/
 test.js
-.idea/*
+*.idea*
 __pycache__*
 _keys.py
 apikey.js

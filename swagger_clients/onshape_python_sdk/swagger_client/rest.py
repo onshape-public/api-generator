@@ -19,22 +19,12 @@ import logging
 import re
 import ssl
 
-# Ethan Added:
-import os
-import random
-import string
-import json
-import hmac
-import hashlib
-import base64
-import urllib
-import datetime
-# Done Ethan added.
+
 
 import certifi
 # python 2 and python 3 compatibility library
 import six
-from six.moves.urllib.parse import urlencode
+from six.moves.urllib.parse import urlencode, urlparse
 
 try:
     import urllib3
@@ -120,91 +110,6 @@ class RESTClientObject(object):
             )
 
 
-    ######################################### ADDED BY ETHAN ###################################################
-    def _make_nonce(self):
-        '''
-        Generate a unique ID for the request, 25 chars in length
-
-        Returns:
-            - str: Cryptographic nonce
-        '''
-
-        chars = string.digits + string.ascii_letters
-        nonce = ''.join(random.choice(chars) for i in range(25))
-
-        # if self._logging:
-        #     utils.log('nonce created: %s' % nonce)
-
-        return nonce
-
-    def _make_auth(self, method, date, nonce, path, query={}, ctype='application/json'):
-        '''
-        Create the request signature to authenticate
-
-        Args:
-            - method (str): HTTP method
-            - date (str): HTTP date header string
-            - nonce (str): Cryptographic nonce
-            - path (str): URL pathname
-            - query (dict, default={}): URL query string in key-value pairs
-            - ctype (str, default='application/json'): HTTP Content-Type
-        '''
-
-        query = urlencode(query)
-
-        hmac_str = (method + '\n' + nonce + '\n' + date + '\n' + ctype + '\n' + path +
-                    '\n' + query + '\n').lower().encode('utf-8')
-        self._access_key= 'MphSYxivHyQT85YvatjmEvqb'.encode('utf-8')
-        self._secret_key = 'mWOxg4WiiAU9oaUlkhk4QuK3r91si70fncxhr4Fv2UPGrU8V'.encode('utf-8')
-        signature = base64.b64encode(hmac.new(self._secret_key, hmac_str, digestmod=hashlib.sha256).digest())
-        auth = 'On ' + self._access_key.decode('utf-8') + ':HmacSHA256:' + signature.decode('utf-8')
-
-        # if self._logging:
-        #     utils.log({
-        #         'query': query,
-        #         'hmac_str': hmac_str,
-        #         'signature': signature,
-        #         'auth': auth
-        #     })
-
-        return auth
-
-    def _make_headers(self, method, path, query={}, headers={}):
-        '''
-        Creates a headers object to sign the request
-
-        Args:
-            - method (str): HTTP method
-            - path (str): Request path, e.g. /api/documents. No query string
-            - query (dict, default={}): Query string in key-value format
-            - headers (dict, default={}): Other headers to pass in
-
-        Returns:
-            - dict: Dictionary containing all headers
-        '''
-        method = method.lower()
-        path = "/" + path
-        date = datetime.datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')
-        nonce = self._make_nonce()
-        ctype = headers.get('Content-Type') if headers.get('Content-Type') else 'application/json'
-
-        auth = self._make_auth(method, date, nonce, path, query=query, ctype=ctype)
-
-        req_headers = {
-            'Content-Type': 'application/json',
-            'Date': date,
-            'On-Nonce': nonce,
-            'Authorization': auth,
-            'User-Agent': 'Onshape Python Sample App',
-            'Accept': 'application/json'
-        }
-
-        # add in user-defined headers
-        for h in headers:
-            req_headers[h] = headers[h]
-
-        return req_headers
-    ######################################### END ADDED BY ETHAN ###############################################
 
 
     def request(self, method, url, query_params=None, headers=None,
@@ -239,7 +144,12 @@ class RESTClientObject(object):
 
         post_params = post_params or {}
         headers = headers or {}
-        headers.update(self._make_headers(method, "api/documents"))
+
+        # Ethan added this to build the necessary authentication headers
+        from swagger_client.apikey_headers import make_headers
+        self._access_key = 'MphSYxivHyQT85YvatjmEvqb'.encode('utf-8')
+        self._secret_key = 'mWOxg4WiiAU9oaUlkhk4QuK3r91si70fncxhr4Fv2UPGrU8V'.encode('utf-8')
+        headers.update(make_headers(method, urlparse(url).path[1:], self._access_key, self._secret_key))
 
         timeout = None
         if _request_timeout:
