@@ -1,4 +1,5 @@
 # ref: https://docs.travis-ci.com/user/languages/python
+# Make the Python Swagger client based on the api_config.yaml file and test it against some static tests.
 language: python
 python:
   - "2.7"
@@ -9,6 +10,9 @@ python:
   #- "3.5-dev" # 3.5 development branch
   #- "nightly" # points to the latest development branch e.g. 3.6-dev
 # command to install dependencies
-install: "pip install -r requirements.txt"
+install:
+  - brew install swagger-codegen
+  - swagger-codegen generate -i /Users/ethankeller/onshape/api-generator/api_data/apiDataAll.jsonAuto.yaml -l python -C .swagger-codegen/swagger_config.json
+  - "pip install -r requirements.txt"
 # command to run tests
 script: nosetests

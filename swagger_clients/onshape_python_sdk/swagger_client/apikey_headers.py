@@ -1,3 +1,6 @@
+"""A custom module that enables Swagger to fully support our HMAC scheme with the API keys. This generates the correct
+authentication headers for the given API call."""
+
 import os
 import random
 import string

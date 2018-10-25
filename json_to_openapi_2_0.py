@@ -34,12 +34,36 @@ class Converter:
     def __init__(self, path="./apiData.json", template_path="onshapeOpenApiSpecTemplate.yaml", config=default_config):
         self.template_path = template_path
         self.path = path
-        self.config = config
+        self.config = Converter.default_config
+        self.config.update(config)
+
 
     @property
     def json_dict(self):
         """Return the dict read from self.path"""
         return json.load(open(self.path))
+
+    @property
+    def filtered_endpoints(self):
+        """Return the list of filtered endpoints as filtered according to the values set in the configuration"""
+        l = []
+        for group in self.json_dict:
+            for endpoint in group['endpoints']:
+                # collect statuses of current endpoint
+                deprecated = any(['deprecated' in p['name'] for p in endpoint['permission']])
+                # Filter out any endpoints that should be skipped based on config settings
+                has_visible_permission_scope = [p in endpoint['permission'][0]['name'] for p in
+                                                self.config['visible_permissions']]
+                # Filter through the various criteria and set the allowed flag if any configuration criteria is not met:
+                allowed = True
+                if not any(has_visible_permission_scope):
+                    allowed = False
+                if not self.config['show_deprecated'] and deprecated:
+                    allowed = False
+
+                if allowed:
+                    l.append(endpoint)
+        return l
 
     @property
     def template_dict(self):
@@ -51,18 +75,21 @@ class Converter:
         """Return a dict that makes a best guess at constructing all the potential data models from the success and
         descriptions present in the body and the response"""
         d = {}
-        for group in self.json_dict:
-            for endpoint in group['endpoints']:
-                if "success" in endpoint and "fields" in endpoint["success"] and "Response" in endpoint["success"][
-                    "fields"]:
-                    model, required = Converter.convert_response_list_to_definition(
-                        endpoint["success"]["fields"]["Response"])
+        for endpoint in self.filtered_endpoints:
+            if "success" in endpoint and "fields" in endpoint["success"] and "Response" in endpoint["success"][
+                "fields"]:
+                model, required = Converter.convert_response_list_to_definition(
+                    endpoint["success"]["fields"]["Response"])
+                if model['type'] == 'object':
                     d[Converter.name_model(endpoint, self.ModelLocations.RESPONSE_200)] = model
-                if "parameter" in endpoint and "fields" in endpoint["parameter"] and "Body" in endpoint["parameter"][
-                    "fields"]:
-                    model, required = Converter.convert_response_list_to_definition(
-                        endpoint["parameter"]["fields"]["Body"])
+            if "parameter" in endpoint and "fields" in endpoint["parameter"] and "Body" in endpoint["parameter"][
+                "fields"]:
+                model, required = Converter.convert_response_list_to_definition(
+                    [b for b in endpoint["parameter"]["fields"]["Body"] if b['type'] != 'File'])
+                if model['type'] == 'object':
                     d[Converter.name_model(endpoint, self.ModelLocations.BODY)] = model
+                    if len(required) < 0:
+                        d[Converter.name_model(endpoint, self.ModelLocations.BODY)]['required'] = required
         return d
 
     @property
@@ -70,109 +97,96 @@ class Converter:
         """Parse a json file made with the onshape JSON 'spec' into a valid set of swagger operation items, such that
         d = {(path, method): operation_definition}"""
         d = {}
-        for group in self.json_dict:
-            for endpoint in group['endpoints']:
-                # Filter out any endpoints that should be skipped based on config settings
-                has_visible_permission_scope = [p in endpoint['permission'][0]['name'] for p in
-                                                self.config['visible_permissions']]
-                if not any(has_visible_permission_scope):
-                    continue
 
-                # Assemble the openApi (path,method) dict.
-                method = endpoint['type']
-                path = Converter.convert_path(endpoint['url'])
+        for endpoint in self.filtered_endpoints:
 
-                # Get the implicit path parameters like [wvm] into the parameter list.
-                path, param_list = Converter.convert_bracketed_path_components_to_parameter_list(path)
 
-                v = {}
-                # The parameters that relate to a single endpoint (path, method pair)
-                v["summary"] = endpoint['title']
-                v['operationId'] = endpoint['name'] + endpoint['group']
-                v['description'] = endpoint['description']
-                v["parameters"] = param_list
-                if self.config['include_tags']:
-                    v["tags"] = [endpoint['group']]
-                for permission_dict in endpoint['permission']:
-                    permission = permission_dict['name']
-                    oauth = []
-                    if "OAuth" in permission:
-                        oauth.append(permission)
-                    # Apply the deprecated tag
-                    elif "deprecated" in permission:
-                        v["deprecated"] = True
-                        try:
-                            # Add the replaced with line to the description
-                            v['description'] += "This endpoint has been replaced! Please use:" + \
-                                                endpoint['error']['fields']['ReplacedBy'][0]['description']
-                        except KeyError as e:
-                            raise KeyError("The replacement URL should be added under {}.")
-                    # Apply an x-public tag that is responsible for hiding the endpoints not marked with 'x-public'
-                    # with a Swagger extension.
-                    elif 'public' in permission and self.config['include_tags']:
-                        v['tags'].append('x-public')
-                v['security'] = [{"OAuth2": oauth}, {"apiSecretKey": []}, {"apiAccessKey": []}]
+            # Assemble the openApi (path,method) dict.
+            method = endpoint['type']
+            path = Converter.convert_path(endpoint['url'])
 
-                # Skip showing deprecated if set in config:
-                if "deprecated" in v and v["deprecated"] and not self.config["show_deprecated"]:
-                    continue
+            # Get the implicit path parameters like [wvm] into the parameter list.
+            path, param_list = Converter.convert_bracketed_path_components_to_parameter_list(path)
 
-                # Parse the fields in the field list into the parameter list
-                if 'parameter' in endpoint and 'fields' in endpoint['parameter']:
-                    for type, field_list in endpoint['parameter']['fields'].items():
-                        # Do some munging to get the body params into the correct arrangement.
-                        if type == "Body":
-                            # Awkwardly detect if this is indeed a file (and thus should have the multipart form data)
-                            if any([(f['type'] == "File") for f in field_list]):
-                                v["parameters"] += (Converter.convert_form_list_to_form_data_list(field_list))
-                                v["consumes"] = ["multipart/form-data"]
-                            else:
-                                body_param = {"in": "body", "name": "Body", "description": "The JSON request body."}
-                                body_param['schema'] = Converter.ref_model(endpoint)
-                                v["parameters"].append(body_param)
+            v = {}
+            # The parameters that relate to a single endpoint (path, method pair)
+            v["summary"] = endpoint['title']
+            v['operationId'] = endpoint['name'] + endpoint['group']
+            v['description'] = endpoint['description']
+            v["parameters"] = param_list
+            if self.config['include_tags']:
+                v["tags"] = [endpoint['group']]
+            oauth = []
+            for permission_dict in endpoint['permission']:
+                oauth = []
+                permission = permission_dict['name']
+                if "OAuth" in permission:
+                    oauth.append(permission)
+                # Apply the deprecated tag
+                elif "deprecated" in permission:
+                    v["deprecated"] = True
+                    try:
+                        # Add the replaced with line to the description
+                        v['description'] += "This endpoint has been replaced! Please use:" + \
+                                            endpoint['error']['fields']['ReplacedBy'][0]['description']
+                    except KeyError as e:
+                        raise KeyError("The replacement URL should be added under {}.")
+                # Apply an x-public tag that is responsible for hiding the endpoints not marked with 'x-public'
+                # with a Swagger extension.
+                # elif 'public' in permission and self.config['include_tags']:
+                #     v['tags'].append('x-public')
+            v['security'] = [{"OAuth2": oauth}, {"apiSecretKey": []}, {"apiAccessKey": []}]
+
+            # Parse the fields in the field list into the parameter list
+            if 'parameter' in endpoint and 'fields' in endpoint['parameter']:
+                for type, field_list in endpoint['parameter']['fields'].items():
+                    # Do some munging to get the body params into the correct arrangement.
+                    if type == "Body":
+                        # Awkwardly detect if this is indeed a file (and thus should have the multipart form data)
+                        if any([(f['type'] == "File") for f in field_list]):
+                            v["parameters"] += (Converter.convert_form_list_to_form_data_list(field_list))
+                            v["consumes"] = ["multipart/form-data"]
                         else:
-                            v["parameters"] += (Converter.convert_field_list_to_parameter_list(field_list))
-                # For annotated successful responses.
-                if "success" in endpoint and "fields" in endpoint["success"] and "Response" in endpoint["success"][
-                    "fields"]:
-                    # This is a special endpoint that returns an array instead of an object
-                    if endpoint['name'] == "getEndpoints":
-                        v["responses"] = {"200":
-                                              {"description": 'OK',
-                                               "schema":
-                                                   {'type': 'array',
-                                                    'description': 'Array containing response data.',
-                                                    'items': {'type': 'object', 'description': 'Endpoint object.'}}}}
+                            body_param = {"in": "body", "name": "Body", "description": "The JSON request body."}
+                            body_param['schema'] = {'$ref': Converter.ref_model(endpoint)}
+                            v["parameters"].append(body_param)
                     else:
-                        # If the schema suggests this should really be a type 'file'
-                        model_name = Converter.name_model(endpoint, self.ModelLocations.RESPONSE_200)
-                        model = self.models_dict[model_name]
-                        model_type = next(iter(model.values()))
-                        if model_type['type'] == 'file':
-                            v["responses"] = {"200":
-                                                  {"description": 'OK',
-                                                   "schema":
-                                                       {'type': 'file',
-                                                        'description': 'A file download.'}}}
-                        elif model_type['type'] == 'binary':
-                            v["responses"] = {"200":
-                                                  {"description": 'OK',
-                                                   "schema":
-                                                       {'type': 'file',
-                                                        'description': 'Octet stream to download.'}}}
-                        else:
-                            v["responses"] = {"200":
-                                              {"description": 'OK',
-                                               "schema":
-                                                   {'$ref': '#/definitions/{}'.format(model_name)}}}
-
-                # If the response is not annotated, we need to generate one based on the method type
+                        v["parameters"] += (Converter.convert_field_list_to_parameter_list(field_list))
+            # For annotated successful responses.
+            if "success" in endpoint and "fields" in endpoint["success"] and "Response" in endpoint["success"][
+                "fields"]:
+                response_list = endpoint["success"]["fields"]["Response"]
+                # This is a special endpoint that returns an array instead of an object
+                if endpoint['name'] == "getEndpoints":
+                    v["responses"] = {"200":
+                                          {"description": 'OK',
+                                           "schema":
+                                               {'type': 'array',
+                                                'description': 'Array containing response data.',
+                                                'items': {'type': 'object', 'description': 'Endpoint object.'}}}}
+                elif len(response_list) == 1 and response_list[0]["type"] == 'Data':
+                    v["responses"] = {"200":
+                                          {"description": response_list[0]['description'],
+                                           'schema': {"type": "file"}}}
+                elif len(response_list) == 1 and response_list[0]["type"] == 'File':
+                    v["responses"] = {"200":
+                                          {"description": response_list[0]['description'],
+                                           'schema': {"type": "file"}}}
                 else:
-                    if endpoint['type'] == 'delete':
-                        v["responses"] = {"200": {'description': 'The resource was successfully deleted'}}
-                    else:
-                        v["responses"] = {"200": {'description': "This endpoint's response is not documented."}}
-                d[(path, method)] = v
+                    model_name = Converter.name_model(endpoint, self.ModelLocations.RESPONSE_200)
+                    v["responses"] = {"200":
+                                          {"description": 'OK',
+                                           "schema":
+                                               {'$ref': '#/definitions/{}'.format(model_name)}}}
+
+
+            # If the response is not annotated, we need to generate one based on the method type
+            else:
+                if endpoint['type'] == 'delete':
+                    v["responses"] = {"200": {'description': 'The resource was successfully deleted'}}
+                else:
+                    v["responses"] = {"200": {'description': "This endpoint's response is not documented."}}
+            d[(path, method)] = v
         # Add the methods specified in the yaml at method_fixer_path to the method dict.
         if 'method_fixer_path' in self.config and self.config['method_fixer_path']:
             for path in yaml.load(open(self.config['method_fixer_path'])):
@@ -205,10 +219,11 @@ class Converter:
         d = self.template_dict
         paths = self.paths_dict
         d['paths'] = paths
+        d['definitions'] = self.models_dict
         return d
 
     @staticmethod
-    def convert_response_list_to_definition(response_list, include_required=False):
+    def convert_response_list_to_definition(response_list, include_required=True, include_required_recursive=False):
         """Convert a response list, such as:
             [
                       {
@@ -287,27 +302,37 @@ class Converter:
             # If the type is returned as nothing, skip this response
             if not t:
                 continue
+            else:
+                v = {}
+                # Update the type
+                v.update(t)
 
-            v = {}
-            # Update the type
-            v.update(t)
+                if "description" in response:
+                    v["description"] = response["description"]
 
-            if "description" in response:
-                v["description"] = response["description"]
             Converter.nested_set_update(d, path_list, v)
 
             # add to the required list or one level up from the path list.
-            if include_required and not response["optional"]:
-                if len(path_list) > 2:
-                    two_levels_up = Converter.nested_get(d, path_list[:-2])
-                    if 'type' in two_levels_up and two_levels_up['type'] == "object":
-                        Converter.add_required(d, path_list[:-2], path_list[-1])
+            if not response["optional"]:
+                if include_required_recursive:
+                    if len(path_list) > 2:
+                        two_levels_up = Converter.nested_get(d, path_list[:-2])
+                        if 'type' in two_levels_up and two_levels_up['type'] == "object":
+                            Converter.add_required(d, path_list[:-2], path_list[-1])
                 # If there is only one item in the path_list, this must be a top level key, and we should insert it into
                 # a list of top level required keys
-                elif len(path_list) == 1:
+                elif len(path_list) == 1 and include_required:
                     required.append(path_list[-1])
 
-        return d, required
+        # This is to deal with when the type is communicated within the key. Defaults to object.
+        if len(d) == 1 and next(iter(d.values()))["type"] == 'file':
+            d_final = d['file']
+        elif len(d) == 1 and next(iter(d.values()))["type"] == 'data':
+            d_final = d['data']
+        else:
+            d_final = {'type': 'object', 'properties': d}
+
+        return d_final, required
 
     @staticmethod
     def parse_response_headers(header_list):
@@ -427,15 +452,6 @@ class Converter:
         return fl
 
     @staticmethod
-    def convert_body_list_to_body_schema(body_list):
-        properties, required = Converter.convert_response_list_to_definition(body_list)
-        schema = {"type": "object", 'properties': properties}
-        if len(required) > 0:
-            schema['required'] = required
-
-        return schema
-
-    @staticmethod
     def convert_field_list_to_parameter_list(field_list):
         fl = []
         for field in field_list:
@@ -470,7 +486,7 @@ class Converter:
                  "Object[]": {'type': "array", 'items': {'type': "object"}},
                  "Object": {'type': "object"}, "String[]": {'type': "array", 'items': {'type': "string"}},
                  "File": {'type': "file"}, "Date": {'type': 'string', 'format': "date-time"},
-                 "Data": {'type': "string"}, "Number[][]": {'type': "array", 'items': {'type': "number"}}}
+                 "Data": {'type': "null"}, "Number[][]": {'type': "array", 'items': {'type': "number"}}}
         # Throw out null types
         if field_type == "null":
             return None
@@ -522,7 +538,7 @@ class Converter:
     def name_model(endpoint, location=ModelLocations.BODY):
         """Takes an Onshape endpoint and provides a string that can be used to uniquely identify the method. If two
         endpoints provide the same value under here, that is a problem."""
-        return "{group}_{name}_{location}".format(group=endpoint['group'], name=endpoint['name'], location=location)
+        return "{group}_{name}_{location}".format(group=endpoint['group'], name=endpoint['name'], location=location.value)
 
     @staticmethod
     def ref_model(endpoint, location=ModelLocations.BODY):
@@ -530,6 +546,7 @@ class Converter:
         return "#/definitions/{}".format(Converter.name_model(endpoint, location))
 
 
+
 if __name__ == "__main__":
-    converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml')
+    converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml', config={'include_required': True, 'include_tags': True})
     yaml.dump(converter.converted_dict, open(converter.path + "Auto.yaml", "w"))
