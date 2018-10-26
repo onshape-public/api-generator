@@ -17,7 +17,7 @@ import re  # noqa: F401
 import six
 
 from onshape_client.models.release_management_create_release_package_response200_items import ReleaseManagementCreateReleasePackageResponse200Items  # noqa: F401,E501
-from onshape_client.models.release_management_create_release_package_response200_properties1 import ReleaseManagementCreateReleasePackageResponse200Properties1  # noqa: F401,E501
+from onshape_client.models.release_management_create_release_package_response200_properties_1 import ReleaseManagementCreateReleasePackageResponse200Properties1  # noqa: F401,E501
 from onshape_client.models.release_management_get_release_package_response200_workflow import ReleaseManagementGetReleasePackageResponse200Workflow  # noqa: F401,E501
 
 

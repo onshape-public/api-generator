@@ -17,7 +17,7 @@ import re  # noqa: F401
 import six
 
 from onshape_client.models.release_management_update_release_package_body_items import ReleaseManagementUpdateReleasePackageBodyItems  # noqa: F401,E501
-from onshape_client.models.release_management_update_release_package_body_properties1 import ReleaseManagementUpdateReleasePackageBodyProperties1  # noqa: F401,E501
+from onshape_client.models.release_management_update_release_package_body_properties_1 import ReleaseManagementUpdateReleasePackageBodyProperties1  # noqa: F401,E501
 
 
 class ReleaseManagementUpdateReleasePackageBody(object):

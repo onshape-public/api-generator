@@ -17,20 +17,21 @@ class Converter:
     utility classes that can convert one small piece of json to swagger very well. As such, they have no
     dependence on the converter's instance state."""
 
-    default_config = {'visible_permissions': ['public'], 'show_deprecated': False, 'method_fixer_path': None,
-                      'include_required': False, 'include_tags': False, 'inline_models': True}
+    default_config = {'visible_permissions': ['public'], 'show_deprecated': False,
+                      'include_required': False, 'include_tags': False, 'inline_models': True,
+                      'link_response_models': False}
     """A configuration dictionary that can get altered as needed and passed into the constructor with the 'config' 
     keyword. These are the following keys:
     
     'visible_permissions': a list of permission scopes that the methods need to have in order to be parsed into the 
         swagger spec.
     'show_deprecated': a bool that if false, prevents the parsing of deprecated methods. Otherwise parse deprecated.
-    'method_fixer_path': a file path that points to a YAML of a list of paths that should overwrite the parsed 
-        methods/paths.
     'include_required': Whether or not to include the 'required' key in the response and parameter model description.
         We have not consistently applied the required key in our source documentation, so we can't depend on our own
         required flag.
-    'inline_models': Whether the models should be inline with the paths, or separated into a definitions section."""
+    'inline_models': Whether the models should be inline with the paths, or separated into a definitions section.
+    'link_response_models': If True, the parser links the methods directly to the definitions. Otherwise the definitions
+        are orphaned."""
 
     def __init__(self, path="./apiData.json", template_path="onshapeOpenApiSpecTemplate.yaml", config=default_config):
         self.template_path = template_path
@@ -40,7 +41,6 @@ class Converter:
 
         # Set the caches:
         self.__cached_models_dict = None
-
 
     @property
     def json_dict(self):
@@ -107,7 +107,6 @@ class Converter:
 
         for endpoint in self.filtered_endpoints:
 
-
             # Assemble the openApi (path,method) dict.
             method = endpoint['type']
             path = Converter.convert_path(endpoint['url'])
@@ -118,7 +117,7 @@ class Converter:
             v = {}
             # The parameters that relate to a single endpoint (path, method pair)
             v["summary"] = endpoint['title']
-            v['operationId'] = endpoint['name'] #+ "_" + endpoint['group']
+            v['operationId'] = endpoint['name'] + "." + endpoint['group']
             v['description'] = endpoint['description']
             v["parameters"] = param_list
             if self.config['include_tags']:
@@ -198,12 +197,12 @@ class Converter:
                     v["responses"] = {"200": {'description': 'The resource was successfully deleted'}}
                 else:
                     v["responses"] = {"200": {'description': "This endpoint's response is not documented."}}
+            # Throw out any schema links if configuration says to
+            if not self.config['link_response_models'] and 'responses' in v:
+                for code, response_spec in v['responses'].items():
+                    response_spec.pop('schema', None)
             d[(path, method)] = v
-        # Add the methods specified in the yaml at method_fixer_path to the method dict.
-        if 'method_fixer_path' in self.config and self.config['method_fixer_path']:
-            for path in yaml.load(open(self.config['method_fixer_path'])):
-                for method in path:
-                    d[(path, method)] = v
+
         return d
 
     @property
@@ -423,8 +422,6 @@ class Converter:
             outer_d[header['field']] = d
         return outer_d
 
-
-
     @staticmethod
     def add_required(dic, keys, value):
         """append a 'required' value onto a list accessed by a list of keys within a dic."""
@@ -455,7 +452,6 @@ class Converter:
         for key in keys[:-1]:
             dic = dic.setdefault(key, {})
             dic[keys[-1]] = value
-
 
     @staticmethod
     def nested_get(input_dict, nested_key):
@@ -585,7 +581,8 @@ class Converter:
     def name_model(endpoint, location=ModelLocations.BODY):
         """Takes an Onshape endpoint and provides a string that can be used to uniquely identify the method. If two
         endpoints provide the same value under here, that is a problem."""
-        return "{group}_{name}_{location}".format(group=endpoint['group'], name=endpoint['name'], location=location.value)
+        return "{group}_{name}_{location}".format(group=endpoint['group'], name=endpoint['name'],
+                                                  location=location.value)
 
     @staticmethod
     def ref_model(endpoint, location=ModelLocations.BODY):
@@ -593,7 +590,7 @@ class Converter:
         return "#/definitions/{}".format(Converter.name_model(endpoint, location))
 
 
-
 if __name__ == "__main__":
-    converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml', config={'include_required': True, 'include_tags': True, 'inline_models': False})
+    converter = Converter(path='./api_data/apiDataOnlyAccounts.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
+                          config={'include_required': True, 'include_tags': True, 'inline_models': False})
     yaml.dump(converter.converted_dict, open(converter.path + "Auto.yaml", "w"))

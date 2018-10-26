@@ -16,7 +16,7 @@ import re  # noqa: F401
 
 import six
 
-from onshape_client.models.parts_get_parts_in_partstudio_response200_parts import PartsGetPartsInPartstudioResponse200Parts  # noqa: F401,E501
+from onshape_client.models.parts_get_parts_in_partstudio_response200_inner import PartsGetPartsInPartstudioResponse200Inner  # noqa: F401,E501
 
 
 class PartsGetPartsInPartstudioResponse200(object):
@@ -33,44 +33,14 @@ class PartsGetPartsInPartstudioResponse200(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'parts': 'list[PartsGetPartsInPartstudioResponse200Parts]'
     }
 
     attribute_map = {
-        'parts': 'parts'
     }
 
-    def __init__(self, parts=None):  # noqa: E501
+    def __init__(self):  # noqa: E501
         """PartsGetPartsInPartstudioResponse200 - a model defined in Swagger"""  # noqa: E501
-
-        self._parts = None
         self.discriminator = None
-
-        if parts is not None:
-            self.parts = parts
-
-    @property
-    def parts(self):
-        """Gets the parts of this PartsGetPartsInPartstudioResponse200.  # noqa: E501
-
-        Parts list  # noqa: E501
-
-        :return: The parts of this PartsGetPartsInPartstudioResponse200.  # noqa: E501
-        :rtype: list[PartsGetPartsInPartstudioResponse200Parts]
-        """
-        return self._parts
-
-    @parts.setter
-    def parts(self, parts):
-        """Sets the parts of this PartsGetPartsInPartstudioResponse200.
-
-        Parts list  # noqa: E501
-
-        :param parts: The parts of this PartsGetPartsInPartstudioResponse200.  # noqa: E501
-        :type: list[PartsGetPartsInPartstudioResponse200Parts]
-        """
-
-        self._parts = parts
 
     def to_dict(self):
         """Returns the model properties as a dict"""

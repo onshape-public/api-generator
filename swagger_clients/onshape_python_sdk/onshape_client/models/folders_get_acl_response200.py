@@ -16,9 +16,9 @@ import re  # noqa: F401
 
 import six
 
-from onshape_client.models.documents_share_document_response200_entries1 import DocumentsShareDocumentResponse200Entries1  # noqa: F401,E501
+from onshape_client.models.documents_share_document_response200_entries_1 import DocumentsShareDocumentResponse200Entries1  # noqa: F401,E501
 from onshape_client.models.documents_share_document_response200_inherited_acls import DocumentsShareDocumentResponse200InheritedAcls  # noqa: F401,E501
-from onshape_client.models.documents_share_document_response200_owner1 import DocumentsShareDocumentResponse200Owner1  # noqa: F401,E501
+from onshape_client.models.documents_share_document_response200_owner_1 import DocumentsShareDocumentResponse200Owner1  # noqa: F401,E501
 
 
 class FoldersGetAclResponse200(object):

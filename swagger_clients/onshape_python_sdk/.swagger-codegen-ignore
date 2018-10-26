@@ -24,5 +24,6 @@
 
 onshape_client/rest.py
 onshape_client/configuration.py
+README.md
 test/*
 .travis.yml

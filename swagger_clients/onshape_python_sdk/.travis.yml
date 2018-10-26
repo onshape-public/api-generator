@@ -12,4 +12,12 @@ python:
 install: "pip install -r requirements.txt"
 # command to run tests
 script: nosetests
-swagger-codegen generate -i /Users/ethankeller/onshape/api-generator/api_data/apiDataAll.jsonAuto.yaml -l python -o . -c swagger_config.json
+  - "DOWNLOAD THE RELEVANT API DEFINITION"
+#  Turn the operationIds into more manageable client names
+  - "perl -pi -w -e 's/(operationId: \w*)\.\w*/$1/;' apiDataAll.jsonAuto.yaml"
+#  Generate the API client
+  - "swagger-codegen generate -i /Users/ethankeller/onshape/api-generator/api_data/apiDataAll.jsonAuto.yaml -l python -o . -c swagger_config.json"
+# Replace the import statements that are screwed up
+  - cd onshape_client/models
+  - "perl -pi -w -e 's/(from [a-z_.0-9]*)1\b/$1_1/;' [^__init__.py]*"
+  - TEST THE CLIENT
