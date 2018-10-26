@@ -3,12 +3,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**properties** | **list[object]** | Part properties | 
-**part_id** | **str** | Part id | 
-**part_type** | **str** | Part type | 
-**is_mesh** | **bool** | True if part is a mesh | 
-**thumbnail** | **object** | Part&#39;s thumbnail | [optional] 
-**href** | **str** | URI of Part metadata | 
+**items** | **list[object]** | Collection items | [optional] 
+**prev** | **str** | URL of the previous page of the collection, can be null | [optional] 
+**href** | **str** | URL of current page of the response | [optional] 
+**next** | **str** | URL of the next page of the collection, can be null | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

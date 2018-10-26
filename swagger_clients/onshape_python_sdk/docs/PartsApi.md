@@ -1,29 +1,29 @@
-# swagger_client.PartsApi
+# onshape_client.PartsApi
 
 All URIs are relative to *https://cad.onshape.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**batch_update_part_metadata_parts**](PartsApi.md#batch_update_part_metadata_parts) | **POST** /parts/d/{did}/{wvm_char}/{wvm} | Update Part metadata
-[**export_parasolid_parts**](PartsApi.md#export_parasolid_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/parasolid | Export Part to Parasolid
-[**export_stl_parts**](PartsApi.md#export_stl_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/stl | Export Part to STL
-[**get_bend_table_parts**](PartsApi.md#get_bend_table_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/sheetmetal/bendtable | Get Sheet Metal Bend Table
-[**get_body_details_parts**](PartsApi.md#get_body_details_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/bodydetails | Body Details
-[**get_bounding_boxes_parts**](PartsApi.md#get_bounding_boxes_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/boundingboxes | Bounding Boxes
-[**get_edges_parts**](PartsApi.md#get_edges_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/tessellatededges | Tessellated Edges
-[**get_faces_parts**](PartsApi.md#get_faces_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/tessellatedfaces | Tessellated Faces
-[**get_mass_properties_parts**](PartsApi.md#get_mass_properties_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/massproperties | Mass Properties
-[**get_part_metadata_parts**](PartsApi.md#get_part_metadata_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/metadata | Get Metadata
-[**get_parts_in_partstudio_parts**](PartsApi.md#get_parts_in_partstudio_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid} | Get Parts In Part Studio
-[**get_parts_parts**](PartsApi.md#get_parts_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm} | Get Parts
-[**get_shaded_views_parts**](PartsApi.md#get_shaded_views_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/shadedviews | Shaded views
-[**get_standard_content_part_metadata_parts**](PartsApi.md#get_standard_content_part_metadata_parts) | **GET** /parts/standardcontent/d/{did}/v/{vid}/e/{eid}/{cu_char}/{oid}/partid/{partid}/metadata | Get Standard Content Metadata
-[**update_part_metadata_parts**](PartsApi.md#update_part_metadata_parts) | **POST** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/metadata | Update Metadata
-[**update_standard_content_part_metadata_parts**](PartsApi.md#update_standard_content_part_metadata_parts) | **POST** /parts/standardcontent/d/{did}/v/{vid}/e/{eid}/{cu_char}/{oid}/partid/{partid}/metadata | Update Standard Content Metadata
+[**batch_update_part_metadata**](PartsApi.md#batch_update_part_metadata) | **POST** /parts/d/{did}/{wvm_char}/{wvm} | Update Part metadata
+[**export_parasolid**](PartsApi.md#export_parasolid) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/parasolid | Export Part to Parasolid
+[**export_stl**](PartsApi.md#export_stl) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/stl | Export Part to STL
+[**get_bend_table**](PartsApi.md#get_bend_table) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/sheetmetal/bendtable | Get Sheet Metal Bend Table
+[**get_body_details**](PartsApi.md#get_body_details) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/bodydetails | Body Details
+[**get_bounding_boxes**](PartsApi.md#get_bounding_boxes) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/boundingboxes | Bounding Boxes
+[**get_edges**](PartsApi.md#get_edges) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/tessellatededges | Tessellated Edges
+[**get_faces**](PartsApi.md#get_faces) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/tessellatedfaces | Tessellated Faces
+[**get_mass_properties**](PartsApi.md#get_mass_properties) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/massproperties | Mass Properties
+[**get_part_metadata**](PartsApi.md#get_part_metadata) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/metadata | Get Metadata
+[**get_parts**](PartsApi.md#get_parts) | **GET** /parts/d/{did}/{wvm_char}/{wvm} | Get Parts
+[**get_parts_in_partstudio**](PartsApi.md#get_parts_in_partstudio) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid} | Get Parts In Part Studio
+[**get_shaded_views**](PartsApi.md#get_shaded_views) | **GET** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/shadedviews | Shaded views
+[**get_standard_content_part_metadata**](PartsApi.md#get_standard_content_part_metadata) | **GET** /parts/standardcontent/d/{did}/v/{vid}/e/{eid}/{cu_char}/{oid}/partid/{partid}/metadata | Get Standard Content Metadata
+[**update_part_metadata**](PartsApi.md#update_part_metadata) | **POST** /parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/metadata | Update Metadata
+[**update_standard_content_part_metadata**](PartsApi.md#update_standard_content_part_metadata) | **POST** /parts/standardcontent/d/{did}/v/{vid}/e/{eid}/{cu_char}/{oid}/partid/{partid}/metadata | Update Standard Content Metadata
 
 
-# **batch_update_part_metadata_parts**
-> batch_update_part_metadata_parts(wvm_char, did, wvm, edit_description=edit_description, body=body)
+# **batch_update_part_metadata**
+> batch_update_part_metadata(wvm_char, did, wvm, body=body, edit_description=edit_description)
 
 Update Part metadata
 
@@ -33,37 +33,37 @@ Part metadata batch update
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
+body = onshape_client.PartsBatchUpdatePartMetadataBody() # PartsBatchUpdatePartMetadataBody | The JSON request body. (optional)
 edit_description = 'edit_description_example' # str | Description of the update (as appear in document history) (optional)
-body = swagger_client.Body41() # Body41 | The JSON request body. (optional)
 
 try:
     # Update Part metadata
-    api_instance.batch_update_part_metadata_parts(wvm_char, did, wvm, edit_description=edit_description, body=body)
+    api_instance.batch_update_part_metadata(wvm_char, did, wvm, body=body, edit_description=edit_description)
 except ApiException as e:
-    print("Exception when calling PartsApi->batch_update_part_metadata_parts: %s\n" % e)
+    print("Exception when calling PartsApi->batch_update_part_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -73,8 +73,8 @@ Name | Type | Description  | Notes
  **wvm_char** | **str**| One of w or v or m corresponding to whether a workspace or version or microversion was entered. | 
  **did** | **str**| Document ID | 
  **wvm** | **str**| Workspace (w), Version (v) or Microversion (m) ID | 
+ **body** | [**PartsBatchUpdatePartMetadataBody**](PartsBatchUpdatePartMetadataBody.md)| The JSON request body. | [optional] 
  **edit_description** | **str**| Description of the update (as appear in document history) | [optional] 
- **body** | [**Body41**](Body41.md)| The JSON request body. | [optional] 
 
 ### Return type
 
@@ -91,8 +91,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **export_parasolid_parts**
-> file export_parasolid_parts(wvm_char, did, wvm, eid, partid, version=version, link_document_id=link_document_id, configuration=configuration)
+# **export_parasolid**
+> file export_parasolid(wvm_char, did, wvm, eid, partid, version=version, link_document_id=link_document_id, configuration=configuration)
 
 Export Part to Parasolid
 
@@ -102,26 +102,26 @@ Export the part in text Parasolid format; returns a 307 redirect.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -133,10 +133,10 @@ configuration = 'configuration_example' # str | Configuration string (optional)
 
 try:
     # Export Part to Parasolid
-    api_response = api_instance.export_parasolid_parts(wvm_char, did, wvm, eid, partid, version=version, link_document_id=link_document_id, configuration=configuration)
+    api_response = api_instance.export_parasolid(wvm_char, did, wvm, eid, partid, version=version, link_document_id=link_document_id, configuration=configuration)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->export_parasolid_parts: %s\n" % e)
+    print("Exception when calling PartsApi->export_parasolid: %s\n" % e)
 ```
 
 ### Parameters
@@ -167,8 +167,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **export_stl_parts**
-> file export_stl_parts(wvm_char, did, wvm, eid, partid, grouping=grouping, scale=scale, units=units, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, max_facet_width=max_facet_width, min_facet_width=min_facet_width, mode=mode, link_document_id=link_document_id, configuration=configuration)
+# **export_stl**
+> file export_stl(wvm_char, did, wvm, eid, partid, grouping=grouping, scale=scale, units=units, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, max_facet_width=max_facet_width, min_facet_width=min_facet_width, mode=mode, link_document_id=link_document_id, configuration=configuration)
 
 Export Part to STL
 
@@ -178,26 +178,26 @@ Export the part in text or binary STL format; returns a 307 redirect.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -216,10 +216,10 @@ configuration = 'configuration_example' # str | Configuration string (optional)
 
 try:
     # Export Part to STL
-    api_response = api_instance.export_stl_parts(wvm_char, did, wvm, eid, partid, grouping=grouping, scale=scale, units=units, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, max_facet_width=max_facet_width, min_facet_width=min_facet_width, mode=mode, link_document_id=link_document_id, configuration=configuration)
+    api_response = api_instance.export_stl(wvm_char, did, wvm, eid, partid, grouping=grouping, scale=scale, units=units, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, max_facet_width=max_facet_width, min_facet_width=min_facet_width, mode=mode, link_document_id=link_document_id, configuration=configuration)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->export_stl_parts: %s\n" % e)
+    print("Exception when calling PartsApi->export_stl: %s\n" % e)
 ```
 
 ### Parameters
@@ -257,8 +257,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_bend_table_parts**
-> InlineResponse20086 get_bend_table_parts(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id)
+# **get_bend_table**
+> PartsGetBendTableResponse200 get_bend_table(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id)
 
 Get Sheet Metal Bend Table
 
@@ -268,26 +268,26 @@ Get the bend table a sheet metal part.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -297,10 +297,10 @@ link_document_id = 'link_document_id_example' # str | Id of document that links 
 
 try:
     # Get Sheet Metal Bend Table
-    api_response = api_instance.get_bend_table_parts(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id)
+    api_response = api_instance.get_bend_table(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->get_bend_table_parts: %s\n" % e)
+    print("Exception when calling PartsApi->get_bend_table: %s\n" % e)
 ```
 
 ### Parameters
@@ -316,7 +316,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20086**](InlineResponse20086.md)
+[**PartsGetBendTableResponse200**](PartsGetBendTableResponse200.md)
 
 ### Authorization
 
@@ -329,8 +329,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_body_details_parts**
-> InlineResponse20082 get_body_details_parts(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id, configuration=configuration)
+# **get_body_details**
+> PartsGetBodyDetailsResponse200 get_body_details(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id, configuration=configuration)
 
 Body Details
 
@@ -340,26 +340,26 @@ Get the body details of a part. All coordinates are in meters.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -370,10 +370,10 @@ configuration = 'configuration_example' # str | Configuration string (optional)
 
 try:
     # Body Details
-    api_response = api_instance.get_body_details_parts(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id, configuration=configuration)
+    api_response = api_instance.get_body_details(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id, configuration=configuration)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->get_body_details_parts: %s\n" % e)
+    print("Exception when calling PartsApi->get_body_details: %s\n" % e)
 ```
 
 ### Parameters
@@ -390,7 +390,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20082**](InlineResponse20082.md)
+[**PartsGetBodyDetailsResponse200**](PartsGetBodyDetailsResponse200.md)
 
 ### Authorization
 
@@ -403,8 +403,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_bounding_boxes_parts**
-> InlineResponse20018 get_bounding_boxes_parts(wvm_char, did, wvm, eid, partid, include_hidden=include_hidden, link_document_id=link_document_id, configuration=configuration)
+# **get_bounding_boxes**
+> PartsGetBoundingBoxesResponse200 get_bounding_boxes(wvm_char, did, wvm, eid, partid, include_hidden=include_hidden, link_document_id=link_document_id, configuration=configuration)
 
 Bounding Boxes
 
@@ -414,26 +414,26 @@ Get the bounding box of a part. All coordinates are in meters.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -445,10 +445,10 @@ configuration = 'configuration_example' # str | Configuration string (optional)
 
 try:
     # Bounding Boxes
-    api_response = api_instance.get_bounding_boxes_parts(wvm_char, did, wvm, eid, partid, include_hidden=include_hidden, link_document_id=link_document_id, configuration=configuration)
+    api_response = api_instance.get_bounding_boxes(wvm_char, did, wvm, eid, partid, include_hidden=include_hidden, link_document_id=link_document_id, configuration=configuration)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->get_bounding_boxes_parts: %s\n" % e)
+    print("Exception when calling PartsApi->get_bounding_boxes: %s\n" % e)
 ```
 
 ### Parameters
@@ -466,7 +466,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20018**](InlineResponse20018.md)
+[**PartsGetBoundingBoxesResponse200**](PartsGetBoundingBoxesResponse200.md)
 
 ### Authorization
 
@@ -479,8 +479,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_edges_parts**
-> InlineResponse20090 get_edges_parts(wvm_char, did, wvm, eid, partid, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, edge_id=edge_id, link_document_id=link_document_id, configuration=configuration)
+# **get_edges**
+> PartsGetEdgesResponse200 get_edges(wvm_char, did, wvm, eid, partid, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, edge_id=edge_id, link_document_id=link_document_id, configuration=configuration)
 
 Tessellated Edges
 
@@ -490,26 +490,26 @@ Get the tessellated edges of a part. The accuracy of the tessellation approximat
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -523,10 +523,10 @@ configuration = 'configuration_example' # str | Configuration string (optional)
 
 try:
     # Tessellated Edges
-    api_response = api_instance.get_edges_parts(wvm_char, did, wvm, eid, partid, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, edge_id=edge_id, link_document_id=link_document_id, configuration=configuration)
+    api_response = api_instance.get_edges(wvm_char, did, wvm, eid, partid, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, edge_id=edge_id, link_document_id=link_document_id, configuration=configuration)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->get_edges_parts: %s\n" % e)
+    print("Exception when calling PartsApi->get_edges: %s\n" % e)
 ```
 
 ### Parameters
@@ -546,7 +546,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20090**](InlineResponse20090.md)
+[**PartsGetEdgesResponse200**](PartsGetEdgesResponse200.md)
 
 ### Authorization
 
@@ -559,8 +559,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_faces_parts**
-> InlineResponse20077 get_faces_parts(wvm_char, did, wvm, eid, partid, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, max_facet_width=max_facet_width, output_vertex_normals=output_vertex_normals, output_facet_normals=output_facet_normals, output_texture_coordinates=output_texture_coordinates, output_index_table=output_index_table, face_id=face_id, output_error_faces=output_error_faces, link_document_id=link_document_id, configuration=configuration)
+# **get_faces**
+> PartsGetFacesResponse200 get_faces(wvm_char, did, wvm, eid, partid, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, max_facet_width=max_facet_width, output_vertex_normals=output_vertex_normals, output_facet_normals=output_facet_normals, output_texture_coordinates=output_texture_coordinates, output_index_table=output_index_table, face_id=face_id, output_error_faces=output_error_faces, link_document_id=link_document_id, configuration=configuration)
 
 Tessellated Faces
 
@@ -570,26 +570,26 @@ Get the tessellated faces of a part. The accuracy of the tessellation approximat
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -609,10 +609,10 @@ configuration = 'configuration_example' # str | Configuration string (optional)
 
 try:
     # Tessellated Faces
-    api_response = api_instance.get_faces_parts(wvm_char, did, wvm, eid, partid, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, max_facet_width=max_facet_width, output_vertex_normals=output_vertex_normals, output_facet_normals=output_facet_normals, output_texture_coordinates=output_texture_coordinates, output_index_table=output_index_table, face_id=face_id, output_error_faces=output_error_faces, link_document_id=link_document_id, configuration=configuration)
+    api_response = api_instance.get_faces(wvm_char, did, wvm, eid, partid, angle_tolerance=angle_tolerance, chord_tolerance=chord_tolerance, max_facet_width=max_facet_width, output_vertex_normals=output_vertex_normals, output_facet_normals=output_facet_normals, output_texture_coordinates=output_texture_coordinates, output_index_table=output_index_table, face_id=face_id, output_error_faces=output_error_faces, link_document_id=link_document_id, configuration=configuration)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->get_faces_parts: %s\n" % e)
+    print("Exception when calling PartsApi->get_faces: %s\n" % e)
 ```
 
 ### Parameters
@@ -638,7 +638,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20077**](InlineResponse20077.md)
+[**PartsGetFacesResponse200**](PartsGetFacesResponse200.md)
 
 ### Authorization
 
@@ -651,8 +651,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_mass_properties_parts**
-> InlineResponse20089 get_mass_properties_parts(wvm_char, did, wvm, eid, partid, infer_metadata_owner=infer_metadata_owner, link_document_id=link_document_id, configuration=configuration)
+# **get_mass_properties**
+> PartsGetMassPropertiesResponse200 get_mass_properties(wvm_char, did, wvm, eid, partid, infer_metadata_owner=infer_metadata_owner, link_document_id=link_document_id, configuration=configuration)
 
 Mass Properties
 
@@ -662,26 +662,26 @@ Get the mass properties of a part; parts must have density in order to have mass
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -693,10 +693,10 @@ configuration = 'configuration_example' # str | Configuration string (optional)
 
 try:
     # Mass Properties
-    api_response = api_instance.get_mass_properties_parts(wvm_char, did, wvm, eid, partid, infer_metadata_owner=infer_metadata_owner, link_document_id=link_document_id, configuration=configuration)
+    api_response = api_instance.get_mass_properties(wvm_char, did, wvm, eid, partid, infer_metadata_owner=infer_metadata_owner, link_document_id=link_document_id, configuration=configuration)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->get_mass_properties_parts: %s\n" % e)
+    print("Exception when calling PartsApi->get_mass_properties: %s\n" % e)
 ```
 
 ### Parameters
@@ -714,7 +714,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20089**](InlineResponse20089.md)
+[**PartsGetMassPropertiesResponse200**](PartsGetMassPropertiesResponse200.md)
 
 ### Authorization
 
@@ -727,8 +727,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_part_metadata_parts**
-> InlineResponse20083 get_part_metadata_parts(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id, configuration=configuration, infer_metadata_owner=infer_metadata_owner, include_property_defaults=include_property_defaults)
+# **get_part_metadata**
+> PartsGetPartMetadataResponse200 get_part_metadata(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id, configuration=configuration, infer_metadata_owner=infer_metadata_owner, include_property_defaults=include_property_defaults)
 
 Get Metadata
 
@@ -738,26 +738,26 @@ Get a part's metadata
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -770,10 +770,10 @@ include_property_defaults = true # bool | If true, include metadata schema prope
 
 try:
     # Get Metadata
-    api_response = api_instance.get_part_metadata_parts(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id, configuration=configuration, infer_metadata_owner=infer_metadata_owner, include_property_defaults=include_property_defaults)
+    api_response = api_instance.get_part_metadata(wvm_char, did, wvm, eid, partid, link_document_id=link_document_id, configuration=configuration, infer_metadata_owner=infer_metadata_owner, include_property_defaults=include_property_defaults)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->get_part_metadata_parts: %s\n" % e)
+    print("Exception when calling PartsApi->get_part_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -792,7 +792,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20083**](InlineResponse20083.md)
+[**PartsGetPartMetadataResponse200**](PartsGetPartMetadataResponse200.md)
 
 ### Authorization
 
@@ -805,8 +805,80 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_parts_in_partstudio_parts**
-> InlineResponse20085 get_parts_in_partstudio_parts(wvm_char, did, wvm, eid, with_thumbnails=with_thumbnails, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
+# **get_parts**
+> PartsGetPartsResponse200 get_parts(wvm_char, did, wvm, with_thumbnails=with_thumbnails, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
+
+Get Parts
+
+Get list of parts
+
+### Example
+```python
+from __future__ import print_function
+import time
+import onshape_client
+from onshape_client.rest import ApiException
+from pprint import pprint
+
+# Configure OAuth2 access token for authorization: OAuth2
+configuration = onshape_client.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure API key authorization: apiAccessKey
+configuration = onshape_client.Configuration()
+configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
+# Configure API key authorization: apiSecretKey
+configuration = onshape_client.Configuration()
+configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
+wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
+did = 'did_example' # str | Document ID
+wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
+with_thumbnails = true # bool | Whether or not to include thumbnails (not supported for           microversion) (optional)
+link_document_id = 'link_document_id_example' # str | Id of document that links to the document being accessed.     This may provide additional access rights to the document. Allowed only with version (v) path parameter. (optional)
+include_property_defaults = true # bool | If true, include metadata schema property       defaults in response (optional)
+
+try:
+    # Get Parts
+    api_response = api_instance.get_parts(wvm_char, did, wvm, with_thumbnails=with_thumbnails, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling PartsApi->get_parts: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **wvm_char** | **str**| One of w or v or m corresponding to whether a workspace or version or microversion was entered. | 
+ **did** | **str**| Document ID | 
+ **wvm** | **str**| Workspace (w), Version (v) or Microversion (m) ID | 
+ **with_thumbnails** | **bool**| Whether or not to include thumbnails (not supported for           microversion) | [optional] 
+ **link_document_id** | **str**| Id of document that links to the document being accessed.     This may provide additional access rights to the document. Allowed only with version (v) path parameter. | [optional] 
+ **include_property_defaults** | **bool**| If true, include metadata schema property       defaults in response | [optional] 
+
+### Return type
+
+[**PartsGetPartsResponse200**](PartsGetPartsResponse200.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [apiAccessKey](../README.md#apiAccessKey), [apiSecretKey](../README.md#apiSecretKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_parts_in_partstudio**
+> PartsGetPartsInPartstudioResponse200 get_parts_in_partstudio(wvm_char, did, wvm, eid, with_thumbnails=with_thumbnails, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
 
 Get Parts In Part Studio
 
@@ -816,26 +888,26 @@ Get list of parts in a part studio. An error is returned if the specified elemen
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -846,10 +918,10 @@ include_property_defaults = true # bool | If true, include metadata schema prope
 
 try:
     # Get Parts In Part Studio
-    api_response = api_instance.get_parts_in_partstudio_parts(wvm_char, did, wvm, eid, with_thumbnails=with_thumbnails, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
+    api_response = api_instance.get_parts_in_partstudio(wvm_char, did, wvm, eid, with_thumbnails=with_thumbnails, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->get_parts_in_partstudio_parts: %s\n" % e)
+    print("Exception when calling PartsApi->get_parts_in_partstudio: %s\n" % e)
 ```
 
 ### Parameters
@@ -866,7 +938,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20085**](InlineResponse20085.md)
+[**PartsGetPartsInPartstudioResponse200**](PartsGetPartsInPartstudioResponse200.md)
 
 ### Authorization
 
@@ -879,80 +951,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_parts_parts**
-> InlineResponse20085 get_parts_parts(wvm_char, did, wvm, with_thumbnails=with_thumbnails, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
-
-Get Parts
-
-Get list of parts
-
-### Example
-```python
-from __future__ import print_function
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
-# Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
-configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
-# Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
-configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
-
-# create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
-wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
-did = 'did_example' # str | Document ID
-wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
-with_thumbnails = true # bool | Whether or not to include thumbnails (not supported for           microversion) (optional)
-link_document_id = 'link_document_id_example' # str | Id of document that links to the document being accessed.     This may provide additional access rights to the document. Allowed only with version (v) path parameter. (optional)
-include_property_defaults = true # bool | If true, include metadata schema property       defaults in response (optional)
-
-try:
-    # Get Parts
-    api_response = api_instance.get_parts_parts(wvm_char, did, wvm, with_thumbnails=with_thumbnails, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling PartsApi->get_parts_parts: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **wvm_char** | **str**| One of w or v or m corresponding to whether a workspace or version or microversion was entered. | 
- **did** | **str**| Document ID | 
- **wvm** | **str**| Workspace (w), Version (v) or Microversion (m) ID | 
- **with_thumbnails** | **bool**| Whether or not to include thumbnails (not supported for           microversion) | [optional] 
- **link_document_id** | **str**| Id of document that links to the document being accessed.     This may provide additional access rights to the document. Allowed only with version (v) path parameter. | [optional] 
- **include_property_defaults** | **bool**| If true, include metadata schema property       defaults in response | [optional] 
-
-### Return type
-
-[**InlineResponse20085**](InlineResponse20085.md)
-
-### Authorization
-
-[OAuth2](../README.md#OAuth2), [apiAccessKey](../README.md#apiAccessKey), [apiSecretKey](../README.md#apiSecretKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_shaded_views_parts**
-> InlineResponse20074 get_shaded_views_parts(wvm_char, did, wvm, eid, partid, output_height=output_height, output_width=output_width, pixel_size=pixel_size, edges=edges, use_anti_aliasing=use_anti_aliasing, link_document_id=link_document_id, configuration=configuration, view_matrix=view_matrix)
+# **get_shaded_views**
+> PartsGetShadedViewsResponse200 get_shaded_views(wvm_char, did, wvm, eid, partid, output_height=output_height, output_width=output_width, pixel_size=pixel_size, edges=edges, use_anti_aliasing=use_anti_aliasing, link_document_id=link_document_id, configuration=configuration, view_matrix=view_matrix)
 
 Shaded views
 
@@ -962,26 +962,26 @@ Get a shaded image rendering of a part
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -998,10 +998,10 @@ view_matrix = 'view_matrix_example' # str | 12-number view matrix (comma-separat
 
 try:
     # Shaded views
-    api_response = api_instance.get_shaded_views_parts(wvm_char, did, wvm, eid, partid, output_height=output_height, output_width=output_width, pixel_size=pixel_size, edges=edges, use_anti_aliasing=use_anti_aliasing, link_document_id=link_document_id, configuration=configuration, view_matrix=view_matrix)
+    api_response = api_instance.get_shaded_views(wvm_char, did, wvm, eid, partid, output_height=output_height, output_width=output_width, pixel_size=pixel_size, edges=edges, use_anti_aliasing=use_anti_aliasing, link_document_id=link_document_id, configuration=configuration, view_matrix=view_matrix)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->get_shaded_views_parts: %s\n" % e)
+    print("Exception when calling PartsApi->get_shaded_views: %s\n" % e)
 ```
 
 ### Parameters
@@ -1024,7 +1024,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20074**](InlineResponse20074.md)
+[**PartsGetShadedViewsResponse200**](PartsGetShadedViewsResponse200.md)
 
 ### Authorization
 
@@ -1037,8 +1037,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_standard_content_part_metadata_parts**
-> InlineResponse20087 get_standard_content_part_metadata_parts(cu_char, partid, did, vid, eid, oid, link_document_id=link_document_id, configuration=configuration, include_property_defaults=include_property_defaults)
+# **get_standard_content_part_metadata**
+> PartsGetStandardContentPartMetadataResponse200 get_standard_content_part_metadata(cu_char, partid, did, vid, eid, oid, link_document_id=link_document_id, configuration=configuration, include_property_defaults=include_property_defaults)
 
 Get Standard Content Metadata
 
@@ -1048,26 +1048,26 @@ Get metadata for a standard content part in the context of a user or company
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 cu_char = 'cu_char_example' # str | One of c or u corresponding to whether a company or user was entered.
 partid = 'partid_example' # str | Part ID
 did = 'did_example' # str | Document ID
@@ -1080,10 +1080,10 @@ include_property_defaults = true # bool | If true, include metadata schema prope
 
 try:
     # Get Standard Content Metadata
-    api_response = api_instance.get_standard_content_part_metadata_parts(cu_char, partid, did, vid, eid, oid, link_document_id=link_document_id, configuration=configuration, include_property_defaults=include_property_defaults)
+    api_response = api_instance.get_standard_content_part_metadata(cu_char, partid, did, vid, eid, oid, link_document_id=link_document_id, configuration=configuration, include_property_defaults=include_property_defaults)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->get_standard_content_part_metadata_parts: %s\n" % e)
+    print("Exception when calling PartsApi->get_standard_content_part_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -1102,7 +1102,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20087**](InlineResponse20087.md)
+[**PartsGetStandardContentPartMetadataResponse200**](PartsGetStandardContentPartMetadataResponse200.md)
 
 ### Authorization
 
@@ -1115,8 +1115,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_part_metadata_parts**
-> InlineResponse20084 update_part_metadata_parts(wvm_char, did, wvm, eid, partid, body=body)
+# **update_part_metadata**
+> PartsUpdatePartMetadataResponse200 update_part_metadata(wvm_char, did, wvm, eid, partid, body=body)
 
 Update Metadata
 
@@ -1126,39 +1126,39 @@ Update a part's metadata
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
 eid = 'eid_example' # str | Element ID
 partid = 'partid_example' # str | Part ID
-body = swagger_client.Body40() # Body40 | The JSON request body. (optional)
+body = onshape_client.PartsUpdatePartMetadataBody() # PartsUpdatePartMetadataBody | The JSON request body. (optional)
 
 try:
     # Update Metadata
-    api_response = api_instance.update_part_metadata_parts(wvm_char, did, wvm, eid, partid, body=body)
+    api_response = api_instance.update_part_metadata(wvm_char, did, wvm, eid, partid, body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->update_part_metadata_parts: %s\n" % e)
+    print("Exception when calling PartsApi->update_part_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -1170,11 +1170,11 @@ Name | Type | Description  | Notes
  **wvm** | **str**| Workspace (w), Version (v) or Microversion (m) ID | 
  **eid** | **str**| Element ID | 
  **partid** | **str**| Part ID | 
- **body** | [**Body40**](Body40.md)| The JSON request body. | [optional] 
+ **body** | [**PartsUpdatePartMetadataBody**](PartsUpdatePartMetadataBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
-[**InlineResponse20084**](InlineResponse20084.md)
+[**PartsUpdatePartMetadataResponse200**](PartsUpdatePartMetadataResponse200.md)
 
 ### Authorization
 
@@ -1187,8 +1187,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_standard_content_part_metadata_parts**
-> InlineResponse20088 update_standard_content_part_metadata_parts(cu_char, partid, did, vid, eid, oid, body=body, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
+# **update_standard_content_part_metadata**
+> PartsUpdateStandardContentPartMetadataResponse200 update_standard_content_part_metadata(cu_char, partid, did, vid, eid, oid, body=body, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
 
 Update Standard Content Metadata
 
@@ -1198,42 +1198,42 @@ Update metadata for a standard content part in the context of a company or user
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.PartsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.PartsApi(onshape_client.ApiClient(configuration))
 cu_char = 'cu_char_example' # str | One of c or u corresponding to whether a company or user was entered.
 partid = 'partid_example' # str | Part ID
 did = 'did_example' # str | Document ID
 vid = 'vid_example' # str | Version ID
 eid = 'eid_example' # str | Element ID
 oid = 'oid_example' # str | Company (c) or User (u) ID of metadata owner
-body = swagger_client.Body42() # Body42 | The JSON request body. (optional)
+body = onshape_client.PartsUpdateStandardContentPartMetadataBody() # PartsUpdateStandardContentPartMetadataBody | The JSON request body. (optional)
 link_document_id = 'link_document_id_example' # str | Id of document that links to the document being accessed.     This may provide additional access rights to the document. Allowed only with version (v) path parameter. (optional)
 include_property_defaults = true # bool | If true, include metadata schema property       defaults in response (optional)
 
 try:
     # Update Standard Content Metadata
-    api_response = api_instance.update_standard_content_part_metadata_parts(cu_char, partid, did, vid, eid, oid, body=body, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
+    api_response = api_instance.update_standard_content_part_metadata(cu_char, partid, did, vid, eid, oid, body=body, link_document_id=link_document_id, include_property_defaults=include_property_defaults)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling PartsApi->update_standard_content_part_metadata_parts: %s\n" % e)
+    print("Exception when calling PartsApi->update_standard_content_part_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -1246,13 +1246,13 @@ Name | Type | Description  | Notes
  **vid** | **str**| Version ID | 
  **eid** | **str**| Element ID | 
  **oid** | **str**| Company (c) or User (u) ID of metadata owner | 
- **body** | [**Body42**](Body42.md)| The JSON request body. | [optional] 
+ **body** | [**PartsUpdateStandardContentPartMetadataBody**](PartsUpdateStandardContentPartMetadataBody.md)| The JSON request body. | [optional] 
  **link_document_id** | **str**| Id of document that links to the document being accessed.     This may provide additional access rights to the document. Allowed only with version (v) path parameter. | [optional] 
  **include_property_defaults** | **bool**| If true, include metadata schema property       defaults in response | [optional] 
 
 ### Return type
 
-[**InlineResponse20088**](InlineResponse20088.md)
+[**PartsUpdateStandardContentPartMetadataResponse200**](PartsUpdateStandardContentPartMetadataResponse200.md)
 
 ### Authorization
 

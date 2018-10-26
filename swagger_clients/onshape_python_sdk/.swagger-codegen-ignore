@@ -22,5 +22,7 @@
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
 
-swagger_client/rest.py
+onshape_client/rest.py
+onshape_client/configuration.py
 test/*
+.travis.yml

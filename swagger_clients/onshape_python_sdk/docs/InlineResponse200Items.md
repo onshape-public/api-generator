@@ -3,27 +3,22 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**public** | **bool** | Whether document is public | 
-**owner** | [**InlineResponse200Owner**](InlineResponse200Owner.md) |  | 
-**permission** | **str** | Onshape internal use | 
-**trashed_at** | **datetime** | When document has been trashed | 
-**trash** | **bool** | Whether document has been trashed | 
-**starred** | **str** | Whether document has been starred | 
-**active** | **bool** | Whether a shared document is active | 
-**created_at** | **datetime** | Creation date | 
-**thumbnail** | [**InlineResponse200Thumbnail**](InlineResponse200Thumbnail.md) |  | 
-**created_by** | [**InlineResponse200CreatedBy**](InlineResponse200CreatedBy.md) |  | 
-**modified_at** | **datetime** | Date of last modification | 
-**modified_by** | [**InlineResponse200ModifiedBy**](InlineResponse200ModifiedBy.md) |  | 
-**default_workspace** | [**InlineResponse200DefaultWorkspace**](InlineResponse200DefaultWorkspace.md) |  | 
-**tags** | **list[str]** | Reserved for future use | 
-**size_bytes** | **float** | Size of document in bytes | 
-**can_unshare** | **bool** | Whether document can be unshared | 
-**name** | **str** | Name of document | 
-**id** | **str** | Document ID | 
-**href** | **str** | Document URL | 
-**total_workspaces_updating** | **float** | Number of workspaces that are updating | 
-**total_workspaces_scheduled_for_update** | **float** | Number of workspaces that are scheduled             for updating | 
+**id** | **str** | Purchase Id | [optional] 
+**user_ids** | **list[str]** | User Ids | [optional] 
+**consumed_ids** | **list[str]** | Consumed Ids | [optional] 
+**seats** | **float** | Number of seats | [optional] 
+**account_id** | **str** | Account id | [optional] 
+**plan_id** | **str** | Plan id | [optional] 
+**plan_type** | **float** | Plan type (0-RECURRING, 1-CONSUMABLE, 2-ONE_TIME) | [optional] 
+**plan_name** | **str** | Plan name | [optional] 
+**group** | **str** | Group | [optional] 
+**application_id** | **str** | Application Id | [optional] 
+**state** | **float** | Purchase state (1-DELETED, 2-CANCELED, 3-UNPAID, 4-PAST_DUE,             5-TRIALING, 6-ACTIVE, 7-CONSUMED) | [optional] 
+**canceled_at** | **str** | Purchase canceled at | [optional] 
+**subscription_end_at** | **str** | Subscription end at | [optional] 
+**amount_cents** | **float** | Amount cents | [optional] 
+**card** | [**InlineResponse200Card**](InlineResponse200Card.md) |  | [optional] 
+**subscribers** | [**list[InlineResponse200Subscribers]**](InlineResponse200Subscribers.md) | List of subscribers included in this individual purchase | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

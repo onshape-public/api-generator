@@ -54,11 +54,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/Document'
-definitions:
-  Document:
-    type: object
-  Stub:
-    type: string
 securityDefinitions:
   apiAccessKey:
     type: apiKey

@@ -9,3 +9,4 @@ node_modules
 python/generated
 api_data/
 .DS_Store
+*.onshapepy*

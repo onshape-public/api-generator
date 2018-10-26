@@ -1,18 +1,18 @@
-# swagger_client.ElementsApi
+# onshape_client.ElementsApi
 
 All URIs are relative to *https://cad.onshape.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**decode_configuration_string_elements**](ElementsApi.md#decode_configuration_string_elements) | **GET** /elements/d/{did}/{wvm_char}/{wvm}/e/{eid}/configurationencodings/{cid} | Decode Configuration String
-[**delete_element_elements**](ElementsApi.md#delete_element_elements) | **DELETE** /elements/d/{did}/w/{wid}/e/{eid} | Delete Element
-[**encode_configuration_elements**](ElementsApi.md#encode_configuration_elements) | **POST** /elements/d/{did}/e/{eid}/configurationencodings | Encode Configuration
-[**get_element_metadata_elements**](ElementsApi.md#get_element_metadata_elements) | **GET** /elements/d/{did}/{wv_char}/{wv}/e/{eid}/metadata | Get Metadata
-[**update_element_metadata_elements**](ElementsApi.md#update_element_metadata_elements) | **POST** /elements/d/{did}/{wv_char}/{wv}/e/{eid}/metadata | Update Element Metadata
+[**decode_configuration_string**](ElementsApi.md#decode_configuration_string) | **GET** /elements/d/{did}/{wvm_char}/{wvm}/e/{eid}/configurationencodings/{cid} | Decode Configuration String
+[**delete_element**](ElementsApi.md#delete_element) | **DELETE** /elements/d/{did}/w/{wid}/e/{eid} | Delete Element
+[**encode_configuration**](ElementsApi.md#encode_configuration) | **POST** /elements/d/{did}/e/{eid}/configurationencodings | Encode Configuration
+[**get_element_metadata**](ElementsApi.md#get_element_metadata) | **GET** /elements/d/{did}/{wv_char}/{wv}/e/{eid}/metadata | Get Metadata
+[**update_element_metadata**](ElementsApi.md#update_element_metadata) | **POST** /elements/d/{did}/{wv_char}/{wv}/e/{eid}/metadata | Update Element Metadata
 
 
-# **decode_configuration_string_elements**
-> InlineResponse20052 decode_configuration_string_elements(wvm_char, cid, did, wvm, eid, include_display=include_display, configuration_is_id=configuration_is_id, link_document_id=link_document_id)
+# **decode_configuration_string**
+> ElementsDecodeConfigurationStringResponse200 decode_configuration_string(wvm_char, cid, did, wvm, eid, include_display=include_display, configuration_is_id=configuration_is_id, link_document_id=link_document_id)
 
 Decode Configuration String
 
@@ -22,26 +22,26 @@ Converts a configuration string or configuration id into parameter map form.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.ElementsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.ElementsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 cid = 'cid_example' # str | configuration string or configuration id to decode (must be url-encoded).
 did = 'did_example' # str | Document ID
@@ -53,10 +53,10 @@ link_document_id = 'link_document_id_example' # str | Id of document that links 
 
 try:
     # Decode Configuration String
-    api_response = api_instance.decode_configuration_string_elements(wvm_char, cid, did, wvm, eid, include_display=include_display, configuration_is_id=configuration_is_id, link_document_id=link_document_id)
+    api_response = api_instance.decode_configuration_string(wvm_char, cid, did, wvm, eid, include_display=include_display, configuration_is_id=configuration_is_id, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ElementsApi->decode_configuration_string_elements: %s\n" % e)
+    print("Exception when calling ElementsApi->decode_configuration_string: %s\n" % e)
 ```
 
 ### Parameters
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20052**](InlineResponse20052.md)
+[**ElementsDecodeConfigurationStringResponse200**](ElementsDecodeConfigurationStringResponse200.md)
 
 ### Authorization
 
@@ -87,8 +87,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_element_elements**
-> delete_element_elements(did, wid, eid)
+# **delete_element**
+> delete_element(did, wid, eid)
 
 Delete Element
 
@@ -98,35 +98,35 @@ Delete an element from a document. It is an error to try to delete the last elem
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.ElementsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.ElementsApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
 eid = 'eid_example' # str | Element ID
 
 try:
     # Delete Element
-    api_instance.delete_element_elements(did, wid, eid)
+    api_instance.delete_element(did, wid, eid)
 except ApiException as e:
-    print("Exception when calling ElementsApi->delete_element_elements: %s\n" % e)
+    print("Exception when calling ElementsApi->delete_element: %s\n" % e)
 ```
 
 ### Parameters
@@ -152,8 +152,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **encode_configuration_elements**
-> InlineResponse20053 encode_configuration_elements(did, eid, version_id=version_id, link_document_id=link_document_id, body=body)
+# **encode_configuration**
+> ElementsEncodeConfigurationResponse200 encode_configuration(did, eid, body=body, version_id=version_id, link_document_id=link_document_id)
 
 Encode Configuration
 
@@ -163,38 +163,38 @@ Encodes a configuration into a string for use in API calls to the target element
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.ElementsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.ElementsApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 eid = 'eid_example' # str | Element ID
+body = onshape_client.ElementsEncodeConfigurationBody() # ElementsEncodeConfigurationBody | The JSON request body. (optional)
 version_id = 'version_id_example' # str | The version of the referenced document. Meaningful only if specified           together with the linkDocumentId query parameter. (optional)
 link_document_id = 'link_document_id_example' # str | Id of document that links to the document being accessed.     This may provide additional access rights to the document. Allowed only with version (v) path parameter. (optional)
-body = swagger_client.Body24() # Body24 | The JSON request body. (optional)
 
 try:
     # Encode Configuration
-    api_response = api_instance.encode_configuration_elements(did, eid, version_id=version_id, link_document_id=link_document_id, body=body)
+    api_response = api_instance.encode_configuration(did, eid, body=body, version_id=version_id, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ElementsApi->encode_configuration_elements: %s\n" % e)
+    print("Exception when calling ElementsApi->encode_configuration: %s\n" % e)
 ```
 
 ### Parameters
@@ -203,13 +203,13 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **did** | **str**| Document ID | 
  **eid** | **str**| Element ID | 
+ **body** | [**ElementsEncodeConfigurationBody**](ElementsEncodeConfigurationBody.md)| The JSON request body. | [optional] 
  **version_id** | **str**| The version of the referenced document. Meaningful only if specified           together with the linkDocumentId query parameter. | [optional] 
  **link_document_id** | **str**| Id of document that links to the document being accessed.     This may provide additional access rights to the document. Allowed only with version (v) path parameter. | [optional] 
- **body** | [**Body24**](Body24.md)| The JSON request body. | [optional] 
 
 ### Return type
 
-[**InlineResponse20053**](InlineResponse20053.md)
+[**ElementsEncodeConfigurationResponse200**](ElementsEncodeConfigurationResponse200.md)
 
 ### Authorization
 
@@ -222,8 +222,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_element_metadata_elements**
-> InlineResponse20054 get_element_metadata_elements(wv_char, did, wv, eid, link_document_id=link_document_id)
+# **get_element_metadata**
+> ElementsGetElementMetadataResponse200 get_element_metadata(wv_char, did, wv, eid, link_document_id=link_document_id)
 
 Get Metadata
 
@@ -233,26 +233,26 @@ Get an element's metadata
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.ElementsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.ElementsApi(onshape_client.ApiClient(configuration))
 wv_char = 'wv_char_example' # str | One of w or v corresponding to whether a workspace or version was entered.
 did = 'did_example' # str | Document ID
 wv = 'wv_example' # str | Workspace (w) or Version (v) ID
@@ -261,10 +261,10 @@ link_document_id = 'link_document_id_example' # str | Id of document that links 
 
 try:
     # Get Metadata
-    api_response = api_instance.get_element_metadata_elements(wv_char, did, wv, eid, link_document_id=link_document_id)
+    api_response = api_instance.get_element_metadata(wv_char, did, wv, eid, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ElementsApi->get_element_metadata_elements: %s\n" % e)
+    print("Exception when calling ElementsApi->get_element_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -279,7 +279,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20054**](InlineResponse20054.md)
+[**ElementsGetElementMetadataResponse200**](ElementsGetElementMetadataResponse200.md)
 
 ### Authorization
 
@@ -292,8 +292,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_element_metadata_elements**
-> InlineResponse20055 update_element_metadata_elements(wv_char, did, wv, eid, body=body)
+# **update_element_metadata**
+> ElementsUpdateElementMetadataResponse200 update_element_metadata(wv_char, did, wv, eid, body=body)
 
 Update Element Metadata
 
@@ -303,38 +303,38 @@ Update element metadata
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.ElementsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.ElementsApi(onshape_client.ApiClient(configuration))
 wv_char = 'wv_char_example' # str | One of w or v corresponding to whether a workspace or version was entered.
 did = 'did_example' # str | Document ID
 wv = 'wv_example' # str | Workspace (w) or Version (v) ID
 eid = 'eid_example' # str | Element ID
-body = swagger_client.Body25() # Body25 | The JSON request body. (optional)
+body = onshape_client.ElementsUpdateElementMetadataBody() # ElementsUpdateElementMetadataBody | The JSON request body. (optional)
 
 try:
     # Update Element Metadata
-    api_response = api_instance.update_element_metadata_elements(wv_char, did, wv, eid, body=body)
+    api_response = api_instance.update_element_metadata(wv_char, did, wv, eid, body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ElementsApi->update_element_metadata_elements: %s\n" % e)
+    print("Exception when calling ElementsApi->update_element_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -345,11 +345,11 @@ Name | Type | Description  | Notes
  **did** | **str**| Document ID | 
  **wv** | **str**| Workspace (w) or Version (v) ID | 
  **eid** | **str**| Element ID | 
- **body** | [**Body25**](Body25.md)| The JSON request body. | [optional] 
+ **body** | [**ElementsUpdateElementMetadataBody**](ElementsUpdateElementMetadataBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
-[**InlineResponse20055**](InlineResponse20055.md)
+[**ElementsUpdateElementMetadataResponse200**](ElementsUpdateElementMetadataResponse200.md)
 
 ### Authorization
 

@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**configuration** | **str** | Configuration in which to apply updates | 
+**configuration** | **str** | Configuration in which to apply updates | [optional] 
 **description** | **str** | Part description | [optional] 
 **part_number** | **str** | Part number | [optional] 
 **revision** | **str** | Part revision | [optional] 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **title2** | **str** | Part title 2 | [optional] 
 **title3** | **str** | Part title 3 | [optional] 
 **material** | [**PartsddidwvmCharwvmeeidpartidpartidmetadataMaterial**](PartsddidwvmCharwvmeeidpartidpartidmetadataMaterial.md) |  | [optional] 
-**custom_properties** | [**list[PartsddidwvmCharwvmeeidpartidpartidmetadataCustomProperties]**](PartsddidwvmCharwvmeeidpartidpartidmetadataCustomProperties.md) | Custom properties | 
+**custom_properties** | [**list[PartsddidwvmCharwvmeeidpartidpartidmetadataCustomProperties]**](PartsddidwvmCharwvmeeidpartidpartidmetadataCustomProperties.md) | Custom properties | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

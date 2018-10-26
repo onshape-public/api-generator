@@ -1,18 +1,18 @@
-# swagger_client.BlobElementsApi
+# onshape_client.BlobElementsApi
 
 All URIs are relative to *https://cad.onshape.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_translation_blob_elements**](BlobElementsApi.md#create_translation_blob_elements) | **POST** /blobelements/d/{did}/{wv_char}/{wv}/e/{eid}/translations | Create Translation
-[**download_file_from_element_blob_elements**](BlobElementsApi.md#download_file_from_element_blob_elements) | **GET** /blobelements/d/{did}/{wvm_char}/{wvm}/e/{eid} | Download File From Blob Element
-[**get_translation_formats_blob_elements**](BlobElementsApi.md#get_translation_formats_blob_elements) | **GET** /blobelements/d/{did}/w/{wid}/e/{eid}/translationformats | Get Translation Formats
-[**upload_file_create_element_blob_elements**](BlobElementsApi.md#upload_file_create_element_blob_elements) | **POST** /blobelements/d/{did}/w/{wid} | Upload File to New Blob Element
-[**upload_file_update_element_blob_elements**](BlobElementsApi.md#upload_file_update_element_blob_elements) | **POST** /blobelements/d/{did}/w/{wid}/e/{eid} | Update Blob Element
+[**create_translation**](BlobElementsApi.md#create_translation) | **POST** /blobelements/d/{did}/{wv_char}/{wv}/e/{eid}/translations | Create Translation
+[**download_file_from_element**](BlobElementsApi.md#download_file_from_element) | **GET** /blobelements/d/{did}/{wvm_char}/{wvm}/e/{eid} | Download File From Blob Element
+[**get_translation_formats**](BlobElementsApi.md#get_translation_formats) | **GET** /blobelements/d/{did}/w/{wid}/e/{eid}/translationformats | Get Translation Formats
+[**upload_file_create_element**](BlobElementsApi.md#upload_file_create_element) | **POST** /blobelements/d/{did}/w/{wid} | Upload File to New Blob Element
+[**upload_file_update_element**](BlobElementsApi.md#upload_file_update_element) | **POST** /blobelements/d/{did}/w/{wid}/e/{eid} | Update Blob Element
 
 
-# **create_translation_blob_elements**
-> InlineResponse20020 create_translation_blob_elements(wv_char, did, wv, eid, body=body)
+# **create_translation**
+> BlobElementsCreateTranslationResponse200 create_translation(wv_char, did, wv, eid, body=body)
 
 Create Translation
 
@@ -22,38 +22,38 @@ Create an element translation.  The translation may be incomplete at the time th
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.BlobElementsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.BlobElementsApi(onshape_client.ApiClient(configuration))
 wv_char = 'wv_char_example' # str | One of w or v corresponding to whether a workspace or version was entered.
 did = 'did_example' # str | Document ID
 wv = 'wv_example' # str | Workspace (w) or Version (v) ID
 eid = 'eid_example' # str | Element ID
-body = swagger_client.Body13() # Body13 | The JSON request body. (optional)
+body = onshape_client.BlobElementsCreateTranslationBody() # BlobElementsCreateTranslationBody | The JSON request body. (optional)
 
 try:
     # Create Translation
-    api_response = api_instance.create_translation_blob_elements(wv_char, did, wv, eid, body=body)
+    api_response = api_instance.create_translation(wv_char, did, wv, eid, body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling BlobElementsApi->create_translation_blob_elements: %s\n" % e)
+    print("Exception when calling BlobElementsApi->create_translation: %s\n" % e)
 ```
 
 ### Parameters
@@ -64,11 +64,11 @@ Name | Type | Description  | Notes
  **did** | **str**| Document ID | 
  **wv** | **str**| Workspace (w) or Version (v) ID | 
  **eid** | **str**| Element ID | 
- **body** | [**Body13**](Body13.md)| The JSON request body. | [optional] 
+ **body** | [**BlobElementsCreateTranslationBody**](BlobElementsCreateTranslationBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
-[**InlineResponse20020**](InlineResponse20020.md)
+[**BlobElementsCreateTranslationResponse200**](BlobElementsCreateTranslationResponse200.md)
 
 ### Authorization
 
@@ -81,8 +81,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **download_file_from_element_blob_elements**
-> file download_file_from_element_blob_elements(wvm_char, did, wvm, eid, content_disposition=content_disposition, link_document_id=link_document_id)
+# **download_file_from_element**
+> file download_file_from_element(wvm_char, did, wvm, eid, content_disposition=content_disposition, link_document_id=link_document_id)
 
 Download File From Blob Element
 
@@ -92,26 +92,26 @@ Download a file from a blob element
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.BlobElementsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.BlobElementsApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -121,10 +121,10 @@ link_document_id = 'link_document_id_example' # str | Id of document that links 
 
 try:
     # Download File From Blob Element
-    api_response = api_instance.download_file_from_element_blob_elements(wvm_char, did, wvm, eid, content_disposition=content_disposition, link_document_id=link_document_id)
+    api_response = api_instance.download_file_from_element(wvm_char, did, wvm, eid, content_disposition=content_disposition, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling BlobElementsApi->download_file_from_element_blob_elements: %s\n" % e)
+    print("Exception when calling BlobElementsApi->download_file_from_element: %s\n" % e)
 ```
 
 ### Parameters
@@ -153,8 +153,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_translation_formats_blob_elements**
-> InlineResponse20027 get_translation_formats_blob_elements(did, wid, eid)
+# **get_translation_formats**
+> BlobElementsGetTranslationFormatsResponse200 get_translation_formats(did, wid, eid)
 
 Get Translation Formats
 
@@ -164,36 +164,36 @@ Returns a list of the available formats to which this Blob element can be transl
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.BlobElementsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.BlobElementsApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
 eid = 'eid_example' # str | Element ID
 
 try:
     # Get Translation Formats
-    api_response = api_instance.get_translation_formats_blob_elements(did, wid, eid)
+    api_response = api_instance.get_translation_formats(did, wid, eid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling BlobElementsApi->get_translation_formats_blob_elements: %s\n" % e)
+    print("Exception when calling BlobElementsApi->get_translation_formats: %s\n" % e)
 ```
 
 ### Parameters
@@ -206,7 +206,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20027**](InlineResponse20027.md)
+[**BlobElementsGetTranslationFormatsResponse200**](BlobElementsGetTranslationFormatsResponse200.md)
 
 ### Authorization
 
@@ -219,8 +219,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **upload_file_create_element_blob_elements**
-> InlineResponse20032 upload_file_create_element_blob_elements(file, translate, flatten_assemblies, y_axis_is_up, did, wid, create_drawing_if_possible=create_drawing_if_possible, encoded_filename=encoded_filename, file_content_length=file_content_length, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts, location_group_id=location_group_id, location_element_id=location_element_id, location_position=location_position)
+# **upload_file_create_element**
+> BlobElementsUploadFileCreateElementResponse200 upload_file_create_element(file, translate, flatten_assemblies, y_axis_is_up, did, wid, create_drawing_if_possible=create_drawing_if_possible, encoded_filename=encoded_filename, file_content_length=file_content_length, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts, location_group_id=location_group_id, location_element_id=location_element_id, location_position=location_position)
 
 Upload File to New Blob Element
 
@@ -230,26 +230,26 @@ Create a blob element from an uploaded file. The request body must have a Conten
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.BlobElementsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.BlobElementsApi(onshape_client.ApiClient(configuration))
 file = '/path/to/file.txt' # file | File data to upload. This field should normally have a Content-Disposition header    field with a \"filename\" attribute, naming the uploaded file.
 translate = true # bool | Whether the uploaded file should be translated to Onshape format,    if possible
 flatten_assemblies = true # bool | If true, remove assembly structure and create only a        Part Studio
@@ -267,10 +267,10 @@ location_position = 8.14 # float | An indicator for the relative placement of th
 
 try:
     # Upload File to New Blob Element
-    api_response = api_instance.upload_file_create_element_blob_elements(file, translate, flatten_assemblies, y_axis_is_up, did, wid, create_drawing_if_possible=create_drawing_if_possible, encoded_filename=encoded_filename, file_content_length=file_content_length, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts, location_group_id=location_group_id, location_element_id=location_element_id, location_position=location_position)
+    api_response = api_instance.upload_file_create_element(file, translate, flatten_assemblies, y_axis_is_up, did, wid, create_drawing_if_possible=create_drawing_if_possible, encoded_filename=encoded_filename, file_content_length=file_content_length, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts, location_group_id=location_group_id, location_element_id=location_element_id, location_position=location_position)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling BlobElementsApi->upload_file_create_element_blob_elements: %s\n" % e)
+    print("Exception when calling BlobElementsApi->upload_file_create_element: %s\n" % e)
 ```
 
 ### Parameters
@@ -294,7 +294,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20032**](InlineResponse20032.md)
+[**BlobElementsUploadFileCreateElementResponse200**](BlobElementsUploadFileCreateElementResponse200.md)
 
 ### Authorization
 
@@ -307,8 +307,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **upload_file_update_element_blob_elements**
-> InlineResponse20031 upload_file_update_element_blob_elements(did, wid, eid, file, translate, flatten_assemblies, y_axis_is_up, encoded_filename=encoded_filename, file_content_length=file_content_length, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts)
+# **upload_file_update_element**
+> BlobElementsUploadFileUpdateElementResponse200 upload_file_update_element(file, translate, flatten_assemblies, y_axis_is_up, did, wid, eid, encoded_filename=encoded_filename, file_content_length=file_content_length, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts)
 
 Update Blob Element
 
@@ -318,33 +318,33 @@ Update a blob element by uploading a file. The request body must have a Content-
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.BlobElementsApi(swagger_client.ApiClient(configuration))
-did = 'did_example' # str | Document ID
-wid = 'wid_example' # str | Workspace ID
-eid = 'eid_example' # str | Element ID
+api_instance = onshape_client.BlobElementsApi(onshape_client.ApiClient(configuration))
 file = '/path/to/file.txt' # file | File data to upload. This field should normally have a Content-Disposition header    field with a \"filename\" attribute, naming the uploaded file.
 translate = true # bool | Whether the uploaded file should be translated to Onshape format,    if possible
 flatten_assemblies = true # bool | If true, remove assembly structure and create only a        Part Studio
 y_axis_is_up = true # bool | If true, treat the model's Y axis as the vertical axis.  Otherwise,        Z is treated as the vertical axis.
+did = 'did_example' # str | Document ID
+wid = 'wid_example' # str | Workspace ID
+eid = 'eid_example' # str | Element ID
 encoded_filename = 'encoded_filename_example' # str | Filename override interpreted as a URL-encoded string. If specified,    this overrides the filename from a Content-Disposition in the file field. (optional)
 file_content_length = 8.14 # float | The length of the file being uploaded, in bytes. If not present,    Onshape may restrict the upload size under some operating conditions, as the file contents may need to be    buffered in memory. If specified, it should be the actual length of the data being uploaded. (optional)
 import_in_background = true # bool | If storeInDocument is true and formatName is ONSHAPE and        the source is a Parasolid file, this specifies the preference as to whether the import should be completed        prior to the completion of the request (importInBackground=false) or whether it should be performed        asynchronously (importInBackground=true). Historically, this parameter was implicitly set to false, but large        imports can take long enough that the request could result in a timeout. Applications are encouraged to set        this parameter to true for reliable operation. (optional)
@@ -352,23 +352,23 @@ allow_faulty_parts = true # bool | If not specified or if specified as false, bo
 
 try:
     # Update Blob Element
-    api_response = api_instance.upload_file_update_element_blob_elements(did, wid, eid, file, translate, flatten_assemblies, y_axis_is_up, encoded_filename=encoded_filename, file_content_length=file_content_length, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts)
+    api_response = api_instance.upload_file_update_element(file, translate, flatten_assemblies, y_axis_is_up, did, wid, eid, encoded_filename=encoded_filename, file_content_length=file_content_length, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling BlobElementsApi->upload_file_update_element_blob_elements: %s\n" % e)
+    print("Exception when calling BlobElementsApi->upload_file_update_element: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **did** | **str**| Document ID | 
- **wid** | **str**| Workspace ID | 
- **eid** | **str**| Element ID | 
  **file** | **file**| File data to upload. This field should normally have a Content-Disposition header    field with a \&quot;filename\&quot; attribute, naming the uploaded file. | 
  **translate** | **bool**| Whether the uploaded file should be translated to Onshape format,    if possible | 
  **flatten_assemblies** | **bool**| If true, remove assembly structure and create only a        Part Studio | 
  **y_axis_is_up** | **bool**| If true, treat the model&#39;s Y axis as the vertical axis.  Otherwise,        Z is treated as the vertical axis. | 
+ **did** | **str**| Document ID | 
+ **wid** | **str**| Workspace ID | 
+ **eid** | **str**| Element ID | 
  **encoded_filename** | **str**| Filename override interpreted as a URL-encoded string. If specified,    this overrides the filename from a Content-Disposition in the file field. | [optional] 
  **file_content_length** | **float**| The length of the file being uploaded, in bytes. If not present,    Onshape may restrict the upload size under some operating conditions, as the file contents may need to be    buffered in memory. If specified, it should be the actual length of the data being uploaded. | [optional] 
  **import_in_background** | **bool**| If storeInDocument is true and formatName is ONSHAPE and        the source is a Parasolid file, this specifies the preference as to whether the import should be completed        prior to the completion of the request (importInBackground&#x3D;false) or whether it should be performed        asynchronously (importInBackground&#x3D;true). Historically, this parameter was implicitly set to false, but large        imports can take long enough that the request could result in a timeout. Applications are encouraged to set        this parameter to true for reliable operation. | [optional] 
@@ -376,7 +376,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20031**](InlineResponse20031.md)
+[**BlobElementsUploadFileUpdateElementResponse200**](BlobElementsUploadFileUpdateElementResponse200.md)
 
 ### Authorization
 

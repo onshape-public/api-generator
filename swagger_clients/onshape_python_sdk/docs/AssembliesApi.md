@@ -1,31 +1,31 @@
-# swagger_client.AssembliesApi
+# onshape_client.AssembliesApi
 
 All URIs are relative to *https://cad.onshape.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_feature_assemblies**](AssembliesApi.md#add_feature_assemblies) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/features | Add Feature
-[**create_assembly_assemblies**](AssembliesApi.md#create_assembly_assemblies) | **POST** /assemblies/d/{did}/w/{wid} | Create Assembly
-[**create_instance_assemblies**](AssembliesApi.md#create_instance_assemblies) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/instances | Create assembly instance
-[**create_translation_assemblies**](AssembliesApi.md#create_translation_assemblies) | **POST** /assemblies/d/{did}/{wv_char}/{wv}/e/{eid}/translations | Create Assembly translation
-[**delete_feature_assemblies**](AssembliesApi.md#delete_feature_assemblies) | **DELETE** /assemblies/d/{did}/w/{wid}/e/{eid}/features/featureid/{fid} | Delete Feature
-[**delete_instance_assemblies**](AssembliesApi.md#delete_instance_assemblies) | **DELETE** /assemblies/d/{did}/w/{wid}/e/{eid}/instance/nodeid/{nid} | Delete assembly instance
-[**get_assembly_definition_assemblies**](AssembliesApi.md#get_assembly_definition_assemblies) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid} | Assembly Definition
-[**get_bill_of_materials_assemblies**](AssembliesApi.md#get_bill_of_materials_assemblies) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/bom | Get Bill of Materials
-[**get_bounding_boxes_assemblies**](AssembliesApi.md#get_bounding_boxes_assemblies) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/boundingboxes | Bounding Boxes
-[**get_feature_specs_assemblies**](AssembliesApi.md#get_feature_specs_assemblies) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/featurespecs | Get Feature Specs
-[**get_features_assemblies**](AssembliesApi.md#get_features_assemblies) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/features | Get Feature List
-[**get_named_views_assemblies**](AssembliesApi.md#get_named_views_assemblies) | **GET** /assemblies/d/{did}/e/{eid}/namedViews | Get Named Views
-[**get_or_create_bill_of_materials_element_assemblies**](AssembliesApi.md#get_or_create_bill_of_materials_element_assemblies) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/bomelement | Get or Create Bill of Materials Element
-[**get_shaded_views_assemblies**](AssembliesApi.md#get_shaded_views_assemblies) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/shadedviews | Shaded Views
-[**get_translation_formats_assemblies**](AssembliesApi.md#get_translation_formats_assemblies) | **GET** /assemblies/d/{did}/w/{wid}/e/{eid}/translationformats | Get Translation Formats
-[**insert_transformed_instances_assemblies**](AssembliesApi.md#insert_transformed_instances_assemblies) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/transformedinstances | Create and transform assembly instances
-[**transform_occurrences_assemblies**](AssembliesApi.md#transform_occurrences_assemblies) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/occurrencetransforms | Transform assembly occurrences
-[**update_feature_assemblies**](AssembliesApi.md#update_feature_assemblies) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/features/featureid/{fid} | Update Feature
+[**add_feature**](AssembliesApi.md#add_feature) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/features | Add Feature
+[**create_assembly**](AssembliesApi.md#create_assembly) | **POST** /assemblies/d/{did}/w/{wid} | Create Assembly
+[**create_instance**](AssembliesApi.md#create_instance) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/instances | Create assembly instance
+[**create_translation**](AssembliesApi.md#create_translation) | **POST** /assemblies/d/{did}/{wv_char}/{wv}/e/{eid}/translations | Create Assembly translation
+[**delete_feature**](AssembliesApi.md#delete_feature) | **DELETE** /assemblies/d/{did}/w/{wid}/e/{eid}/features/featureid/{fid} | Delete Feature
+[**delete_instance**](AssembliesApi.md#delete_instance) | **DELETE** /assemblies/d/{did}/w/{wid}/e/{eid}/instance/nodeid/{nid} | Delete assembly instance
+[**get_assembly_definition**](AssembliesApi.md#get_assembly_definition) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid} | Assembly Definition
+[**get_bill_of_materials**](AssembliesApi.md#get_bill_of_materials) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/bom | Get Bill of Materials
+[**get_bounding_boxes**](AssembliesApi.md#get_bounding_boxes) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/boundingboxes | Bounding Boxes
+[**get_feature_specs**](AssembliesApi.md#get_feature_specs) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/featurespecs | Get Feature Specs
+[**get_features**](AssembliesApi.md#get_features) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/features | Get Feature List
+[**get_named_views**](AssembliesApi.md#get_named_views) | **GET** /assemblies/d/{did}/e/{eid}/namedViews | Get Named Views
+[**get_or_create_bill_of_materials_element**](AssembliesApi.md#get_or_create_bill_of_materials_element) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/bomelement | Get or Create Bill of Materials Element
+[**get_shaded_views**](AssembliesApi.md#get_shaded_views) | **GET** /assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/shadedviews | Shaded Views
+[**get_translation_formats**](AssembliesApi.md#get_translation_formats) | **GET** /assemblies/d/{did}/w/{wid}/e/{eid}/translationformats | Get Translation Formats
+[**insert_transformed_instances**](AssembliesApi.md#insert_transformed_instances) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/transformedinstances | Create and transform assembly instances
+[**transform_occurrences**](AssembliesApi.md#transform_occurrences) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/occurrencetransforms | Transform assembly occurrences
+[**update_feature**](AssembliesApi.md#update_feature) | **POST** /assemblies/d/{did}/w/{wid}/e/{eid}/features/featureid/{fid} | Update Feature
 
 
-# **add_feature_assemblies**
-> InlineResponse20016 add_feature_assemblies(did, wid, eid, body=body)
+# **add_feature**
+> AssembliesAddFeatureResponse200 add_feature(did, wid, eid, body=body)
 
 Add Feature
 
@@ -35,37 +35,37 @@ Add a feature to the feature list for an assembly
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
 eid = 'eid_example' # str | Element ID
-body = swagger_client.Body6() # Body6 | The JSON request body. (optional)
+body = onshape_client.AssembliesAddFeatureBody() # AssembliesAddFeatureBody | The JSON request body. (optional)
 
 try:
     # Add Feature
-    api_response = api_instance.add_feature_assemblies(did, wid, eid, body=body)
+    api_response = api_instance.add_feature(did, wid, eid, body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->add_feature_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->add_feature: %s\n" % e)
 ```
 
 ### Parameters
@@ -75,11 +75,11 @@ Name | Type | Description  | Notes
  **did** | **str**| Document ID | 
  **wid** | **str**| Workspace ID | 
  **eid** | **str**| Element ID | 
- **body** | [**Body6**](Body6.md)| The JSON request body. | [optional] 
+ **body** | [**AssembliesAddFeatureBody**](AssembliesAddFeatureBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
-[**InlineResponse20016**](InlineResponse20016.md)
+[**AssembliesAddFeatureResponse200**](AssembliesAddFeatureResponse200.md)
 
 ### Authorization
 
@@ -92,8 +92,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_assembly_assemblies**
-> InlineResponse20019 create_assembly_assemblies(did, wid, body=body)
+# **create_assembly**
+> AssembliesCreateAssemblyResponse200 create_assembly(did, wid, body=body)
 
 Create Assembly
 
@@ -103,36 +103,36 @@ Create an new assembly tab in the document.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
-body = swagger_client.Body7() # Body7 | The JSON request body. (optional)
+body = onshape_client.AssembliesCreateAssemblyBody() # AssembliesCreateAssemblyBody | The JSON request body. (optional)
 
 try:
     # Create Assembly
-    api_response = api_instance.create_assembly_assemblies(did, wid, body=body)
+    api_response = api_instance.create_assembly(did, wid, body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->create_assembly_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->create_assembly: %s\n" % e)
 ```
 
 ### Parameters
@@ -141,11 +141,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **did** | **str**| Document ID | 
  **wid** | **str**| Workspace ID | 
- **body** | [**Body7**](Body7.md)| The JSON request body. | [optional] 
+ **body** | [**AssembliesCreateAssemblyBody**](AssembliesCreateAssemblyBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
-[**InlineResponse20019**](InlineResponse20019.md)
+[**AssembliesCreateAssemblyResponse200**](AssembliesCreateAssemblyResponse200.md)
 
 ### Authorization
 
@@ -158,8 +158,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_instance_assemblies**
-> create_instance_assemblies(did, wid, eid, body=body)
+# **create_instance**
+> create_instance(did, wid, eid, body=body)
 
 Create assembly instance
 
@@ -169,36 +169,36 @@ Create an instance of a part, part studio or assembly into an existing assembly 
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
 eid = 'eid_example' # str | Element ID
-body = swagger_client.Body10() # Body10 | The JSON request body. (optional)
+body = onshape_client.AssembliesCreateInstanceBody() # AssembliesCreateInstanceBody | The JSON request body. (optional)
 
 try:
     # Create assembly instance
-    api_instance.create_instance_assemblies(did, wid, eid, body=body)
+    api_instance.create_instance(did, wid, eid, body=body)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->create_instance_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->create_instance: %s\n" % e)
 ```
 
 ### Parameters
@@ -208,7 +208,7 @@ Name | Type | Description  | Notes
  **did** | **str**| Document ID | 
  **wid** | **str**| Workspace ID | 
  **eid** | **str**| Element ID | 
- **body** | [**Body10**](Body10.md)| The JSON request body. | [optional] 
+ **body** | [**AssembliesCreateInstanceBody**](AssembliesCreateInstanceBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
@@ -225,8 +225,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_translation_assemblies**
-> InlineResponse20020 create_translation_assemblies(wv_char, did, wv, eid, body=body)
+# **create_translation**
+> AssembliesCreateTranslationResponse200 create_translation(wv_char, did, wv, eid, body=body)
 
 Create Assembly translation
 
@@ -236,38 +236,38 @@ Create an element translation. The translation may be incomplete at the time tha
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 wv_char = 'wv_char_example' # str | One of w or v corresponding to whether a workspace or version was entered.
 did = 'did_example' # str | Document ID
 wv = 'wv_example' # str | Workspace (w) or Version (v) ID
 eid = 'eid_example' # str | Element ID
-body = swagger_client.Body8() # Body8 | The JSON request body. (optional)
+body = onshape_client.AssembliesCreateTranslationBody() # AssembliesCreateTranslationBody | The JSON request body. (optional)
 
 try:
     # Create Assembly translation
-    api_response = api_instance.create_translation_assemblies(wv_char, did, wv, eid, body=body)
+    api_response = api_instance.create_translation(wv_char, did, wv, eid, body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->create_translation_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->create_translation: %s\n" % e)
 ```
 
 ### Parameters
@@ -278,11 +278,11 @@ Name | Type | Description  | Notes
  **did** | **str**| Document ID | 
  **wv** | **str**| Workspace (w) or Version (v) ID | 
  **eid** | **str**| Element ID | 
- **body** | [**Body8**](Body8.md)| The JSON request body. | [optional] 
+ **body** | [**AssembliesCreateTranslationBody**](AssembliesCreateTranslationBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
-[**InlineResponse20020**](InlineResponse20020.md)
+[**AssembliesCreateTranslationResponse200**](AssembliesCreateTranslationResponse200.md)
 
 ### Authorization
 
@@ -295,8 +295,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_feature_assemblies**
-> InlineResponse20022 delete_feature_assemblies(fid, did, wid, eid)
+# **delete_feature**
+> AssembliesDeleteFeatureResponse200 delete_feature(fid, did, wid, eid)
 
 Delete Feature
 
@@ -306,26 +306,26 @@ Delete an existing feature in the feature list for an assembly
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 fid = 'fid_example' # str | The id of the feature being updated.  This id should be URL encoded
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
@@ -333,10 +333,10 @@ eid = 'eid_example' # str | Element ID
 
 try:
     # Delete Feature
-    api_response = api_instance.delete_feature_assemblies(fid, did, wid, eid)
+    api_response = api_instance.delete_feature(fid, did, wid, eid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->delete_feature_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->delete_feature: %s\n" % e)
 ```
 
 ### Parameters
@@ -350,7 +350,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20022**](InlineResponse20022.md)
+[**AssembliesDeleteFeatureResponse200**](AssembliesDeleteFeatureResponse200.md)
 
 ### Authorization
 
@@ -363,8 +363,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_instance_assemblies**
-> delete_instance_assemblies(nid, did, wid, eid)
+# **delete_instance**
+> delete_instance(nid, did, wid, eid)
 
 Delete assembly instance
 
@@ -374,26 +374,26 @@ Delete an assembly instance.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 nid = 'nid_example' # str | The node id of the instance to be deleted
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
@@ -401,9 +401,9 @@ eid = 'eid_example' # str | Element ID
 
 try:
     # Delete assembly instance
-    api_instance.delete_instance_assemblies(nid, did, wid, eid)
+    api_instance.delete_instance(nid, did, wid, eid)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->delete_instance_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->delete_instance: %s\n" % e)
 ```
 
 ### Parameters
@@ -430,8 +430,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_assembly_definition_assemblies**
-> InlineResponse20017 get_assembly_definition_assemblies(wvm_char, did, wvm, eid, include_mate_features=include_mate_features, include_non_solids=include_non_solids, include_mate_connectors=include_mate_connectors, link_document_id=link_document_id)
+# **get_assembly_definition**
+> AssembliesGetAssemblyDefinitionResponse200 get_assembly_definition(wvm_char, did, wvm, eid, include_mate_features=include_mate_features, include_non_solids=include_non_solids, include_mate_connectors=include_mate_connectors, link_document_id=link_document_id)
 
 Assembly Definition
 
@@ -441,26 +441,26 @@ Get information about an Assembly. All coordinates and translation matrix compon
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -472,10 +472,10 @@ link_document_id = 'link_document_id_example' # str | Id of document that links 
 
 try:
     # Assembly Definition
-    api_response = api_instance.get_assembly_definition_assemblies(wvm_char, did, wvm, eid, include_mate_features=include_mate_features, include_non_solids=include_non_solids, include_mate_connectors=include_mate_connectors, link_document_id=link_document_id)
+    api_response = api_instance.get_assembly_definition(wvm_char, did, wvm, eid, include_mate_features=include_mate_features, include_non_solids=include_non_solids, include_mate_connectors=include_mate_connectors, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->get_assembly_definition_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->get_assembly_definition: %s\n" % e)
 ```
 
 ### Parameters
@@ -493,7 +493,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20017**](InlineResponse20017.md)
+[**AssembliesGetAssemblyDefinitionResponse200**](AssembliesGetAssemblyDefinitionResponse200.md)
 
 ### Authorization
 
@@ -506,8 +506,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_bill_of_materials_assemblies**
-> InlineResponse20023 get_bill_of_materials_assemblies(wvm_char, did, wvm, eid, metadata_workspace_id=metadata_workspace_id, bom_column_ids=bom_column_ids, indented=indented, multi_level=multi_level, generate_if_absent=generate_if_absent)
+# **get_bill_of_materials**
+> AssembliesGetBillOfMaterialsResponse200 get_bill_of_materials(wvm_char, did, wvm, eid, metadata_workspace_id=metadata_workspace_id, bom_column_ids=bom_column_ids, indented=indented, multi_level=multi_level, generate_if_absent=generate_if_absent)
 
 Get Bill of Materials
 
@@ -517,26 +517,26 @@ Get content of the bill of materials in json format matching the Onshape BOM Sta
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -549,10 +549,10 @@ generate_if_absent = true # bool | If this is false and the BOM does not exist f
 
 try:
     # Get Bill of Materials
-    api_response = api_instance.get_bill_of_materials_assemblies(wvm_char, did, wvm, eid, metadata_workspace_id=metadata_workspace_id, bom_column_ids=bom_column_ids, indented=indented, multi_level=multi_level, generate_if_absent=generate_if_absent)
+    api_response = api_instance.get_bill_of_materials(wvm_char, did, wvm, eid, metadata_workspace_id=metadata_workspace_id, bom_column_ids=bom_column_ids, indented=indented, multi_level=multi_level, generate_if_absent=generate_if_absent)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->get_bill_of_materials_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->get_bill_of_materials: %s\n" % e)
 ```
 
 ### Parameters
@@ -571,7 +571,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20023**](InlineResponse20023.md)
+[**AssembliesGetBillOfMaterialsResponse200**](AssembliesGetBillOfMaterialsResponse200.md)
 
 ### Authorization
 
@@ -584,8 +584,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_bounding_boxes_assemblies**
-> InlineResponse20018 get_bounding_boxes_assemblies(wvm_char, did, wvm, eid, element_microversion_id=element_microversion_id, include_hidden=include_hidden, link_document_id=link_document_id)
+# **get_bounding_boxes**
+> AssembliesGetBoundingBoxesResponse200 get_bounding_boxes(wvm_char, did, wvm, eid, element_microversion_id=element_microversion_id, include_hidden=include_hidden, link_document_id=link_document_id)
 
 Bounding Boxes
 
@@ -595,26 +595,26 @@ Get the bounding box of an Assembly, or an empty object if the Assembly is empty
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -625,10 +625,10 @@ link_document_id = 'link_document_id_example' # str | Id of document that links 
 
 try:
     # Bounding Boxes
-    api_response = api_instance.get_bounding_boxes_assemblies(wvm_char, did, wvm, eid, element_microversion_id=element_microversion_id, include_hidden=include_hidden, link_document_id=link_document_id)
+    api_response = api_instance.get_bounding_boxes(wvm_char, did, wvm, eid, element_microversion_id=element_microversion_id, include_hidden=include_hidden, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->get_bounding_boxes_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->get_bounding_boxes: %s\n" % e)
 ```
 
 ### Parameters
@@ -645,7 +645,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20018**](InlineResponse20018.md)
+[**AssembliesGetBoundingBoxesResponse200**](AssembliesGetBoundingBoxesResponse200.md)
 
 ### Authorization
 
@@ -658,8 +658,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_feature_specs_assemblies**
-> InlineResponse20025 get_feature_specs_assemblies(wvm_char, did, wvm, eid)
+# **get_feature_specs**
+> AssembliesGetFeatureSpecsResponse200 get_feature_specs(wvm_char, did, wvm, eid)
 
 Get Feature Specs
 
@@ -669,26 +669,26 @@ Get the definition of the feature specs for an assembly
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -696,10 +696,10 @@ eid = 'eid_example' # str | Element ID
 
 try:
     # Get Feature Specs
-    api_response = api_instance.get_feature_specs_assemblies(wvm_char, did, wvm, eid)
+    api_response = api_instance.get_feature_specs(wvm_char, did, wvm, eid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->get_feature_specs_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->get_feature_specs: %s\n" % e)
 ```
 
 ### Parameters
@@ -713,7 +713,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20025**](InlineResponse20025.md)
+[**AssembliesGetFeatureSpecsResponse200**](AssembliesGetFeatureSpecsResponse200.md)
 
 ### Authorization
 
@@ -726,8 +726,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_features_assemblies**
-> InlineResponse20024 get_features_assemblies(wvm_char, did, wvm, eid, feature_id=feature_id, link_document_id=link_document_id)
+# **get_features**
+> AssembliesGetFeaturesResponse200 get_features(wvm_char, did, wvm, eid, feature_id=feature_id, link_document_id=link_document_id)
 
 Get Feature List
 
@@ -737,26 +737,26 @@ Get the definition of the feature list for an assembly
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -766,10 +766,10 @@ link_document_id = 'link_document_id_example' # str | Id of document that links 
 
 try:
     # Get Feature List
-    api_response = api_instance.get_features_assemblies(wvm_char, did, wvm, eid, feature_id=feature_id, link_document_id=link_document_id)
+    api_response = api_instance.get_features(wvm_char, did, wvm, eid, feature_id=feature_id, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->get_features_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->get_features: %s\n" % e)
 ```
 
 ### Parameters
@@ -785,7 +785,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20024**](InlineResponse20024.md)
+[**AssembliesGetFeaturesResponse200**](AssembliesGetFeaturesResponse200.md)
 
 ### Authorization
 
@@ -798,8 +798,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_named_views_assemblies**
-> InlineResponse20026 get_named_views_assemblies(did, eid, skip_perspective=skip_perspective)
+# **get_named_views**
+> AssembliesGetNamedViewsResponse200 get_named_views(did, eid, skip_perspective=skip_perspective)
 
 Get Named Views
 
@@ -809,36 +809,36 @@ Returns a map from view name to view data for the given element
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 eid = 'eid_example' # str | Element ID
 skip_perspective = true # bool | Whether views with a perspective projection should be omitted. (optional)
 
 try:
     # Get Named Views
-    api_response = api_instance.get_named_views_assemblies(did, eid, skip_perspective=skip_perspective)
+    api_response = api_instance.get_named_views(did, eid, skip_perspective=skip_perspective)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->get_named_views_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->get_named_views: %s\n" % e)
 ```
 
 ### Parameters
@@ -851,7 +851,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20026**](InlineResponse20026.md)
+[**AssembliesGetNamedViewsResponse200**](AssembliesGetNamedViewsResponse200.md)
 
 ### Authorization
 
@@ -864,8 +864,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_or_create_bill_of_materials_element_assemblies**
-> InlineResponse20028 get_or_create_bill_of_materials_element_assemblies(did, wid, eid)
+# **get_or_create_bill_of_materials_element**
+> AssembliesGetOrCreateBillOfMaterialsElementResponse200 get_or_create_bill_of_materials_element(did, wid, eid)
 
 Get or Create Bill of Materials Element
 
@@ -875,36 +875,36 @@ Create and retrieve a Bill Of Materials element for the specified assembly. If t
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
 eid = 'eid_example' # str | Element ID
 
 try:
     # Get or Create Bill of Materials Element
-    api_response = api_instance.get_or_create_bill_of_materials_element_assemblies(did, wid, eid)
+    api_response = api_instance.get_or_create_bill_of_materials_element(did, wid, eid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->get_or_create_bill_of_materials_element_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->get_or_create_bill_of_materials_element: %s\n" % e)
 ```
 
 ### Parameters
@@ -917,7 +917,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20028**](InlineResponse20028.md)
+[**AssembliesGetOrCreateBillOfMaterialsElementResponse200**](AssembliesGetOrCreateBillOfMaterialsElementResponse200.md)
 
 ### Authorization
 
@@ -930,8 +930,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_shaded_views_assemblies**
-> InlineResponse20029 get_shaded_views_assemblies(wvm_char, did, wvm, eid, output_height=output_height, output_width=output_width, pixel_size=pixel_size, edges=edges, show_all_parts=show_all_parts, include_surfaces=include_surfaces, use_anti_aliasing=use_anti_aliasing, view_matrix=view_matrix, link_document_id=link_document_id)
+# **get_shaded_views**
+> AssembliesGetShadedViewsResponse200 get_shaded_views(wvm_char, did, wvm, eid, output_height=output_height, output_width=output_width, pixel_size=pixel_size, edges=edges, show_all_parts=show_all_parts, include_surfaces=include_surfaces, use_anti_aliasing=use_anti_aliasing, view_matrix=view_matrix, link_document_id=link_document_id)
 
 Shaded Views
 
@@ -941,26 +941,26 @@ Get a shaded image rendering of an Assembly
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -977,10 +977,10 @@ link_document_id = 'link_document_id_example' # str | Id of document that links 
 
 try:
     # Shaded Views
-    api_response = api_instance.get_shaded_views_assemblies(wvm_char, did, wvm, eid, output_height=output_height, output_width=output_width, pixel_size=pixel_size, edges=edges, show_all_parts=show_all_parts, include_surfaces=include_surfaces, use_anti_aliasing=use_anti_aliasing, view_matrix=view_matrix, link_document_id=link_document_id)
+    api_response = api_instance.get_shaded_views(wvm_char, did, wvm, eid, output_height=output_height, output_width=output_width, pixel_size=pixel_size, edges=edges, show_all_parts=show_all_parts, include_surfaces=include_surfaces, use_anti_aliasing=use_anti_aliasing, view_matrix=view_matrix, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->get_shaded_views_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->get_shaded_views: %s\n" % e)
 ```
 
 ### Parameters
@@ -1003,7 +1003,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20029**](InlineResponse20029.md)
+[**AssembliesGetShadedViewsResponse200**](AssembliesGetShadedViewsResponse200.md)
 
 ### Authorization
 
@@ -1016,8 +1016,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_translation_formats_assemblies**
-> InlineResponse20027 get_translation_formats_assemblies(did, wid, eid, check_content=check_content)
+# **get_translation_formats**
+> AssembliesGetTranslationFormatsResponse200 get_translation_formats(did, wid, eid, check_content=check_content)
 
 Get Translation Formats
 
@@ -1027,26 +1027,26 @@ Returns a list of the available formats to which this Assembly can be translated
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
 eid = 'eid_example' # str | Element ID
@@ -1054,10 +1054,10 @@ check_content = true # bool | Whether the current content or lack thereof should
 
 try:
     # Get Translation Formats
-    api_response = api_instance.get_translation_formats_assemblies(did, wid, eid, check_content=check_content)
+    api_response = api_instance.get_translation_formats(did, wid, eid, check_content=check_content)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->get_translation_formats_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->get_translation_formats: %s\n" % e)
 ```
 
 ### Parameters
@@ -1071,7 +1071,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20027**](InlineResponse20027.md)
+[**AssembliesGetTranslationFormatsResponse200**](AssembliesGetTranslationFormatsResponse200.md)
 
 ### Authorization
 
@@ -1084,8 +1084,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **insert_transformed_instances_assemblies**
-> insert_transformed_instances_assemblies(did, wid, eid, body=body)
+# **insert_transformed_instances**
+> insert_transformed_instances(did, wid, eid, body=body)
 
 Create and transform assembly instances
 
@@ -1095,36 +1095,36 @@ Insert a list of instances, each with a transform.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
 eid = 'eid_example' # str | Element ID
-body = swagger_client.Body9() # Body9 | The JSON request body. (optional)
+body = onshape_client.AssembliesInsertTransformedInstancesBody() # AssembliesInsertTransformedInstancesBody | The JSON request body. (optional)
 
 try:
     # Create and transform assembly instances
-    api_instance.insert_transformed_instances_assemblies(did, wid, eid, body=body)
+    api_instance.insert_transformed_instances(did, wid, eid, body=body)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->insert_transformed_instances_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->insert_transformed_instances: %s\n" % e)
 ```
 
 ### Parameters
@@ -1134,7 +1134,7 @@ Name | Type | Description  | Notes
  **did** | **str**| Document ID | 
  **wid** | **str**| Workspace ID | 
  **eid** | **str**| Element ID | 
- **body** | [**Body9**](Body9.md)| The JSON request body. | [optional] 
+ **body** | [**AssembliesInsertTransformedInstancesBody**](AssembliesInsertTransformedInstancesBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
@@ -1151,8 +1151,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **transform_occurrences_assemblies**
-> transform_occurrences_assemblies(did, wid, eid, body=body)
+# **transform_occurrences**
+> transform_occurrences(did, wid, eid, body=body)
 
 Transform assembly occurrences
 
@@ -1162,36 +1162,36 @@ Transform a list of assembly occurrences.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
 eid = 'eid_example' # str | Element ID
-body = swagger_client.Body12() # Body12 | The JSON request body. (optional)
+body = onshape_client.AssembliesTransformOccurrencesBody() # AssembliesTransformOccurrencesBody | The JSON request body. (optional)
 
 try:
     # Transform assembly occurrences
-    api_instance.transform_occurrences_assemblies(did, wid, eid, body=body)
+    api_instance.transform_occurrences(did, wid, eid, body=body)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->transform_occurrences_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->transform_occurrences: %s\n" % e)
 ```
 
 ### Parameters
@@ -1201,7 +1201,7 @@ Name | Type | Description  | Notes
  **did** | **str**| Document ID | 
  **wid** | **str**| Workspace ID | 
  **eid** | **str**| Element ID | 
- **body** | [**Body12**](Body12.md)| The JSON request body. | [optional] 
+ **body** | [**AssembliesTransformOccurrencesBody**](AssembliesTransformOccurrencesBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
@@ -1218,8 +1218,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_feature_assemblies**
-> InlineResponse20021 update_feature_assemblies(fid, did, wid, eid, body=body)
+# **update_feature**
+> AssembliesUpdateFeatureResponse200 update_feature(fid, did, wid, eid, body=body)
 
 Update Feature
 
@@ -1229,38 +1229,38 @@ Update an existing feature in the feature list for an assembly
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.AssembliesApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.AssembliesApi(onshape_client.ApiClient(configuration))
 fid = 'fid_example' # str | The id of the feature being updated.  This id should be URL encoded and must   match the featureId found in the serialized structure
 did = 'did_example' # str | Document ID
 wid = 'wid_example' # str | Workspace ID
 eid = 'eid_example' # str | Element ID
-body = swagger_client.Body11() # Body11 | The JSON request body. (optional)
+body = onshape_client.AssembliesUpdateFeatureBody() # AssembliesUpdateFeatureBody | The JSON request body. (optional)
 
 try:
     # Update Feature
-    api_response = api_instance.update_feature_assemblies(fid, did, wid, eid, body=body)
+    api_response = api_instance.update_feature(fid, did, wid, eid, body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AssembliesApi->update_feature_assemblies: %s\n" % e)
+    print("Exception when calling AssembliesApi->update_feature: %s\n" % e)
 ```
 
 ### Parameters
@@ -1271,11 +1271,11 @@ Name | Type | Description  | Notes
  **did** | **str**| Document ID | 
  **wid** | **str**| Workspace ID | 
  **eid** | **str**| Element ID | 
- **body** | [**Body11**](Body11.md)| The JSON request body. | [optional] 
+ **body** | [**AssembliesUpdateFeatureBody**](AssembliesUpdateFeatureBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
-[**InlineResponse20021**](InlineResponse20021.md)
+[**AssembliesUpdateFeatureResponse200**](AssembliesUpdateFeatureResponse200.md)
 
 ### Authorization
 

@@ -1,23 +1,23 @@
-# swagger_client.MetadataApi
+# onshape_client.MetadataApi
 
 All URIs are relative to *https://cad.onshape.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_metadata_metadata**](MetadataApi.md#get_metadata_metadata) | **GET** /metadata/d/{did}/{wv_char}/{wv} | Get Workspace / Version Metadata
-[**get_metadata_property_metadata**](MetadataApi.md#get_metadata_property_metadata) | **GET** /metadataschema/property/{pid} | Get metadata property
-[**get_metadata_schema_by_id_metadata**](MetadataApi.md#get_metadata_schema_by_id_metadata) | **GET** /metadataschema/{sid} | Get metadata schema by ID
-[**get_metadata_schema_metadata**](MetadataApi.md#get_metadata_schema_metadata) | **GET** /metadataschema | Get metadata schema by owner
-[**get_metadata_schema_properties_metadata**](MetadataApi.md#get_metadata_schema_properties_metadata) | **GET** /metadataschema/properties | Get metadata properties
-[**get_part_list_metadata_metadata**](MetadataApi.md#get_part_list_metadata_metadata) | **GET** /metadata/d/{did}/{wvm_char}/{wvm}/e/{eid}/p | Get Parts Metadata
-[**get_part_metadata_metadata**](MetadataApi.md#get_part_metadata_metadata) | **GET** /metadata/d/{did}/{wvm_char}/{wvm}/e/{eid}/p/{pid} | Get Part Metadata
-[**get_standard_content_metadata_metadata**](MetadataApi.md#get_standard_content_metadata_metadata) | **GET** /metadata/standardcontent/d/{did}/v/{vid}/e/{eid}/{cu_char}/{oid}/p/{pid} | Get Standard Content Part Metadata
-[**update_metadata_metadata**](MetadataApi.md#update_metadata_metadata) | **POST** /metadata/d/{did}/{wv_char}/{wv} | Update Metadata
-[**update_standard_content_metadata_metadata**](MetadataApi.md#update_standard_content_metadata_metadata) | **POST** /metadata/standardcontent/d/{did}/v/{vid}/e/{eid}/{cu_char}/{oid}/p/{pid} | Update Standard Content Part Metadata
+[**get_metadata**](MetadataApi.md#get_metadata) | **GET** /metadata/d/{did}/{wv_char}/{wv} | Get Workspace / Version Metadata
+[**get_metadata_property**](MetadataApi.md#get_metadata_property) | **GET** /metadataschema/property/{pid} | Get metadata property
+[**get_metadata_schema**](MetadataApi.md#get_metadata_schema) | **GET** /metadataschema | Get metadata schema by owner
+[**get_metadata_schema_by_id**](MetadataApi.md#get_metadata_schema_by_id) | **GET** /metadataschema/{sid} | Get metadata schema by ID
+[**get_metadata_schema_properties**](MetadataApi.md#get_metadata_schema_properties) | **GET** /metadataschema/properties | Get metadata properties
+[**get_part_list_metadata**](MetadataApi.md#get_part_list_metadata) | **GET** /metadata/d/{did}/{wvm_char}/{wvm}/e/{eid}/p | Get Parts Metadata
+[**get_part_metadata**](MetadataApi.md#get_part_metadata) | **GET** /metadata/d/{did}/{wvm_char}/{wvm}/e/{eid}/p/{pid} | Get Part Metadata
+[**get_standard_content_metadata**](MetadataApi.md#get_standard_content_metadata) | **GET** /metadata/standardcontent/d/{did}/v/{vid}/e/{eid}/{cu_char}/{oid}/p/{pid} | Get Standard Content Part Metadata
+[**update_metadata**](MetadataApi.md#update_metadata) | **POST** /metadata/d/{did}/{wv_char}/{wv} | Update Metadata
+[**update_standard_content_metadata**](MetadataApi.md#update_standard_content_metadata) | **POST** /metadata/standardcontent/d/{did}/v/{vid}/e/{eid}/{cu_char}/{oid}/p/{pid} | Update Standard Content Part Metadata
 
 
-# **get_metadata_metadata**
-> InlineResponse20062 get_metadata_metadata(wv_char, did, wv, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, e_offset=e_offset, e_limit=e_limit, link_document_id=link_document_id, configuration=configuration, infer_metadata_owner=infer_metadata_owner)
+# **get_metadata**
+> MetadataGetMetadataResponse200 get_metadata(wv_char, did, wv, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, e_offset=e_offset, e_limit=e_limit, link_document_id=link_document_id, configuration=configuration, infer_metadata_owner=infer_metadata_owner)
 
 Get Workspace / Version Metadata
 
@@ -27,26 +27,26 @@ Get workspace / version metadata
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.MetadataApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.MetadataApi(onshape_client.ApiClient(configuration))
 wv_char = 'wv_char_example' # str | One of w or v corresponding to whether a workspace or version was entered.
 did = 'did_example' # str | Document ID
 wv = 'wv_example' # str | Workspace (w) or Version (v) ID
@@ -62,10 +62,10 @@ infer_metadata_owner = true # bool | If the URL references a Standard Content pa
 
 try:
     # Get Workspace / Version Metadata
-    api_response = api_instance.get_metadata_metadata(wv_char, did, wv, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, e_offset=e_offset, e_limit=e_limit, link_document_id=link_document_id, configuration=configuration, infer_metadata_owner=infer_metadata_owner)
+    api_response = api_instance.get_metadata(wv_char, did, wv, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, e_offset=e_offset, e_limit=e_limit, link_document_id=link_document_id, configuration=configuration, infer_metadata_owner=infer_metadata_owner)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling MetadataApi->get_metadata_metadata: %s\n" % e)
+    print("Exception when calling MetadataApi->get_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -87,7 +87,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20062**](InlineResponse20062.md)
+[**MetadataGetMetadataResponse200**](MetadataGetMetadataResponse200.md)
 
 ### Authorization
 
@@ -100,8 +100,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_metadata_property_metadata**
-> InlineResponse20064 get_metadata_property_metadata(pid, schema_id, document_id=document_id)
+# **get_metadata_property**
+> MetadataGetMetadataPropertyResponse200 get_metadata_property(pid, schema_id, document_id=document_id)
 
 Get metadata property
 
@@ -111,36 +111,36 @@ Get metadata property
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.MetadataApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.MetadataApi(onshape_client.ApiClient(configuration))
 pid = 'pid_example' # str | Property ID
 schema_id = 'schema_id_example' # str | Metadata schema ID
 document_id = 'document_id_example' # str | ID of the document the schema is associated with. (optional)
 
 try:
     # Get metadata property
-    api_response = api_instance.get_metadata_property_metadata(pid, schema_id, document_id=document_id)
+    api_response = api_instance.get_metadata_property(pid, schema_id, document_id=document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling MetadataApi->get_metadata_property_metadata: %s\n" % e)
+    print("Exception when calling MetadataApi->get_metadata_property: %s\n" % e)
 ```
 
 ### Parameters
@@ -153,7 +153,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20064**](InlineResponse20064.md)
+[**MetadataGetMetadataPropertyResponse200**](MetadataGetMetadataPropertyResponse200.md)
 
 ### Authorization
 
@@ -166,72 +166,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_metadata_schema_by_id_metadata**
-> InlineResponse20065 get_metadata_schema_by_id_metadata(sid, document_id=document_id)
-
-Get metadata schema by ID
-
-Get metadata schema by ID
-
-### Example
-```python
-from __future__ import print_function
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
-# Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
-configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
-# Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
-configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
-
-# create an instance of the API class
-api_instance = swagger_client.MetadataApi(swagger_client.ApiClient(configuration))
-sid = 'sid_example' # str | Metadata schema ID
-document_id = 'document_id_example' # str | ID of the document the schema is associated with. (optional)
-
-try:
-    # Get metadata schema by ID
-    api_response = api_instance.get_metadata_schema_by_id_metadata(sid, document_id=document_id)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling MetadataApi->get_metadata_schema_by_id_metadata: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sid** | **str**| Metadata schema ID | 
- **document_id** | **str**| ID of the document the schema is associated with. | [optional] 
-
-### Return type
-
-[**InlineResponse20065**](InlineResponse20065.md)
-
-### Authorization
-
-[OAuth2](../README.md#OAuth2), [apiAccessKey](../README.md#apiAccessKey), [apiSecretKey](../README.md#apiSecretKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_metadata_schema_metadata**
-> InlineResponse20065 get_metadata_schema_metadata(owner_id, object_type, owner_type=owner_type, document_id=document_id)
+# **get_metadata_schema**
+> MetadataGetMetadataSchemaResponse200 get_metadata_schema(owner_id, object_type, owner_type=owner_type, document_id=document_id)
 
 Get metadata schema by owner
 
@@ -241,26 +177,26 @@ Get metadata schema, or Onshape schema if user/company has no schema for the giv
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.MetadataApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.MetadataApi(onshape_client.ApiClient(configuration))
 owner_id = 'owner_id_example' # str | Schema owner ID
 object_type = 8.14 # float | Metadata object type, which can be: 0:GLOBAL, 1:DOCUMENT, 2:PART,           3:ASSEMBLY, 4:DRAWING, 5:PART_STUDIO, 6: BLOB_ELEMENT, 7:APP_ELEMENT, 8:VERSION, 9:WORKSPACE
 owner_type = 8.14 # float | Schema owner type, which can be: 0: user, 1: company (default: 1) (optional)
@@ -268,10 +204,10 @@ document_id = 'document_id_example' # str | ID of the document the schema is ass
 
 try:
     # Get metadata schema by owner
-    api_response = api_instance.get_metadata_schema_metadata(owner_id, object_type, owner_type=owner_type, document_id=document_id)
+    api_response = api_instance.get_metadata_schema(owner_id, object_type, owner_type=owner_type, document_id=document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling MetadataApi->get_metadata_schema_metadata: %s\n" % e)
+    print("Exception when calling MetadataApi->get_metadata_schema: %s\n" % e)
 ```
 
 ### Parameters
@@ -285,7 +221,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20065**](InlineResponse20065.md)
+[**MetadataGetMetadataSchemaResponse200**](MetadataGetMetadataSchemaResponse200.md)
 
 ### Authorization
 
@@ -298,8 +234,72 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_metadata_schema_properties_metadata**
-> InlineResponse20063 get_metadata_schema_properties_metadata(schema_id=schema_id, owner_id=owner_id, owner_type=owner_type, object_type=object_type, strict=strict, active_only=active_only, document_id=document_id, offset=offset, limit=limit)
+# **get_metadata_schema_by_id**
+> MetadataGetMetadataSchemaByIDResponse200 get_metadata_schema_by_id(sid, document_id=document_id)
+
+Get metadata schema by ID
+
+Get metadata schema by ID
+
+### Example
+```python
+from __future__ import print_function
+import time
+import onshape_client
+from onshape_client.rest import ApiException
+from pprint import pprint
+
+# Configure OAuth2 access token for authorization: OAuth2
+configuration = onshape_client.Configuration()
+configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure API key authorization: apiAccessKey
+configuration = onshape_client.Configuration()
+configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
+# Configure API key authorization: apiSecretKey
+configuration = onshape_client.Configuration()
+configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = onshape_client.MetadataApi(onshape_client.ApiClient(configuration))
+sid = 'sid_example' # str | Metadata schema ID
+document_id = 'document_id_example' # str | ID of the document the schema is associated with. (optional)
+
+try:
+    # Get metadata schema by ID
+    api_response = api_instance.get_metadata_schema_by_id(sid, document_id=document_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling MetadataApi->get_metadata_schema_by_id: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sid** | **str**| Metadata schema ID | 
+ **document_id** | **str**| ID of the document the schema is associated with. | [optional] 
+
+### Return type
+
+[**MetadataGetMetadataSchemaByIDResponse200**](MetadataGetMetadataSchemaByIDResponse200.md)
+
+### Authorization
+
+[OAuth2](../README.md#OAuth2), [apiAccessKey](../README.md#apiAccessKey), [apiSecretKey](../README.md#apiSecretKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_metadata_schema_properties**
+> MetadataGetMetadataSchemaPropertiesResponse200 get_metadata_schema_properties(schema_id=schema_id, owner_id=owner_id, owner_type=owner_type, object_type=object_type, strict=strict, active_only=active_only, document_id=document_id, offset=offset, limit=limit)
 
 Get metadata properties
 
@@ -309,26 +309,26 @@ Get metadata properties
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.MetadataApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.MetadataApi(onshape_client.ApiClient(configuration))
 schema_id = 'schema_id_example' # str | Metadata schema ID. Must be specified if ownerId is blank. (optional)
 owner_id = 'owner_id_example' # str | Schema owner ID. Must be specified if schemaId is blank. (optional)
 owner_type = 8.14 # float | Schema owner type, which can be: 0: user, 1: company (default: 1).           Should only be specified if ownerId is specified. (optional)
@@ -341,10 +341,10 @@ limit = 8.14 # float | Number of results to return per page (max is 20) (optiona
 
 try:
     # Get metadata properties
-    api_response = api_instance.get_metadata_schema_properties_metadata(schema_id=schema_id, owner_id=owner_id, owner_type=owner_type, object_type=object_type, strict=strict, active_only=active_only, document_id=document_id, offset=offset, limit=limit)
+    api_response = api_instance.get_metadata_schema_properties(schema_id=schema_id, owner_id=owner_id, owner_type=owner_type, object_type=object_type, strict=strict, active_only=active_only, document_id=document_id, offset=offset, limit=limit)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling MetadataApi->get_metadata_schema_properties_metadata: %s\n" % e)
+    print("Exception when calling MetadataApi->get_metadata_schema_properties: %s\n" % e)
 ```
 
 ### Parameters
@@ -363,7 +363,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20063**](InlineResponse20063.md)
+[**MetadataGetMetadataSchemaPropertiesResponse200**](MetadataGetMetadataSchemaPropertiesResponse200.md)
 
 ### Authorization
 
@@ -376,8 +376,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_part_list_metadata_metadata**
-> InlineResponse20060 get_part_list_metadata_metadata(wvm_char, did, wvm, eid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id)
+# **get_part_list_metadata**
+> MetadataGetPartListMetadataResponse200 get_part_list_metadata(wvm_char, did, wvm, eid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id)
 
 Get Parts Metadata
 
@@ -387,26 +387,26 @@ Get metadata of parts of an element in a workspace / version / microversion
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.MetadataApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.MetadataApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 did = 'did_example' # str | Document ID
 wvm = 'wvm_example' # str | Workspace (w), Version (v) or Microversion (m) ID
@@ -419,10 +419,10 @@ link_document_id = 'link_document_id_example' # str | Id of document that links 
 
 try:
     # Get Parts Metadata
-    api_response = api_instance.get_part_list_metadata_metadata(wvm_char, did, wvm, eid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id)
+    api_response = api_instance.get_part_list_metadata(wvm_char, did, wvm, eid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling MetadataApi->get_part_list_metadata_metadata: %s\n" % e)
+    print("Exception when calling MetadataApi->get_part_list_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -441,7 +441,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20060**](InlineResponse20060.md)
+[**MetadataGetPartListMetadataResponse200**](MetadataGetPartListMetadataResponse200.md)
 
 ### Authorization
 
@@ -454,8 +454,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_part_metadata_metadata**
-> InlineResponse20059 get_part_metadata_metadata(wvm_char, pid, did, wvm, eid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id)
+# **get_part_metadata**
+> MetadataGetPartMetadataResponse200 get_part_metadata(wvm_char, pid, did, wvm, eid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id)
 
 Get Part Metadata
 
@@ -465,26 +465,26 @@ Get metadata of a part in an element in a workspace / version / microversion
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.MetadataApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.MetadataApi(onshape_client.ApiClient(configuration))
 wvm_char = 'wvm_char_example' # str | One of w or v or m corresponding to whether a workspace or version or microversion was entered.
 pid = 'pid_example' # str | Part ID
 did = 'did_example' # str | Document ID
@@ -498,10 +498,10 @@ link_document_id = 'link_document_id_example' # str | Id of document that links 
 
 try:
     # Get Part Metadata
-    api_response = api_instance.get_part_metadata_metadata(wvm_char, pid, did, wvm, eid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id)
+    api_response = api_instance.get_part_metadata(wvm_char, pid, did, wvm, eid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling MetadataApi->get_part_metadata_metadata: %s\n" % e)
+    print("Exception when calling MetadataApi->get_part_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -521,7 +521,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20059**](InlineResponse20059.md)
+[**MetadataGetPartMetadataResponse200**](MetadataGetPartMetadataResponse200.md)
 
 ### Authorization
 
@@ -534,8 +534,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_standard_content_metadata_metadata**
-> InlineResponse20061 get_standard_content_metadata_metadata(cu_char, pid, did, vid, eid, oid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id, configuration=configuration)
+# **get_standard_content_metadata**
+> MetadataGetStandardContentMetadataResponse200 get_standard_content_metadata(cu_char, pid, did, vid, eid, oid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id, configuration=configuration)
 
 Get Standard Content Part Metadata
 
@@ -545,26 +545,26 @@ Get metadata of a standard content part in a version
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.MetadataApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.MetadataApi(onshape_client.ApiClient(configuration))
 cu_char = 'cu_char_example' # str | One of c or u corresponding to whether a company or user was entered.
 pid = 'pid_example' # str | Part ID
 did = 'did_example' # str | Document ID
@@ -580,10 +580,10 @@ configuration = 'configuration_example' # str | Configuration string (optional)
 
 try:
     # Get Standard Content Part Metadata
-    api_response = api_instance.get_standard_content_metadata_metadata(cu_char, pid, did, vid, eid, oid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id, configuration=configuration)
+    api_response = api_instance.get_standard_content_metadata(cu_char, pid, did, vid, eid, oid, depth=depth, detail_level=detail_level, no_null=no_null, thumbnail=thumbnail, link_document_id=link_document_id, configuration=configuration)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling MetadataApi->get_standard_content_metadata_metadata: %s\n" % e)
+    print("Exception when calling MetadataApi->get_standard_content_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -605,7 +605,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20061**](InlineResponse20061.md)
+[**MetadataGetStandardContentMetadataResponse200**](MetadataGetStandardContentMetadataResponse200.md)
 
 ### Authorization
 
@@ -618,8 +618,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_metadata_metadata**
-> update_metadata_metadata(wv_char, did, wv, body=body)
+# **update_metadata**
+> update_metadata(wv_char, did, wv, body=body)
 
 Update Metadata
 
@@ -629,36 +629,36 @@ Update metadata. Updates of parts in configurable Par Studios require configurat
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.MetadataApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.MetadataApi(onshape_client.ApiClient(configuration))
 wv_char = 'wv_char_example' # str | One of w or v corresponding to whether a workspace or version was entered.
 did = 'did_example' # str | Document ID
 wv = 'wv_example' # str | Workspace (w) or Version (v) ID
-body = swagger_client.Body30() # Body30 | The JSON request body. (optional)
+body = onshape_client.MetadataUpdateMetadataBody() # MetadataUpdateMetadataBody | The JSON request body. (optional)
 
 try:
     # Update Metadata
-    api_instance.update_metadata_metadata(wv_char, did, wv, body=body)
+    api_instance.update_metadata(wv_char, did, wv, body=body)
 except ApiException as e:
-    print("Exception when calling MetadataApi->update_metadata_metadata: %s\n" % e)
+    print("Exception when calling MetadataApi->update_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -668,7 +668,7 @@ Name | Type | Description  | Notes
  **wv_char** | **str**| One of w or v corresponding to whether a workspace or version was entered. | 
  **did** | **str**| Document ID | 
  **wv** | **str**| Workspace (w) or Version (v) ID | 
- **body** | [**Body30**](Body30.md)| The JSON request body. | [optional] 
+ **body** | [**MetadataUpdateMetadataBody**](MetadataUpdateMetadataBody.md)| The JSON request body. | [optional] 
 
 ### Return type
 
@@ -685,8 +685,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_standard_content_metadata_metadata**
-> update_standard_content_metadata_metadata(cu_char, pid, did, vid, eid, oid, link_document_id=link_document_id, body=body)
+# **update_standard_content_metadata**
+> update_standard_content_metadata(cu_char, pid, did, vid, eid, oid, body=body, link_document_id=link_document_id)
 
 Update Standard Content Part Metadata
 
@@ -696,40 +696,40 @@ Update metadata of a standard content part in a version for a specific user or c
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.MetadataApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.MetadataApi(onshape_client.ApiClient(configuration))
 cu_char = 'cu_char_example' # str | One of c or u corresponding to whether a company or user was entered.
 pid = 'pid_example' # str | Part ID
 did = 'did_example' # str | Document ID
 vid = 'vid_example' # str | Version ID
 eid = 'eid_example' # str | Element ID
 oid = 'oid_example' # str | Company (c) or User (u) ID of metadata owner
+body = onshape_client.MetadataUpdateStandardContentMetadataBody() # MetadataUpdateStandardContentMetadataBody | The JSON request body. (optional)
 link_document_id = 'link_document_id_example' # str | Id of document that links to the document being accessed.     This may provide additional access rights to the document. Allowed only with version (v) path parameter. (optional)
-body = swagger_client.Body29() # Body29 | The JSON request body. (optional)
 
 try:
     # Update Standard Content Part Metadata
-    api_instance.update_standard_content_metadata_metadata(cu_char, pid, did, vid, eid, oid, link_document_id=link_document_id, body=body)
+    api_instance.update_standard_content_metadata(cu_char, pid, did, vid, eid, oid, body=body, link_document_id=link_document_id)
 except ApiException as e:
-    print("Exception when calling MetadataApi->update_standard_content_metadata_metadata: %s\n" % e)
+    print("Exception when calling MetadataApi->update_standard_content_metadata: %s\n" % e)
 ```
 
 ### Parameters
@@ -742,8 +742,8 @@ Name | Type | Description  | Notes
  **vid** | **str**| Version ID | 
  **eid** | **str**| Element ID | 
  **oid** | **str**| Company (c) or User (u) ID of metadata owner | 
+ **body** | [**MetadataUpdateStandardContentMetadataBody**](MetadataUpdateStandardContentMetadataBody.md)| The JSON request body. | [optional] 
  **link_document_id** | **str**| Id of document that links to the document being accessed.     This may provide additional access rights to the document. Allowed only with version (v) path parameter. | [optional] 
- **body** | [**Body29**](Body29.md)| The JSON request body. | [optional] 
 
 ### Return type
 

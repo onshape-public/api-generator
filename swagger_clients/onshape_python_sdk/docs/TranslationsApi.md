@@ -1,18 +1,18 @@
-# swagger_client.TranslationsApi
+# onshape_client.TranslationsApi
 
 All URIs are relative to *https://cad.onshape.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_translation_translations**](TranslationsApi.md#create_translation_translations) | **POST** /translations/d/{did}/w/{wid} | Create translation from upload
-[**delete_translation_translations**](TranslationsApi.md#delete_translation_translations) | **DELETE** /translations/{tid} | Delete Translation Status entry
-[**get_translation_translations**](TranslationsApi.md#get_translation_translations) | **GET** /translations/{tid} | Get Translation Status
-[**get_translations_translations**](TranslationsApi.md#get_translations_translations) | **GET** /translations/d/{did} | Get Translation Status for a document
-[**get_translator_formats_translations**](TranslationsApi.md#get_translator_formats_translations) | **GET** /translations/translationformats | Get Translation Formats
+[**create_translation**](TranslationsApi.md#create_translation) | **POST** /translations/d/{did}/w/{wid} | Create translation from upload
+[**delete_translation**](TranslationsApi.md#delete_translation) | **DELETE** /translations/{tid} | Delete Translation Status entry
+[**get_translation**](TranslationsApi.md#get_translation) | **GET** /translations/{tid} | Get Translation Status
+[**get_translations**](TranslationsApi.md#get_translations) | **GET** /translations/d/{did} | Get Translation Status for a document
+[**get_translator_formats**](TranslationsApi.md#get_translator_formats) | **GET** /translations/translationformats | Get Translation Formats
 
 
-# **create_translation_translations**
-> InlineResponse20020 create_translation_translations(file, format_name, flatten_assemblies, y_axis_is_up, store_in_document, did, wid, version_string=version_string, notify_user=notify_user, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts)
+# **create_translation**
+> TranslationsCreateTranslationResponse200 create_translation(file, format_name, flatten_assemblies, y_axis_is_up, store_in_document, did, wid, version_string=version_string, notify_user=notify_user, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts)
 
 Create translation from upload
 
@@ -22,26 +22,26 @@ Create a translation of the input data. The translation may be incomplete at the
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.TranslationsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.TranslationsApi(onshape_client.ApiClient(configuration))
 file = '/path/to/file.txt' # file | File to upload
 format_name = 'format_name_example' # str | Name of format into which this element should be translated. ONSHAPE        indicates that the model file should be translated into a Part Studio or Assembly.
 flatten_assemblies = true # bool | If true, remove assembly structure and create only a        Part Studio
@@ -56,10 +56,10 @@ allow_faulty_parts = true # bool | If not specified or if specified as false, bo
 
 try:
     # Create translation from upload
-    api_response = api_instance.create_translation_translations(file, format_name, flatten_assemblies, y_axis_is_up, store_in_document, did, wid, version_string=version_string, notify_user=notify_user, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts)
+    api_response = api_instance.create_translation(file, format_name, flatten_assemblies, y_axis_is_up, store_in_document, did, wid, version_string=version_string, notify_user=notify_user, import_in_background=import_in_background, allow_faulty_parts=allow_faulty_parts)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TranslationsApi->create_translation_translations: %s\n" % e)
+    print("Exception when calling TranslationsApi->create_translation: %s\n" % e)
 ```
 
 ### Parameters
@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20020**](InlineResponse20020.md)
+[**TranslationsCreateTranslationResponse200**](TranslationsCreateTranslationResponse200.md)
 
 ### Authorization
 
@@ -93,8 +93,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_translation_translations**
-> delete_translation_translations(tid)
+# **delete_translation**
+> delete_translation(tid)
 
 Delete Translation Status entry
 
@@ -104,33 +104,33 @@ Delete translation status
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.TranslationsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.TranslationsApi(onshape_client.ApiClient(configuration))
 tid = 'tid_example' # str | Translation ID
 
 try:
     # Delete Translation Status entry
-    api_instance.delete_translation_translations(tid)
+    api_instance.delete_translation(tid)
 except ApiException as e:
-    print("Exception when calling TranslationsApi->delete_translation_translations: %s\n" % e)
+    print("Exception when calling TranslationsApi->delete_translation: %s\n" % e)
 ```
 
 ### Parameters
@@ -154,8 +154,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_translation_translations**
-> InlineResponse20020 get_translation_translations(tid)
+# **get_translation**
+> TranslationsGetTranslationResponse200 get_translation(tid)
 
 Get Translation Status
 
@@ -165,34 +165,34 @@ Get element translation status
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.TranslationsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.TranslationsApi(onshape_client.ApiClient(configuration))
 tid = 'tid_example' # str | Translation ID
 
 try:
     # Get Translation Status
-    api_response = api_instance.get_translation_translations(tid)
+    api_response = api_instance.get_translation(tid)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TranslationsApi->get_translation_translations: %s\n" % e)
+    print("Exception when calling TranslationsApi->get_translation: %s\n" % e)
 ```
 
 ### Parameters
@@ -203,7 +203,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20020**](InlineResponse20020.md)
+[**TranslationsGetTranslationResponse200**](TranslationsGetTranslationResponse200.md)
 
 ### Authorization
 
@@ -216,8 +216,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_translations_translations**
-> InlineResponse200101 get_translations_translations(did, offset, limit)
+# **get_translations**
+> TranslationsGetTranslationsResponse200 get_translations(did, offset, limit)
 
 Get Translation Status for a document
 
@@ -227,36 +227,36 @@ Get list of translation status entries for a document
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.TranslationsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.TranslationsApi(onshape_client.ApiClient(configuration))
 did = 'did_example' # str | Document ID
 offset = 8.14 # float | Offset into list of items
 limit = 8.14 # float | Maximum number to retrieve (Must be <= 20)
 
 try:
     # Get Translation Status for a document
-    api_response = api_instance.get_translations_translations(did, offset, limit)
+    api_response = api_instance.get_translations(did, offset, limit)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TranslationsApi->get_translations_translations: %s\n" % e)
+    print("Exception when calling TranslationsApi->get_translations: %s\n" % e)
 ```
 
 ### Parameters
@@ -269,7 +269,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse200101**](InlineResponse200101.md)
+[**TranslationsGetTranslationsResponse200**](TranslationsGetTranslationsResponse200.md)
 
 ### Authorization
 
@@ -282,8 +282,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_translator_formats_translations**
-> InlineResponse200100 get_translator_formats_translations()
+# **get_translator_formats**
+> TranslationsGetTranslatorFormatsResponse200 get_translator_formats()
 
 Get Translation Formats
 
@@ -293,33 +293,33 @@ Get a list of all translator formats. Some are valid only as input formats and c
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.TranslationsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.TranslationsApi(onshape_client.ApiClient(configuration))
 
 try:
     # Get Translation Formats
-    api_response = api_instance.get_translator_formats_translations()
+    api_response = api_instance.get_translator_formats()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling TranslationsApi->get_translator_formats_translations: %s\n" % e)
+    print("Exception when calling TranslationsApi->get_translator_formats: %s\n" % e)
 ```
 
 ### Parameters
@@ -327,7 +327,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**InlineResponse200100**](InlineResponse200100.md)
+[**TranslationsGetTranslatorFormatsResponse200**](TranslationsGetTranslatorFormatsResponse200.md)
 
 ### Authorization
 

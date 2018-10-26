@@ -3,18 +3,20 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** | Onshape internal use | 
-**name** | **str** | User&#39;s name (OAuth2ReadPII) | 
-**href** | **str** | Onshape internal use | 
-**first_name** | **str** | User&#39;s first name (OAuth2ReadPII) | 
-**last_name** | **str** | User&#39;s last name (OAuth2ReadPII) | 
-**email** | **str** | User&#39;s email (OAuth2ReadPII) | 
-**image** | **str** | User&#39;s image (OAuth2ReadPII) | 
-**state** | **float** | Onshape internal use | 
-**oauth2_scopes** | **float** | Onshape internal use | 
-**client_id** | **str** | application&#39;s client ID | 
-**role** | **float** | Onshape internal use | 
-**roles** | **list[str]** | User&#39;s roles (OAuth2ReadPII) | 
+**id** | **str** | Onshape internal use | [optional] 
+**enforce_application_acl** | **bool** | Onshape internal use | [optional] 
+**common_units** | [**InlineResponse200102CommonUnits**](InlineResponse200102CommonUnits.md) |  | [optional] 
+**default_units** | [**InlineResponse200102DefaultUnits**](InlineResponse200102DefaultUnits.md) |  | [optional] 
+**mouse_actions** | **str** | Onshape internal use (deprecated) | [optional] 
+**reverse_scroll_wheel_zoom_direction** | **bool** | Whether scroll wheel zoom direction is reversed (default: scroll forward to zoom in) | [optional] 
+**view_mapping_id** | **float** | Onshape internal use | [optional] 
+**view_manipulation_mouse_key_mapping** | [**InlineResponse200102ViewManipulationMouseKeyMapping**](InlineResponse200102ViewManipulationMouseKeyMapping.md) |  | [optional] 
+**locale** | **str** | Locale and language in which user uses Onshape | [optional] 
+**drawing_background_id** | **float** | Onshape internal use | [optional] 
+**export_solid_options** | **str** | JSON string of Export options for solid models | [optional] 
+**export_drawing_options** | **str** | JSON string of Export options for drawings, sketches, and faces | [optional] 
+**units_display_precision** | **object** | Number of decimal places to be displayed per unit | [optional] 
+**units_maximum_display_precision** | **object** | Maximum number of decimal places to be displayed per unit | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -1,14 +1,14 @@
-# swagger_client.RevisionsApi
+# onshape_client.RevisionsApi
 
 All URIs are relative to *https://cad.onshape.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_revision_history_in_company_revisions**](RevisionsApi.md#get_revision_history_in_company_revisions) | **GET** /revisions/companies/{cid}/partnumber/{pnum} | 
+[**get_revision_history_in_company**](RevisionsApi.md#get_revision_history_in_company) | **GET** /revisions/companies/{cid}/partnumber/{pnum} | 
 
 
-# **get_revision_history_in_company_revisions**
-> InlineResponse20095 get_revision_history_in_company_revisions(cid, pnum, element_type)
+# **get_revision_history_in_company**
+> RevisionsGetRevisionHistoryInCompanyResponse200 get_revision_history_in_company(cid, pnum, element_type)
 
 
 
@@ -18,36 +18,36 @@ Get a list of all revisions for a part number in a company, ordered newest first
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import onshape_client
+from onshape_client.rest import ApiException
 from pprint import pprint
 
 # Configure OAuth2 access token for authorization: OAuth2
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.access_token = 'YOUR_ACCESS_TOKEN'
 # Configure API key authorization: apiAccessKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['ACCESS_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['ACCESS_KEY'] = 'Bearer'
 # Configure API key authorization: apiSecretKey
-configuration = swagger_client.Configuration()
+configuration = onshape_client.Configuration()
 configuration.api_key['SECRET_KEY'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['SECRET_KEY'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = swagger_client.RevisionsApi(swagger_client.ApiClient(configuration))
+api_instance = onshape_client.RevisionsApi(onshape_client.ApiClient(configuration))
 cid = 'cid_example' # str | Company Id
 pnum = 'pnum_example' # str | Part number
 element_type = 8.14 # float | Type of element, which can be 0: Part Studio, 1: Assembly, 2:           Drawing. 4: Blob
 
 try:
     # 
-    api_response = api_instance.get_revision_history_in_company_revisions(cid, pnum, element_type)
+    api_response = api_instance.get_revision_history_in_company(cid, pnum, element_type)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling RevisionsApi->get_revision_history_in_company_revisions: %s\n" % e)
+    print("Exception when calling RevisionsApi->get_revision_history_in_company: %s\n" % e)
 ```
 
 ### Parameters
@@ -60,7 +60,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20095**](InlineResponse20095.md)
+[**RevisionsGetRevisionHistoryInCompanyResponse200**](RevisionsGetRevisionHistoryInCompanyResponse200.md)
 
 ### Authorization
 

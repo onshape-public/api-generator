@@ -3,10 +3,12 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**previous** | **str** | URL of previous page of results | 
-**href** | **str** | URL of current page of results | 
-**next** | **str** | URL of next page of results | 
-**items** | [**list[InlineResponse20049Items]**](InlineResponse20049Items.md) | Array of insertables | 
+**new_document_id** | **str** | ID of new document | [optional] 
+**new_document_name** | **str** | Name of new document | [optional] 
+**new_workspace_id** | **str** | ID of new workspace | [optional] 
+**new_document_version_id** | **str** | the new version created in the target document, can be null | [optional] 
+**error_message** | **str** | Error message if the call fails | [optional] 
+**is_new_document** | **bool** | true if elements have been moved to a new document | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

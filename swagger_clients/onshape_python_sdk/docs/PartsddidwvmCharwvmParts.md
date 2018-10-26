@@ -3,9 +3,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**element_id** | **str** | The element ID of the Part Studio containing the part to update | 
+**element_id** | **str** | The element ID of the Part Studio containing the part to update | [optional] 
 **configuration** | **str** | Configuration in which to apply updates | [optional] 
-**part_id** | **str** | Deterministic part ID of the part to update | 
+**part_id** | **str** | Deterministic part ID of the part to update | [optional] 
 **name** | **str** | Part name (Name can only be modified in workspace) | [optional] 
 **description** | **str** | Part description | [optional] 
 **part_number** | **str** | Part number | [optional] 

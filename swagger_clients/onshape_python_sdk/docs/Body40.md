@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **title3** | **str** | Part title 3 | [optional] 
 **appearance** | [**PartsddidwvmCharwvmeeidpartidpartidmetadataAppearance**](PartsddidwvmCharwvmeeidpartidpartidmetadataAppearance.md) |  | [optional] 
 **material** | [**PartsddidwvmCharwvmeeidpartidpartidmetadataMaterial**](PartsddidwvmCharwvmeeidpartidpartidmetadataMaterial.md) |  | [optional] 
-**custom_properties** | [**list[PartsddidwvmCharwvmeeidpartidpartidmetadataCustomProperties]**](PartsddidwvmCharwvmeeidpartidpartidmetadataCustomProperties.md) | Custom properties | 
+**custom_properties** | [**list[PartsddidwvmCharwvmeeidpartidpartidmetadataCustomProperties]**](PartsddidwvmCharwvmeeidpartidpartidmetadataCustomProperties.md) | Custom properties | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
