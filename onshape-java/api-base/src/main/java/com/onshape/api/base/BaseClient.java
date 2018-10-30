@@ -357,9 +357,15 @@ public class BaseClient {
     URI buildURI(String path, Map<String, Object> urlParameters, Map<String, Object> queryParameters) {
         UriBuilder uriBuilder;
         if (path.startsWith("/")) {
-            uriBuilder = UriBuilder.fromUri(baseURL + path.replaceAll(":([^\\/:]+)", "{$1}").replace("[wvm]", "{wvmType}"));
+            uriBuilder = UriBuilder.fromUri(baseURL + path
+                    .replaceAll(":([^\\/:]+)", "{$1}")
+                    .replace("[wvm]", "{wvmType}")
+                    .replace("[wv]", "{wvType}"));
         } else {
-            uriBuilder = UriBuilder.fromUri(path.replaceAll(":([^\\/:]+)", "{$1}").replace("[wvm]", "{wvmType}"));
+            uriBuilder = UriBuilder.fromUri(path
+                    .replaceAll(":([^\\/:]+)", "{$1}")
+                    .replace("[wvm]", "{wvmType}")
+                    .replace("[wv]", "{wvType}"));
         }
         queryParameters.entrySet().stream().filter((queryParameter) -> (queryParameter.getValue() != null))
                 .forEachOrdered((queryParameter) -> {
