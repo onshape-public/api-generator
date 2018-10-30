@@ -27,7 +27,6 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import com.google.common.io.CharStreams;
-import com.google.common.io.Files;
 import com.onshape.api.base.BaseClient;
 import com.onshape.api.types.OnshapeVersion;
 import com.onshape.api.generator.targets.GroupTarget;
@@ -51,12 +50,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.lang.model.element.Modifier;
 
 /**
- *
+ * Generates a client library in Java.
+ * 
  * @author Peter Harman peter.harman@cae.tech
  */
 public class JavaLibraryTarget extends LibraryTarget {

@@ -37,7 +37,8 @@ import java.io.IOException;
 import javax.lang.model.element.Modifier;
 
 /**
- *
+ * Generates client code for one API group in Java.
+ * 
  * @author Peter Harman peter.harman@cae.tech
  */
 public class JavaGroupTarget extends GroupTarget {
@@ -52,11 +53,6 @@ public class JavaGroupTarget extends GroupTarget {
     @Override
     public EndpointTarget endpoint(Endpoint endpoint) {
         return new JavaEndpointTarget(this, endpoint);
-    }
-
-    @Override
-    public void start() {
-        //System.out.println(getGroup().getGroup());
     }
 
     @Override
