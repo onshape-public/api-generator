@@ -146,6 +146,14 @@ public class JavaEndpointTarget extends EndpointTarget {
                     callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
                     javadoc.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
                     i++;
+                } else if ("wv".equals(name)) {
+                    if (i > 0) {
+                        callStatement.append(", ");
+                    }
+                    callStatement.append("\"wvType\", wvType");
+                    callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
+                    javadoc.append("\n@param wvType Type of Workspace or Version\n");
+                    i++;
                 }
                 Class<?> type = JavaLibraryTarget.guessClass(field.getType());
                 if (i > 0) {
