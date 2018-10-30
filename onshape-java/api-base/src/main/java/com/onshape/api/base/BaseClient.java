@@ -146,7 +146,7 @@ public class BaseClient {
     }
 
     /**
-     * Get the time at which the OAuth token was received
+     * Get the time at which the OAuth token was received.
      *
      * @return Date token received
      */
@@ -155,13 +155,14 @@ public class BaseClient {
     }
 
     /**
-     * Set an access code received from an OAuth request
+     * Set an access code received from an OAuth request.
      *
      * @param code Code returned from server
      * @param clientId Client id of application
      * @param clientSecret Client secret of application
      * @param redirectURI URI to redirect to after authentication
-     * @throws com.onshape.api.exceptions.OnshapeException
+     * @throws com.onshape.api.exceptions.OnshapeException On HTTP or
+     * serialization error.
      */
     public void setOAuthAccessCode(String code, String clientId, String clientSecret, String redirectURI) throws OnshapeException {
         WebTarget target = client.target("https://oauth.onshape.com/oauth/token");
@@ -218,7 +219,7 @@ public class BaseClient {
     }
 
     /**
-     * Performs the http call and transforms the result to the required class
+     * Performs the HTTP call and transforms the result to the required class.
      *
      * @param <T> Return type
      * @param method HTTP method
@@ -228,7 +229,8 @@ public class BaseClient {
      * @param queryParameters Map of query parameters
      * @param type Return type
      * @return Response object
-     * @throws com.onshape.api.exceptions.OnshapeException
+     * @throws com.onshape.api.exceptions.OnshapeException On HTTP or
+     * serialization error.
      */
     public final <T> T call(String method, String url, Object payload, Map<String, Object> urlParameters, Map<String, Object> queryParameters, Class<T> type) throws OnshapeException {
         Response response = call(method, url, payload, urlParameters, queryParameters);
@@ -259,7 +261,7 @@ public class BaseClient {
                         }
                         fos.flush();
                     }
-                    return (T) f;
+                    return type.cast(f);
                 } catch (IOException ex) {
                     throw new OnshapeException("Error while copying to local file", ex);
                 }
@@ -339,10 +341,10 @@ public class BaseClient {
     }
 
     /**
-     * Utility method to construct a Map from a varargs array of Objects
+     * Utility method to construct a Map from a varargs array of Objects.
      *
-     * @param objs Array of name-value pairs
-     * @return Map
+     * @param objs Array of name-value pairs.
+     * @return Map A map containing the names and values as keys and values.
      */
     public final Map<String, Object> buildMap(Object... objs) {
         Map<String, Object> out = new LinkedHashMap<>();

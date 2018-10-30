@@ -56,7 +56,8 @@ import java.util.logging.Logger;
 import javax.lang.model.element.Modifier;
 
 /**
- *
+ * Generates a client library in Java.
+ * 
  * @author Peter Harman peter.harman@cae.tech
  */
 public class JavaLibraryTarget extends LibraryTarget {

@@ -41,6 +41,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 /**
+ * Utility class for desktop based applications to launch Onshape client.
  *
  * @author Peter Harman peter.harman@cae.tech
  */
@@ -52,19 +53,21 @@ public class OnshapeDesktop {
     private static Server server;
 
     /**
+     * Creates a new instance with given application id.
      *
-     * @param clientId
-     * @param clientSecret
+     * @param clientId Client ID of application.
+     * @param clientSecret Client secret of application.
      */
     public OnshapeDesktop(String clientId, String clientSecret) {
         this(clientId, clientSecret, 6789);
     }
 
     /**
+     * Creates a new instance with given application id and port.
      *
-     * @param clientId
-     * @param clientSecret
-     * @param port
+     * @param clientId Client ID of application.
+     * @param clientSecret Client secret of application.
+     * @param port Network port to use for HTTP server.
      */
     public OnshapeDesktop(String clientId, String clientSecret, int port) {
         this.clientId = clientId;
@@ -73,19 +76,24 @@ public class OnshapeDesktop {
     }
 
     /**
+     * Launches browser-based login and sets credentials on the given Onshape
+     * client instance.
      *
-     * @param client
-     * @throws OnshapeException
+     * @param client An Onshape API client instance.
+     * @throws OnshapeException On HTTP, authentication, or serialization,
+     * error.
      */
     public void setupClient(BaseClient client) throws OnshapeException {
         client.setOAuthAccessCode(getAccessCodeFromBrowser(), clientId, clientSecret, "http://localhost:" + Integer.toString(port));
     }
 
     /**
+     * Applies previously obtained OAuth token to the given Onshape client
+     * instance.
      *
-     * @param client
-     * @param token
-     * @param tokenReceived
+     * @param client An Onshape API client instance.
+     * @param token An OAuth token previously obtained.
+     * @param tokenReceived The time at which the token was obtained.
      */
     public void setupClient(BaseClient client, OAuthTokenResponse token, Date tokenReceived) {
         client.setOAuthTokenResponse(token, tokenReceived, clientId, clientSecret);
