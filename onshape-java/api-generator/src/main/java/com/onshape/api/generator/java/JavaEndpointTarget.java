@@ -32,6 +32,7 @@ import com.onshape.api.generator.Utilities;
 import com.onshape.api.generator.exceptions.GeneratorException;
 import com.onshape.api.generator.model.Endpoint;
 import com.onshape.api.generator.model.Field;
+import com.onshape.api.types.Base64Encoded;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
@@ -51,6 +52,7 @@ import tech.cae.javabard.BuilderSpec;
 import tech.cae.javabard.GetterSpec;
 
 /**
+ * Generates source for a single endpoint in Java.
  *
  * @author Peter Harman peter.harman@cae.tech
  */
@@ -251,10 +253,8 @@ public class JavaEndpointTarget extends EndpointTarget {
                 return ClassName.get(Number.class);
             }
             if (desc.contains("Base-64 encoded")) {
-                // It is base64 encoded, should be a String
-                //TODO: Could add a new type for this that allows unencoding?
-                System.out.println(getGroupTarget().getGroup().getGroup() + " " + getEndpoint().getName() + ": " + ref + " (" + typeString + " -> String" + (isArray ? "[]" : "") + ")");
-                return ClassName.get(String.class);
+                // It is base64 encoded, use a special type to handle decoding/encoding
+                return ClassName.get(Base64Encoded.class);
             }
             System.out.println(getGroupTarget().getGroup().getGroup() + " " + getEndpoint().getName() + ": " + ref + " (" + typeString + " -> Map" + (isArray ? "[]" : "") + ")");
             return ClassName.get(Map.class);
@@ -342,7 +342,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                     .addParameter(ParameterSpec.builder(ClassName.get("com.onshape.api", "Onshape"), "onshape").build())
                     .addException(ClassName.get("com.onshape.api.exceptions", "OnshapeException"))
                     .addStatement("return (next==null ? null : onshape.get(next, " + newClassName + ".class))")
-                    .addJavadoc("Fetch next page of results\n@return Next page of results or null if this is last page\n")
+                    .addJavadoc("Fetch next page of results\n@param onshape The Onshape client object.\n@return Next page of results or null if this is last page.\n@throws OnshapeException On HTTP or serialization error.\n")
                     .build());
         }
         if (hasPreviousField) {
@@ -352,7 +352,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                     .addParameter(ParameterSpec.builder(ClassName.get("com.onshape.api", "Onshape"), "onshape").build())
                     .addException(ClassName.get("com.onshape.api.exceptions", "OnshapeException"))
                     .addStatement("return (previous==null ? null : onshape.get(previous, " + newClassName + ".class))")
-                    .addJavadoc("Fetch previous page of results\n@return Previous page of results or null if this is first page\n")
+                    .addJavadoc("Fetch previous page of results\n@param onshape The Onshape client object.\n@return Previous page of results or null if this is first page.\n@throws OnshapeException On HTTP or serialization error.\n")
                     .build());
         }
         if (hasUrlField) {
@@ -362,7 +362,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                     .addParameter(ParameterSpec.builder(ClassName.get("com.onshape.api", "Onshape"), "onshape").build())
                     .addException(ClassName.get("com.onshape.api.exceptions", "OnshapeException"))
                     .addStatement("return onshape.get(href, " + newClassName + ".class)")
-                    .addJavadoc("Refresh this page of results\n@return Updated response\n")
+                    .addJavadoc("Refresh this page of results\n@param onshape The Onshape client object.\n@return Updated response.\n@throws OnshapeException On HTTP or serialization error.\n")
                     .build());
         }
         responseBuilder = GetterSpec.forType(responseBuilder).build();
@@ -388,5 +388,9 @@ public class JavaEndpointTarget extends EndpointTarget {
         } catch (IOException ex) {
             throw new GeneratorException("Error while writing class", ex);
         }
+    }
+
+    void createTest() {
+
     }
 }
