@@ -120,6 +120,8 @@ public class JavaEndpointTarget extends EndpointTarget {
         }
         requestBuilder = GetterSpec.forType(requestBuilder).build();
         addToString(requestBuilder);
+
+        // callBuilder is call(...) method
         MethodSpec.Builder callBuilder = MethodSpec.methodBuilder("call")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addException(ClassName.get("com.onshape.api.exceptions", "OnshapeException"))
@@ -132,6 +134,20 @@ public class JavaEndpointTarget extends EndpointTarget {
                 .append(" method, ")
                 .append(getEndpoint().getDescription())
                 .append("\n@return Response object\n@throws OnshapeException On HTTP or serialization error\n");
+        // callBuilder2 is call(OnshapeDocument) method
+        MethodSpec.Builder callBuilder2 = MethodSpec.methodBuilder("call")
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addException(ClassName.get("com.onshape.api.exceptions", "OnshapeException"))
+                .addParameter(ClassName.get("com.onshape.api.types", "OnshapeDocument"), "document")
+                .returns(ClassName.get("com.onshape.api.responses", groupName + Utilities.toCamelCase(getEndpoint().getName()) + "Response"));
+        StringBuilder callStatement2 = new StringBuilder("return onshape.call(\"")
+                .append(getEndpoint().getType()).append("\", \"").append(getEndpoint().getUrl())
+                .append("\", build(), onshape.buildMap(");
+        StringBuilder javadoc2 = new StringBuilder("Calls ")
+                .append(getEndpoint().getName())
+                .append(" method, ")
+                .append(getEndpoint().getDescription())
+                .append("\n@param document Document object from Onshape URL.\n@return Response object\n@throws OnshapeException On HTTP or serialization error\n");
 
         if (getEndpoint().getParameters().getFields().containsKey("PathParam")) {
             Collection<Field> pathParams = getEndpoint().getParameters().getFields().get("PathParam");
@@ -141,16 +157,20 @@ public class JavaEndpointTarget extends EndpointTarget {
                 if ("wvm".equals(name)) {
                     if (i > 0) {
                         callStatement.append(", ");
+                        callStatement2.append(", ");
                     }
                     callStatement.append("\"wvmType\", wvmType");
+                    callStatement2.append("\"wvmType\", WVM.Workspace");
                     callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
                     javadoc.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
                     i++;
                 } else if ("wv".equals(name)) {
                     if (i > 0) {
                         callStatement.append(", ");
+                        callStatement2.append(", ");
                     }
                     callStatement.append("\"wvType\", wvType");
+                    callStatement2.append("\"wvType\", WV.Workspace");
                     callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
                     javadoc.append("\n@param wvType Type of Workspace or Version\n");
                     i++;
@@ -158,15 +178,33 @@ public class JavaEndpointTarget extends EndpointTarget {
                 Class<?> type = JavaLibraryTarget.guessClass(field.getType());
                 if (i > 0) {
                     callStatement.append(", ");
+                    callStatement2.append(", ");
                 }
                 callStatement.append('"').append(name).append("\", ").append(name);
                 callBuilder.addParameter(JavaLibraryTarget.getTypeName(type), name);
                 javadoc.append("\n@param ").append(name)
                         .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
+                switch (name) {
+                    case "did":
+                        callStatement2.append("\"did\", document.getDocumentId()");
+                        break;
+                    case "eid":
+                        callStatement2.append("\"eid\", document.getElementId()");
+                        break;
+                    case "wvm":
+                        callStatement2.append("\"wvm\", document.getWorkspaceId()");
+                        break;
+                    default:
+                        callStatement2.append('"').append(name).append("\", ").append(name);
+                        callBuilder2.addParameter(JavaLibraryTarget.getTypeName(type), name);
+                        javadoc2.append("\n@param ").append(name)
+                                .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
+                }
                 i++;
             }
         }
         callStatement.append("), onshape.buildMap(");
+        callStatement2.append("), onshape.buildMap(");
         if (getEndpoint().getParameters().getFields().containsKey("QueryParam")) {
             Collection<Field> queryParams = getEndpoint().getParameters().getFields().get("QueryParam");
             int i = 0;
@@ -199,10 +237,14 @@ public class JavaEndpointTarget extends EndpointTarget {
         callStatement.append("), ").append("com.onshape.api.responses.").append(groupName).append(Utilities.toCamelCase(getEndpoint().getName())).append("Response.class)");
         callBuilder.addStatement(callStatement.toString());
         callBuilder.addJavadoc(javadoc.toString());
+        callStatement2.append("), ").append("com.onshape.api.responses.").append(groupName).append(Utilities.toCamelCase(getEndpoint().getName())).append("Response.class)");
+        callBuilder2.addStatement(callStatement2.toString());
+        callBuilder2.addJavadoc(javadoc2.toString());
 
         requestBuilder = BuilderSpec.forType("com.onshape.api.requests", requestBuilder)
                 .withBuildMethodModifiers(Modifier.PRIVATE)
                 .withAdditionalMethod(callBuilder.build())
+                .withAdditionalMethod(callBuilder2.build())
                 .withAdditionalField(FieldSpec.builder(ClassName.get("com.onshape.api", "Onshape"), "onshape").build())
                 .build();
 
