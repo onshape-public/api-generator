@@ -1,13 +1,21 @@
 'use strict';
 var fs = require('fs');
 
-
+// Update the default opts arg with the user-specified opts.
+const defaults = {
+    api_data_file_path: './api_data/apiData.json',
+    target: 'prod',
+    api_keys: require('./apikey'),
+    language: 'Python',
+    includeInternalString: 'both',
+    data: [],
+    optionalParentDirectory: './generated'
+};
 
 module.exports = function (grunt) {
     grunt.initConfig({
         task: {}
     });
-    const defaults = require('./generateApiWrapper').defaults;
     grunt.registerTask('downloadApiDefinition', function () {
       // Update the default opts arg with the user-specified opts.
         let opts = flagsToFields(defaults);
@@ -22,7 +30,7 @@ module.exports = function (grunt) {
                 // opts.data = require("./apiData");
                 client.getEndpoints(function (data) {
                     console.log(data);
-                    fs.writeFile("./apiData.json", data, function(err) {
+                    fs.writeFile(opts.api_data_file_path, data, function(err) {
                         if(err) {
                             return console.log(err);
                         }

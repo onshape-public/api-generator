@@ -605,21 +605,22 @@ class Converter:
 
 
 if __name__ == "__main__":
-    converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
+    converter = Converter(path='./api_data/apiData.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
                           config={'include_required': True, 'include_tags': True, 'inline_models': False})
     yaml.dump(converter.converted_dict, open(converter.path + "Auto.yaml", "w"))
-    converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
-                          config={'include_required': True, 'include_tags': True, 'inline_models': False})
-    d = {}
-    converter_inline = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
-                          config={'include_required': True, 'include_tags': True, 'inline_models': True})
-    for path, path_v in converter_inline.converted_dict['paths'].items():
-        v = {}
-        for method, method_v in path_v.items():
-            t = None
-            if 'responses' in method_v and '200' in method_v['responses'] and 'schema' in method_v['responses']['200'] \
-                    and 'type' in method_v['responses']['200']['schema']:
-                t = method_v['responses']['200']['schema']['type']
-            v[method] = t
-        d[path] = v
-    yaml.dump(d, open(converter_inline.path + "PathsAndMethods.yaml", "w"))
+
+    # converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
+    #                       config={'include_required': True, 'include_tags': True, 'inline_models': False})
+    # d = {}
+    # converter_inline = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
+    #                       config={'include_required': True, 'include_tags': True, 'inline_models': True})
+    # for path, path_v in converter_inline.converted_dict['paths'].items():
+    #     v = {}
+    #     for method, method_v in path_v.items():
+    #         t = None
+    #         if 'responses' in method_v and '200' in method_v['responses'] and 'schema' in method_v['responses']['200'] \
+    #                 and 'type' in method_v['responses']['200']['schema']:
+    #             t = method_v['responses']['200']['schema']['type']
+    #         v[method] = t
+    #     d[path] = v
+    # yaml.dump(d, open(converter_inline.path + "PathsAndMethods.yaml", "w"))

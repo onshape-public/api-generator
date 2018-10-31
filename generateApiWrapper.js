@@ -1,16 +1,6 @@
-// Update the default opts arg with the user-specified opts.
-const defaults = {
-    target: 'prod',
-    api_keys: require('./apikey'),
-    language: 'Python',
-    includeInternalString: 'both',
-    data: [],
-    optionalParentDirectory: './generated'
-};
-
 function getEndpointsPromise(opts) {
     return new Promise(function (resolve, reject) {
-        opts.data = require("./api_data/apiData");
+        opts.data = require(opts.api_data_file_path);
         resolve(opts);
     })
 }
@@ -65,8 +55,7 @@ function buildWrapper(opts) {
 }
 
 module.exports = {
-    buildWrapper: buildWrapper,
-    defaults: defaults
+    buildWrapper: buildWrapper
 };
 
 // buildWrapper(defaults).catch(function(data) {console.log(data)});
