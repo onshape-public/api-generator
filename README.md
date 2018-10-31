@@ -3,13 +3,16 @@ This repo is responsible for generating an OpenAPI specification for the Onshape
 
 The most up-to-date version of the spec can always be found [here](https://github.com/onshape-public/api-generator/releases/latest).
 
-Additionally, this repo is responsible for notifying various clients when the OpenAPI specification is published. Notification consists of uploading an "api.yaml" file that declares the API version and the link to the relevant OpenAPI link like this:
+## Adding a new auto-generating client
+This repo is responsible for kicking off the auto-generation of all dependent repos. When a new version of Onshape is released, the following happens:
 
-```YAML
-version: 1.87
-openApiSpec: https://github.com/onshape-public/api-generator
+1. After a successful new API release, the api-generator grunt task 'downloadApiDefinition' is run internally to generate the relevant OpenAPI spec, and then the parser task is run to parse the API definition into a valid OpenAPI spec. 
+2. The resulting OpenAPI spec is validated using the online validator [here](http://online.swagger.io/validator), and if valid, continue to step 3.
+3. The spec is committed to multiple "subscribing" repos (such as the various client SDKs) under their master branch in the root and labeled as "onshape_openapi_spec.yaml"
+4. Each 'subscribing' repo creates a client SDK as each sees fit, usually using a CI tool such as Travis to run swagger codegen and tag the result, as described in [Incorporating the client with CI tools](Incorporating-the-client-with-CI-tools)
 
-```
+Through this process, we can always see the spec used to generate the client directly within the client source code, and we can easily add new clients to be notified when a new release happens.
+
 ## Incorporating the client with CI tools
 The file is uploaded to the master branch of each of the clients. Each is responsible for taking the file and using it to update the relevant client. In general, the Travis file should perform the following:
 1. Load information from the api.yaml file into the environment

@@ -396,18 +396,40 @@ yaml = YAML()
              "field": "parts.0.isMesh",
              "description": "Whether the part is a mesh"
          }
-     ], {'type': 'object', 'properties': {'parts': {'type': 'array',
-                                                    'items': {'type': 'object', 'description': 'Individual part',
-                                                              'properties': {'partId': {'type': 'string',
-                                                                                        'description': 'Part ID'},
+     ], {'type': 'object', 'properties': {'parts': {'items': {'type': 'object', 'description': 'Individual part',
+                                                              'properties': {'bodyType': {'type': 'string',
+                                                                                          'description': "Part body type; can be 'solid', 'surface', or 'wire'"},
                                                                              'name': {'type': 'string',
                                                                                       'description': 'Part name'},
+                                                                             'partId': {'type': 'string',
+                                                                                        'description': 'Part ID'},
                                                                              'partQuery': {'type': 'string',
                                                                                            'description': 'Onshape internal use'},
-                                                                             'elementId': {'type': 'string',
-                                                                                           'description': 'Element ID'},
-                                                                             'isHidden': {'type': 'boolean',
-                                                                                          'description': 'Part visibility'},
+                                                                             'material': {'type': 'object',
+                                                                                          'description': 'Part material, if assigned',
+                                                                                          'properties': {
+                                                                                              'libraryName': {
+                                                                                                  'type': 'string',
+                                                                                                  'description': 'Name of the material library'},
+                                                                                              'id': {'type': 'string',
+                                                                                                     'description': 'Id of the material'},
+                                                                                              'properties': {'items': {
+                                                                                                  'type': 'object',
+                                                                                                  'properties': {
+                                                                                                      'units': {
+                                                                                                          'type': 'string',
+                                                                                                          'description': 'Units of the material property value'},
+                                                                                                      'name': {
+                                                                                                          'type': 'string',
+                                                                                                          'description': 'Material property name'},
+                                                                                                      'value': {
+                                                                                                          'type': 'number',
+                                                                                                          'description': 'Material property value'},
+                                                                                                      'description': {
+                                                                                                          'type': 'string',
+                                                                                                          'description': 'Material property description'}}},
+                                                                                                             'type': 'array',
+                                                                                                             'description': 'Properties of the material'}}},
                                                                              'appearance': {'type': 'object',
                                                                                             'description': 'Part appearance',
                                                                                             'properties': {'opacity': {
@@ -420,50 +442,26 @@ yaml = YAML()
                                                                                                                'type': 'object',
                                                                                                                'description': 'Part color',
                                                                                                                'properties': {
-                                                                                                                   'red': {
-                                                                                                                       'type': 'number',
-                                                                                                                       'description': 'Red RGB value'},
                                                                                                                    'blue': {
                                                                                                                        'type': 'number',
                                                                                                                        'description': 'Blue RGB value'},
                                                                                                                    'green': {
                                                                                                                        'type': 'number',
-                                                                                                                       'description': 'Green RGB value'}}}}},
-                                                                             'material': {'type': 'object',
-                                                                                          'description': 'Part material, if assigned',
-                                                                                          'properties': {
-                                                                                              'libraryName': {
-                                                                                                  'type': 'string',
-                                                                                                  'description': 'Name of the material library'},
-                                                                                              'id': {'type': 'string',
-                                                                                                     'description': 'Id of the material'},
-                                                                                              'properties': {
-                                                                                                  'type': 'array',
-                                                                                                  'items': {
-                                                                                                      'type': 'object',
-                                                                                                      'properties': {
-                                                                                                          'name': {
-                                                                                                              'type': 'string',
-                                                                                                              'description': 'Material property name'},
-                                                                                                          'units': {
-                                                                                                              'type': 'string',
-                                                                                                              'description': 'Units of the material property value'},
-                                                                                                          'description': {
-                                                                                                              'type': 'string',
-                                                                                                              'description': 'Material property description'},
-                                                                                                          'value': {
-                                                                                                              'type': 'number',
-                                                                                                              'description': 'Material property value'}}},
-                                                                                                  'description': 'Properties of the material'}}},
-                                                                             'customProperties': {'type': 'object',
-                                                                                                  'description': 'Custom properties, if any'},
+                                                                                                                       'description': 'Green RGB value'},
+                                                                                                                   'red': {
+                                                                                                                       'type': 'number',
+                                                                                                                       'description': 'Red RGB value'}}}}},
                                                                              'microversionId': {'type': 'string',
                                                                                                 'description': 'Document microversion ID'},
-                                                                             'bodyType': {'type': 'string',
-                                                                                          'description': "Part body type; can be 'solid', 'surface', or 'wire'"},
+                                                                             'customProperties': {'type': 'object',
+                                                                                                  'description': 'Custom properties, if any'},
                                                                              'isMesh': {'type': 'boolean',
-                                                                                        'description': 'Whether the part is a mesh'}}},
-                                                    'description': 'Parts list'}}},
+                                                                                        'description': 'Whether the part is a mesh'},
+                                                                             'isHidden': {'type': 'boolean',
+                                                                                          'description': 'Part visibility'},
+                                                                             'elementId': {'type': 'string',
+                                                                                           'description': 'Element ID'}}},
+                                                    'type': 'array', 'description': 'Parts list'}}},
      ['parts'], True),
     # Get external data
     ([
@@ -474,23 +472,24 @@ yaml = YAML()
              "field": "data",
              "description": "Requested data"
          }
-     ], {'description': 'Requested data', 'type': 'data'}, None, True),
+     ], {'type': 'object', 'properties': {'data': {'type': 'null', 'description': 'Requested data'}}}, ['data'], True),
     # Export part to parasolid
     ([
-              {
-                "group": "Response",
-                "type": "File",
-                "optional": False,
-                "field": "file",
-                "description": "The exported document, as an attachment (could be text or binary depending on\n            parameters)"
-              }
-            ], {'type': 'file', 'description': 'The exported document, as an attachment (could be text or binary depending on\n            parameters)'}, None, True)
+         {
+             "group": "Response",
+             "type": "File",
+             "optional": False,
+             "field": "file",
+             "description": "The exported document, as an attachment (could be text or binary depending on\n            parameters)"
+         }
+     ], {'type': 'file', 'description': 'The exported document, as an attachment (could be text or binary depending on\n            parameters)'},
+     ['file'], True)
 ])
 def test_convert_responses_to_models(response_list, expected, required_expected, include_required):
     scheme_dict, required = Converter.convert_response_list_to_definition(response_list,
                                                                           include_required=include_required)
-    assert scheme_dict == expected
-    assert required == required_expected
+    assert expected == scheme_dict
+    assert required_expected == required
 
 
 def test_nested_set_update():
@@ -547,8 +546,16 @@ def test_add_required():
     Converter.add_required(dic, keys, value)
     assert dic == {'a': {'b': {'c': 'c.a', 'required': ['We need this!']}}}
 
-def test_expand_dictionary():
-    d= {'a': {'b': {'c': {'$ref': '#/a.2'}}}, 'a.2': 'answer'}
-    d_actual = Converter.expand_yaml(d)
-    d_expected = {'a': {'b': {'c': 'answer'}}, 'a.2': 'answer'}
-    assert d_actual == d_expected
+
+# def test_expand_dictionary():
+#     d = {'a': {'b': {'c': {'$ref': '#/a.2'}}}, 'a.2': 'answer'}
+#     d_actual = Converter.expand_yaml(d)
+#     d_expected = {'a': {'b': {'c': 'answer'}}, 'a.2': 'answer'}
+#     assert d_actual == d_expected
+
+def test_nondestructive_dict_update():
+    d = {'a': 0, 'b': 1, 'nested': {'a': 0, 'b': 1}}
+    d_add = {'a': 3, 'b': 7, 'c': 4}
+    expected = {'a': 0, 'b': 1, 'nested': {'a': 0, 'b': 1, 'c': 4}}
+    Converter.nondestructive_update_dict(d['nested'], d_add)
+    assert d == expected

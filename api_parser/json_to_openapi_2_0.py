@@ -19,7 +19,7 @@ class Converter:
 
     default_config = {'visible_permissions': ['public'], 'show_deprecated': False,
                       'include_required': False, 'include_tags': False, 'inline_models': True,
-                      'link_response_models': False}
+                      'link_response_models': True}
     """A configuration dictionary that can get altered as needed and passed into the constructor with the 'config' 
     keyword. These are the following keys:
     
@@ -224,14 +224,28 @@ class Converter:
                 paths[path].update({method: v})
         return paths
 
+    @staticmethod
+    def nondestructive_update_dict(d , d_add):
+        """Copy all keys from d_add into d that aren't already in d"""
+        for k, v in d_add.items():
+            if k not in d.keys():
+                d[k] = v
+
     @property
     def converted_dict(self):
         """The dictionary in the form that Swagger expects."""
         d = self.template_dict
-        paths = self.paths_dict
-        d['paths'] = paths
-        if not self.config['inline_models']:
-            d['definitions'] = self.models_dict
+        if not d['paths']:
+            d['paths'] = {}
+        if not d['definitions']:
+            d['definitions'] = {}
+        # Update the methods within the paths if present in the template (template takes priority.)
+        for path, path_v in self.paths_dict.items():
+            if path in d['paths']:
+                Converter.nondestructive_update_dict(d['paths'][path], self.paths_dict[path])
+            else:
+                d['paths'][path] = self.paths_dict[path]
+        Converter.nondestructive_update_dict(d['definitions'], self.models_dict)
         return d
 
     # @staticmethod
@@ -591,6 +605,21 @@ class Converter:
 
 
 if __name__ == "__main__":
-    converter = Converter(path='./api_data/apiDataOnlyAccounts.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
+    converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
                           config={'include_required': True, 'include_tags': True, 'inline_models': False})
     yaml.dump(converter.converted_dict, open(converter.path + "Auto.yaml", "w"))
+    converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
+                          config={'include_required': True, 'include_tags': True, 'inline_models': False})
+    d = {}
+    converter_inline = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
+                          config={'include_required': True, 'include_tags': True, 'inline_models': True})
+    for path, path_v in converter_inline.converted_dict['paths'].items():
+        v = {}
+        for method, method_v in path_v.items():
+            t = None
+            if 'responses' in method_v and '200' in method_v['responses'] and 'schema' in method_v['responses']['200'] \
+                    and 'type' in method_v['responses']['200']['schema']:
+                t = method_v['responses']['200']['schema']['type']
+            v[method] = t
+        d[path] = v
+    yaml.dump(d, open(converter_inline.path + "PathsAndMethods.yaml", "w"))
