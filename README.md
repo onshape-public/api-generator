@@ -7,7 +7,7 @@ The most up-to-date version of the spec can always be found [here](https://githu
 To download the API definition, you'll have to use API keys. The gruntfile expects the API keys to be located within the apikey.js file in the root. Modify the apikey.example.js to include your keys, then rename it to apikey.js. 
 The API definition should be downloaded with the downloadApiDefinition grunt task, which can be run with:
 `grunt downloadApiDefinition`
-By defualt, this will place the downloaded file in the api_data folder with the name "apiData.json".
+By default, this will place the downloaded file in the api_data folder with the name "apiData.json".
 
 ## Running the converter
 To run the parser, update and run "python api_parser/json_to_openapi_2_0.py". So far, this command doesn't take command line arguments and you will therefore need to change the hardcoded values under the 'if __name__=="__main__": ' section at the end. There are a number of possible configurations that can be set on the converter. The default output location for the generated OpenAPI definition is <soure_file_path>Auto.yaml.

@@ -547,12 +547,6 @@ def test_add_required():
     assert dic == {'a': {'b': {'c': 'c.a', 'required': ['We need this!']}}}
 
 
-# def test_expand_dictionary():
-#     d = {'a': {'b': {'c': {'$ref': '#/a.2'}}}, 'a.2': 'answer'}
-#     d_actual = Converter.expand_yaml(d)
-#     d_expected = {'a': {'b': {'c': 'answer'}}, 'a.2': 'answer'}
-#     assert d_actual == d_expected
-
 def test_nondestructive_dict_update():
     d = {'a': 0, 'b': 1, 'nested': {'a': 0, 'b': 1}}
     d_add = {'a': 3, 'b': 7, 'c': 4}

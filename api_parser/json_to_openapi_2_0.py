@@ -260,31 +260,6 @@ class Converter:
         d["info"]["version"] = self.implementation_version
         return d
 
-    # @staticmethod
-    # def expand_yaml(d):
-    #     """Expand all the refs in a yaml dictionary"""
-    #
-    #     l = Converter.gen_dict_extract('$ref', d)
-    #     for k in l:
-    #         Converter.nested_set_update(d, Converter.nested_get(k.split('/')[1:], d),d)
-    #     return expanded_d
-    #
-    # @staticmethod
-    # def gen_dict_extract(key, var):
-    #     """find all instances of a key that is equal to key within var and return a map of
-    #     {'path_to_found_key':'key_value'}"""
-    #     if hasattr(var, 'iteritems'):
-    #         for k, v in var.iteritems():
-    #             if k == key:
-    #                 yield v
-    #             if isinstance(v, dict):
-    #                 for result in Converter.gen_dict_extract(key, v):
-    #                     yield result
-    #             elif isinstance(v, list):
-    #                 for d in v:
-    #                     for result in Converter.gen_dict_extract(key, d):
-    #                         yield result
-
     @staticmethod
     def convert_response_list_to_definition(response_list, include_required=True, include_required_recursive=False):
         """Convert a response list, such as:
@@ -539,7 +514,7 @@ class Converter:
         """
         "/accounts/:aid/purchases/:pid" -->  "/accounts/{aid}/purchases/{pid}"
         """
-        return re.sub(r":(\w*)", r"{\1}", path)
+        return re.sub(r":(\w+)", r"{\1}", path)
 
     @staticmethod
     def convert_type(field_type):
@@ -620,19 +595,3 @@ if __name__ == "__main__":
     converter = Converter(path='./api_data/apiData.json', template_path='./api_data_templates/onshapeOpenApiSpecTemplate.yaml',
                           config={'include_required': True, 'include_tags': True, 'inline_models': False})
     yaml.dump(converter.converted_dict, open(converter.path + "Auto.yaml", "w"))
-
-    # converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data_templates/onshapeOpenApiSpecTemplate.yaml',
-    #                       config={'include_required': True, 'include_tags': True, 'inline_models': False})
-    # d = {}
-    # converter_inline = Converter(path='./api_data/apiDataAll.json', template_path='./api_data_templates/onshapeOpenApiSpecTemplate.yaml',
-    #                       config={'include_required': True, 'include_tags': True, 'inline_models': True})
-    # for path, path_v in converter_inline.converted_dict['paths'].items():
-    #     v = {}
-    #     for method, method_v in path_v.items():
-    #         t = None
-    #         if 'responses' in method_v and '200' in method_v['responses'] and 'schema' in method_v['responses']['200'] \
-    #                 and 'type' in method_v['responses']['200']['schema']:
-    #             t = method_v['responses']['200']['schema']['type']
-    #         v[method] = t
-    #     d[path] = v
-    # yaml.dump(d, open(converter_inline.path + "PathsAndMethods.yaml", "w"))

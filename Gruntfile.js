@@ -58,16 +58,6 @@ module.exports = function (grunt) {
                             resolve(d);
                         });
                     });
-                    // client.onshape.get({path: "/api/build"}, function (version) {
-                    //     console.log(version);
-                    //     fs.writeFile(opts.api_data_file_path, {data: data, version: version}, function (err) {
-                    //         if (err) {
-                    //             return console.log(err);
-                    //         }
-                    //         console.log("The file was saved!");
-                    //         resolve(data);
-                    //     });
-                    // });
                 });
             })
         }

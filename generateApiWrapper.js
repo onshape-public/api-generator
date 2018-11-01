@@ -7,7 +7,7 @@ function getEndpointsPromise(opts) {
 
 function optsCheck(opts) {
     return new Promise(function (resolve, reject) {
-            // opts.language is one of: python, C#
+            // opts.language is one of: python
             // opts.includeInternalString is one of: yes, no, both
             opts = {
                 ...defaults,
@@ -57,5 +57,3 @@ function buildWrapper(opts) {
 module.exports = {
     buildWrapper: buildWrapper
 };
-
-// buildWrapper(defaults).catch(function(data) {console.log(data)});
