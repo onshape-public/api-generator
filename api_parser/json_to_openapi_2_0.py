@@ -617,14 +617,14 @@ class Converter:
 
 
 if __name__ == "__main__":
-    converter = Converter(path='./api_data/apiData.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
+    converter = Converter(path='./api_data/apiData.json', template_path='./api_data_templates/onshapeOpenApiSpecTemplate.yaml',
                           config={'include_required': True, 'include_tags': True, 'inline_models': False})
     yaml.dump(converter.converted_dict, open(converter.path + "Auto.yaml", "w"))
 
-    # converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
+    # converter = Converter(path='./api_data/apiDataAll.json', template_path='./api_data_templates/onshapeOpenApiSpecTemplate.yaml',
     #                       config={'include_required': True, 'include_tags': True, 'inline_models': False})
     # d = {}
-    # converter_inline = Converter(path='./api_data/apiDataAll.json', template_path='./api_data/onshapeOpenApiSpecTemplate.yaml',
+    # converter_inline = Converter(path='./api_data/apiDataAll.json', template_path='./api_data_templates/onshapeOpenApiSpecTemplate.yaml',
     #                       config={'include_required': True, 'include_tags': True, 'inline_models': True})
     # for path, path_v in converter_inline.converted_dict['paths'].items():
     #     v = {}
