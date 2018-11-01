@@ -16,18 +16,18 @@ const defaults = {
 };
 
 function ensureDirectoryExistence(filePath) {
-  var dirname = path.dirname(filePath);
-  if (fs.existsSync(dirname)) {
-    return true;
-  }
-  ensureDirectoryExistence(dirname);
-  fs.mkdirSync(dirname);
+    var dirname = path.dirname(filePath);
+    if (fs.existsSync(dirname)) {
+        return true;
+    }
+    ensureDirectoryExistence(dirname);
+    fs.mkdirSync(dirname);
 }
 
 
 module.exports = function (grunt) {
     grunt.initConfig({
-        task: {}
+        task: {},
     });
     grunt.registerTask('downloadApiDefinition', function () {
         // Update the default opts arg with the user-specified opts.
@@ -42,7 +42,7 @@ module.exports = function (grunt) {
                     reject(Error("The target, " + opts.target + " doesn't exist in the passed in apikeys."));
                 }
                 client.getEndpoints(function (data) {
-                    console.log("Endpoint data received, first 100 chars of endpoint definition: " + data.slice(0,100));
+                    console.log("Endpoint data received, first 100 chars of endpoint definition: " + data.slice(0, 100));
                     request('https://cad.onshape.com/api/build', {json: true}, (err, res, version) => {
                         if (err) {
                             return console.log(err);
@@ -64,22 +64,6 @@ module.exports = function (grunt) {
 
         getEndpointsPromise(opts).then(done);
     });
-    grunt.registerTask('generateApiWrapper',
-        'Generates a wrapper library around Onshape\'s API for the specified language', function () {
-            // Get defaults and modify as needed from the grunt options flags.
-            let opts = flagsToFields(defaults);
-            // Use done in order to let grunt wait for everything to finish.
-            const done = this.async();
-
-            // Call the generator
-            const buildWrapper = require('./generateApiWrapper').buildWrapper;
-            buildWrapper(opts).catch(function (data) {
-                console.log(data)
-            });
-        }
-    );
-    grunt.registerTask('downloadAndGenerateApiWrapper', ['downloadApiDefinition', 'generateApiWrapper']);
-
     function flagsToFields(defaults) {
         // For converting grunt flags to keys of a dictionary
         let userOpts = {};
@@ -97,6 +81,8 @@ module.exports = function (grunt) {
             ...userOpts
         };
     }
+
+    grunt.loadNpmTasks('grunt-run');
 };
 
 

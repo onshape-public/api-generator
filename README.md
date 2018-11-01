@@ -10,7 +10,11 @@ The API definition should be downloaded with the downloadApiDefinition grunt tas
 By default, this will place the downloaded file in the api_data folder with the name "apiData.json".
 
 ## Running the converter
-To run the parser, update and run "python api_parser/json_to_openapi_2_0.py". So far, this command doesn't take command line arguments and you will therefore need to change the hardcoded values under the 'if __name__=="__main__": ' section at the end. There are a number of possible configurations that can be set on the converter. The default output location for the generated OpenAPI definition is <soure_file_path>Auto.yaml.
+You'll first need to download the required packages with pipenv. To install and configure your virtual environment with pipenv, run the following:
+1. `pip install pipenv` - install pipenv
+2. `pipenv install . --dev` - use pipenv to install the required and dev dependencies
+3. `pipenv shell` - start the created virtual environment
+To run the parser, update the source endpoints data, go into the pipenv shell as described above, and run `python api_parser/json_to_openapi_2_0.py`. So far, this command doesn't take command line arguments and you will therefore need to change the hardcoded values under the 'if __name__=="__main__": ' section at the end. There are a number of possible configurations that can be set on the converter. The default output location for the generated OpenAPI definition is <soure_file_path>Auto.yaml.
 
 ## Validating the generated OpenAPI definition
 To validate the generated OpenAPI definition, copy and paste the code [here](http://editor.swagger.io/).
