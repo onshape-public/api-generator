@@ -23,6 +23,7 @@
  */
 package com.onshape.api.generator;
 
+import com.google.common.io.Files;
 import com.onshape.api.generator.targets.GroupTarget;
 import com.onshape.api.generator.targets.EndpointTarget;
 import com.onshape.api.generator.targets.LibraryTarget;
@@ -39,7 +40,7 @@ import java.util.HashMap;
 
 /**
  * Generator for API clients from Onshape JSON endpoint specification.
- * 
+ *
  * @author Peter Harman peter.harman@cae.tech
  */
 public class Generator {
@@ -55,18 +56,22 @@ public class Generator {
             throw new IOException("No base directory specified");
         }
         Generator generator = new Generator();
-        JavaLibraryTarget libraryTarget = new JavaLibraryTarget(new File(args[0]), "com.onshape.api");
-        generator.generate(libraryTarget);
+        File targetDir = new File(args[0]);
+        File workingDir = Files.createTempDir();
+        JavaLibraryTarget libraryTarget = new JavaLibraryTarget();
+        generator.generate(targetDir, workingDir, libraryTarget);
     }
-    
+
     /**
      * Generate code with the given target libraries.
-     * 
-     * @param targets
+     *
+     * @param targetDir The /target directory in the api-generator Maven project
+     * @param workingDir A working directory for git repos to be cloned
+     * @param targets Instances of LibraryTarget used for code generation
      * @throws OnshapeException
-     * @throws GeneratorException 
+     * @throws GeneratorException
      */
-    void generate(LibraryTarget... targets) throws OnshapeException, GeneratorException {
+    void generate(File targetDir, File workingDir, LibraryTarget... targets) throws OnshapeException, GeneratorException {
         String accessKey = System.getenv("ONSHAPE_API_ACCESSKEY");
         String secretKey = System.getenv("ONSHAPE_API_SECRETKEY");
         if ((accessKey == null || accessKey.isEmpty()) || (secretKey == null || secretKey.isEmpty())) {
@@ -77,7 +82,7 @@ public class Generator {
         OnshapeVersion buildVersion = client.version();
         Group[] apiGroups = client.call("GET", "/endpoints", null, new HashMap<>(), new HashMap<>(), Group[].class);
         for (LibraryTarget target : targets) {
-            target.start(buildVersion);
+            target.start(targetDir, workingDir, buildVersion);
             for (Group group : apiGroups) {
                 generateGroup(target, group);
             }
@@ -87,10 +92,10 @@ public class Generator {
 
     /**
      * Generate code to access the given group of endpoints.
-     * 
+     *
      * @param target
      * @param group
-     * @throws GeneratorException 
+     * @throws GeneratorException
      */
     void generateGroup(LibraryTarget target, Group group) throws GeneratorException {
         GroupTarget groupTarget = target.group(group);
@@ -103,14 +108,15 @@ public class Generator {
 
     /**
      * Generate code to access the given endpoint.
-     * 
+     *
      * @param groupTarget
      * @param group
      * @param endpoint
-     * @throws GeneratorException 
+     * @throws GeneratorException
      */
     void generateEndpoint(GroupTarget groupTarget, Group group, Endpoint endpoint) throws GeneratorException {
         EndpointTarget endpointTarget = groupTarget.endpoint(endpoint);
         endpointTarget.create();
     }
+
 }

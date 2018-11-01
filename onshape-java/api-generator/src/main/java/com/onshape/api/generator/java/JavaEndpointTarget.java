@@ -194,6 +194,9 @@ public class JavaEndpointTarget extends EndpointTarget {
                     case "wvm":
                         callStatement2.append("\"wvm\", document.getWorkspaceId()");
                         break;
+                    case "wv":
+                        callStatement2.append("\"wv\", document.getWorkspaceId()");
+                        break;
                     default:
                         callStatement2.append('"').append(name).append("\", ").append(name);
                         callBuilder2.addParameter(JavaLibraryTarget.getTypeName(type), name);
