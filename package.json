@@ -5,7 +5,8 @@
   "main": "Gruntfile.js",
   "dependencies": {
     "@onshape/apikey": "^1.0.0",
-    "npm": "^6.4.1"
+    "npm": "^6.4.1",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "grunt": "^1.0.3"

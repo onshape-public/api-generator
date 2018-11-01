@@ -1,5 +1,7 @@
 'use strict';
 var fs = require('fs');
+// Using request instead of Onshape because the authorization headers throw a 406
+const request = require('request');
 
 // Update the default opts arg with the user-specified opts.
 const defaults = {
@@ -12,35 +14,53 @@ const defaults = {
     optionalParentDirectory: './generated'
 };
 
+
 module.exports = function (grunt) {
     grunt.initConfig({
         task: {}
     });
     grunt.registerTask('downloadApiDefinition', function () {
-      // Update the default opts arg with the user-specified opts.
+        // Update the default opts arg with the user-specified opts.
         let opts = flagsToFields(defaults);
+        const apiKey = opts.api_keys[opts.target];
+        const client = require('@onshape/apikey/lib/app')(apiKey);
         const done = this.async();
+
         function getEndpointsPromise(opts) {
             return new Promise(function (resolve, reject) {
                 if (!(opts.target in opts.api_keys)) {
                     reject(Error("The target, " + opts.target + " doesn't exist in the passed in apikeys."));
                 }
-                const apiKey = opts.api_keys[opts.target];
-                const client = require('@onshape/apikey/lib/app')(apiKey);
-                // opts.data = require("./apiData");
                 client.getEndpoints(function (data) {
-                    console.log(data);
-                    fs.writeFile(opts.api_data_file_path, data, function(err) {
-                        if(err) {
+                    console.log("Endpoint data received, first 100 chars of endpoint definition: " + data.slice(0,100));
+                    request('https://cad.onshape.com/api/build', {json: true}, (err, res, version) => {
+                        if (err) {
                             return console.log(err);
                         }
-
-                        console.log("The file was saved!");
-                        resolve(data);
+                        console.log("Version data recieved, implementation version is: " + version["Implementation-Version"]);
+                        const d = {groups: JSON.parse(data), version: version}
+                        fs.writeFile(opts.api_data_file_path, JSON.stringify(d), function (err) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                            console.log("The file was saved!");
+                            resolve(d);
+                        });
                     });
+                    // client.onshape.get({path: "/api/build"}, function (version) {
+                    //     console.log(version);
+                    //     fs.writeFile(opts.api_data_file_path, {data: data, version: version}, function (err) {
+                    //         if (err) {
+                    //             return console.log(err);
+                    //         }
+                    //         console.log("The file was saved!");
+                    //         resolve(data);
+                    //     });
+                    // });
                 });
             })
         }
+
         getEndpointsPromise(opts).then(done);
     });
     grunt.registerTask('generateApiWrapper',
@@ -52,10 +72,13 @@ module.exports = function (grunt) {
 
             // Call the generator
             const buildWrapper = require('./generateApiWrapper').buildWrapper;
-            buildWrapper(opts).catch(function(data) {console.log(data)});
+            buildWrapper(opts).catch(function (data) {
+                console.log(data)
+            });
         }
     );
     grunt.registerTask('downloadAndGenerateApiWrapper', ['downloadApiDefinition', 'generateApiWrapper']);
+
     function flagsToFields(defaults) {
         // For converting grunt flags to keys of a dictionary
         let userOpts = {};
@@ -69,9 +92,9 @@ module.exports = function (grunt) {
             userOpts[flags[i]] = grunt.option(flags[i]);
         }
         return {
-                    ...defaults,
-                    ...userOpts
-                };
+            ...defaults,
+            ...userOpts
+        };
     }
 };
 

@@ -48,10 +48,20 @@ class Converter:
         return json.load(open(self.path))
 
     @property
+    def groups_list(self):
+        """Return the list of groups definitions"""
+        return json.load(open(self.path))["groups"]
+
+    @property
+    def implementation_version(self):
+        """Return the implementation version"""
+        return json.load(open(self.path))["version"]["Implementation-Version"]
+
+    @property
     def filtered_endpoints(self):
         """Return the list of filtered endpoints as filtered according to the values set in the configuration"""
         l = []
-        for group in self.json_dict:
+        for group in self.groups_list:
             for endpoint in group['endpoints']:
                 # collect statuses of current endpoint
                 deprecated = any(['deprecated' in p['name'] for p in endpoint['permission']])
@@ -246,6 +256,8 @@ class Converter:
             else:
                 d['paths'][path] = self.paths_dict[path]
         Converter.nondestructive_update_dict(d['definitions'], self.models_dict)
+        # Update the version
+        d["info"]["version"] = self.implementation_version
         return d
 
     # @staticmethod
