@@ -1,5 +1,6 @@
 'use strict';
 var fs = require('fs');
+var path = require('path');
 // Using request instead of Onshape because the authorization headers throw a 406
 const request = require('request');
 
