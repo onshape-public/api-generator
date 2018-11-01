@@ -101,53 +101,16 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
+                        <id>generate-code</id>
                         <goals>
                             <goal>java</goal>
                         </goals>
                         <phase>install</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>com.onshape.api.generator.Generator</mainClass>
-                    <arguments>
-                        <argument>${basedir}</argument>
-                    </arguments>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <id>copy-api-base</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
                         <configuration>
-                            <target>
-                                <copydir src="${parentdir}/api-base/src" dest="${project.basedir}/target/generated/src"/>
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-invoker-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>build-generated</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <pom>${project.basedir}/target/generated/pom.xml</pom>
-                            <goals>install javadoc:javadoc</goals>
-                            <streamLogs>true</streamLogs>
-                            <showErrors>true</showErrors>
+                            <mainClass>com.onshape.api.generator.Generator</mainClass>
+                            <arguments>
+                                <argument>${basedir}/target</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
