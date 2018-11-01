@@ -54,19 +54,17 @@ import javax.lang.model.element.Modifier;
 
 /**
  * Generates a client library in Java.
- * 
+ *
  * @author Peter Harman peter.harman@cae.tech
  */
 public class JavaLibraryTarget extends LibraryTarget {
 
-    private final File baseDir;
-    private final String basePackage;
+    private File baseDir;
     private String licenseString;
     private final TypeSpec.Builder typeBuilder;
 
-    public JavaLibraryTarget(File baseDir, String basePackage) {
-        this.baseDir = baseDir;
-        this.basePackage = basePackage;
+    public JavaLibraryTarget() {
+        super("java", "git@github.com:onshape-public/java-client.git");
         typeBuilder = TypeSpec.classBuilder("Onshape").addModifiers(Modifier.PUBLIC, Modifier.FINAL);
     }
 
@@ -77,10 +75,10 @@ public class JavaLibraryTarget extends LibraryTarget {
 
     void write(String packageName, TypeSpec typeSpec, boolean test) throws IOException {
         if (this.licenseString == null) {
-            this.licenseString = CharStreams.toString(new FileReader(new File(baseDir, "src/main/resources/LICENSE")));
+            this.licenseString = CharStreams.toString(new FileReader(new File(baseDir, "../../src/main/resources/LICENSE")));
         }
         JavaFile javaFile = JavaFile.builder(packageName, typeSpec).addFileComment(this.licenseString).build();
-        File target = new File(baseDir, "target/generated/src/" + (test ? "test" : "main") + "/java");
+        File target = new File(baseDir, "src/" + (test ? "test" : "main") + "/java");
         target.mkdirs();
         javaFile.writeTo(target);
     }
@@ -141,19 +139,27 @@ public class JavaLibraryTarget extends LibraryTarget {
     }
 
     @Override
-    public void start(OnshapeVersion buildVersion) throws GeneratorException {
-        super.start(buildVersion);
-        new File(baseDir, "target/generated/src/main").mkdirs();
-        new File(baseDir, "target/generated/src/test").mkdirs();
+    public void start(File targetDir, File workingDir, OnshapeVersion buildVersion) throws GeneratorException {
+        super.start(targetDir, workingDir, buildVersion);
+        this.baseDir = new File(targetDir, "java-build");
+        new File(baseDir, "src/main").mkdirs();
+        new File(baseDir, "src/test").mkdirs();
         // Copy pom and inject version number into it
         Map<String, Object> data = new HashMap<>();
         data.put("version", buildVersion.getImplementationVersion());
-        try (Writer writer = new FileWriter(new File(baseDir, "target/generated/pom.xml"))) {
+        try (Writer writer = new FileWriter(new File(baseDir, "pom.xml"))) {
             MustacheFactory mf = new DefaultMustacheFactory();
-            Mustache mustache = mf.compile(new FileReader(new File(baseDir, "src/main/resources/pom.xml")), "pom");
+            Mustache mustache = mf.compile(new FileReader(new File(baseDir, "../../src/main/resources/java/pom.xml")), "pom");
             mustache.execute(writer, data);
         } catch (IOException ex) {
             throw new GeneratorException("Failed to copy pom.xml", ex);
+        }
+        try (Writer writer = new FileWriter(new File(baseDir, "README.md"))) {
+            MustacheFactory mf = new DefaultMustacheFactory();
+            Mustache mustache = mf.compile(new FileReader(new File(baseDir, "../../src/main/resources/java/README.md")), "readme");
+            mustache.execute(writer, data);
+        } catch (IOException ex) {
+            throw new GeneratorException("Failed to copy README.md", ex);
         }
     }
 
@@ -179,11 +185,43 @@ public class JavaLibraryTarget extends LibraryTarget {
         } catch (IOException ex) {
             throw new GeneratorException("Error while writing class", ex);
         }
+        try {
+            // Copy api-base sources
+            copyRecursive(new File(getTargetDir(), "../../api-base/src"), new File(baseDir, "src"));
+        } catch (IOException ex) {
+            throw new GeneratorException("Failed to copy api-base sources", ex);
+        }
+        try {
+            // All sources are now written, copy to git master branch
+            copyRecursive(baseDir, new File(getWorkingDir(), "java-master"));
+        } catch (IOException ex) {
+            throw new GeneratorException("Failed to copy sources to git repo directory", ex);
+        }
+        // Run build/test and generate javadoc
+        build(baseDir);
+        try {
+            // Copy javadoc to docs git branch
+            copyRecursive(new File(baseDir, "target/site/apidocs"), new File(getWorkingDir(), "java-gh-pages"));
+        } catch (IOException ex) {
+            throw new GeneratorException("Failed to copy javadoc to git repo directory", ex);
+        }
         super.finish();
     }
 
     public TypeSpec.Builder getTypeBuilder() {
         return typeBuilder;
+    }
+
+    void build(File location) throws GeneratorException {
+        // Create tag
+        String[] buildCommands = createArguments("mvn", "clean", "install", "javadoc:javadoc");
+        try {
+            if (0 != new ProcessBuilder(buildCommands).directory(location).inheritIO().start().waitFor()) {
+                throw new GeneratorException("Failed to run mvn command in " + location);
+            }
+        } catch (IOException | InterruptedException ex) {
+            throw new GeneratorException("Failed to run mvn command in " + location, ex);
+        }
     }
 
 }
