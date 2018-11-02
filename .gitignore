@@ -8,3 +8,5 @@ node_modules
 python/generated
 .DS_Store
 *.onshapepy*
+api_data/apiData.json
+api_data/apiData.jsonAuto.yaml
