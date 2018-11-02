@@ -7,7 +7,7 @@ const request = require('request');
 // Update the default opts arg with the user-specified opts.
 const defaults = {
     api_data_file_path: './api_data/apiData.json',
-    target: 'prod',
+    target: require('./apikey').default,
     api_keys: require('./apikey'),
     language: 'Python',
     includeInternalString: 'both',

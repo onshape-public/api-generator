@@ -908,7 +908,36 @@
 /metadataschema:
   get: {}
 /partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/metadata:
-  get: {}
+  get: [ {
+           "description": null,
+           "state": "IN_PROGRESS",
+           "partId": "JHD",
+           "configurationId": "QYJAIRQDAFGJSDQCTKMZTGMZTG4T6CADAEAAEAHABYAAAALITEHAFGUZTGMZTGNZH4EAGAIAAIAOADQAAAAXPGIOAKNJTGMZTGM3SPYIAMAQAAQA4AHAAAAAAA======",
+           "revision": null,
+           "elementId": "0639ea3c439aa0947744d29a",
+           "microversionId": "e26022ce9bc8414946bf09b4",
+           "partNumber": null,
+           "partQuery": "query=qCompressed(1.0,\"&1bb$eJx9UE1zgjAQ/TPbYx2CQPEIIVhsBU1oHXthgkTJVA2FOC3++gaZ6aUzHnff7vt6CF1YX0TbL12GbKhkx0+lPFy4luoccc0DtLT/I3nfCIamkNFknqTBaxGRFUkjkuItm4Fq5UGe+bELHGwZYg7irKXuh6+QA/kbmAMkmhNWQi07rdpx6QOmJMiTLDWAakR7k0yq0IakChBDaOJB/N6/7a8EpQtc1ygqrG/Ziqwx6l9DnBtRBeyF5Pi5IGme5FsmoPsUelePBpKK7QzR1WuXG0uxNcWrUmmtToNn6lCXevSJ+pTTku5oxR6RPZmCVs0d3IGj2Os7By6YbmpNHeyZ8GEWbccjXI7BZhB7H7m/aOYstv1DHxeWasiPbi+VoKVpkm3IKi+Gx1+jUo4n\",id);",
+           "bodyType": "solid",
+           "isFlattenedBody": false,
+           "isMesh": false,
+           "appearance": {
+             "isGenerated": true,
+             "color": {
+               "blue": 237,
+               "red": 157,
+               "green": 207
+             },
+             "opacity": 255
+           },
+           "thumbnailConfigurationId": "PNGD2NBVHEYTQNZQGE4DAMBWGY4TKNZXGIZCA3LFORSXELBANA6TINJZGE4DOMBRHAYDANRWHE2TONZSGIQG2ZLUMVZCYIDXHU2DKOJRHA3TAMJYGAYDMNRZGU3TOMRSEBWWK5DFOJ6Q",
+           "isHidden": false,
+           "ordinal": 0,
+           "propertySourceTypes": {
+             "57f3fb8efa3416c06701d60d": 0
+           },
+           "name": "Part 1"
+         } ]
 /releasepackages/release/{wfid}:
   post: {}
 /blobelements/d/{did}/w/{wid}/e/{eid}/translationformats:
