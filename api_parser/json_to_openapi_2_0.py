@@ -8,7 +8,7 @@ import re
 yaml = YAML()
 
 
-class Converter:
+class Converter(object):
     """This class is broken into two types of functions, those with the @property decorator and those with the
     @staticmethod decorator. The @property classes depend fully on the state of the converter instance, and
     represent intermediate states of process between the initial and converted state. These intermediate states
@@ -38,26 +38,28 @@ class Converter:
         self.path = path
         self.config = Converter.default_config
         self.config.update(config)
+        self.json_dict = self.json_dict()
+        self.groups_list = self.groups_list()
+        self.implementation_version = self.implementation_version()
+        self.filtered_endpoints = self.filtered_endpoints()
+        self.template_dict = self.template_dict()
+        self.models_dict = self.models_dict()
+        self.method_dict = self.method_dict()
+        self.paths_dict = self.paths_dict()
+        self.converted_dict = self.converted_dict()
 
-        # Set the caches:
-        self.__cached_models_dict = None
-
-    @property
     def json_dict(self):
         """Return the dict read from self.path"""
         return json.load(open(self.path))
 
-    @property
     def groups_list(self):
         """Return the list of groups definitions"""
         return json.load(open(self.path))["groups"]
 
-    @property
     def implementation_version(self):
         """Return the implementation version"""
         return json.load(open(self.path))["version"]["Implementation-Version"]
 
-    @property
     def filtered_endpoints(self):
         """Return the list of filtered endpoints as filtered according to the values set in the configuration"""
         l = []
@@ -79,17 +81,13 @@ class Converter:
                     l.append(endpoint)
         return l
 
-    @property
     def template_dict(self):
         """Return the dict read from self.template_path"""
         return yaml.load(open(self.template_path))
 
-    @property
     def models_dict(self):
         """Return a dict that makes a best guess at constructing all the potential data models from the success and
         descriptions present in the body and the response"""
-        if self.__cached_models_dict:
-            return self.__cached_models_dict
         d = {}
         for endpoint in self.filtered_endpoints:
             if "success" in endpoint and "fields" in endpoint["success"] and "Response" in endpoint["success"][
@@ -106,10 +104,9 @@ class Converter:
                     d[Converter.name_model(endpoint, self.ModelLocations.BODY)] = model
                     if len(required) < 0:
                         d[Converter.name_model(endpoint, self.ModelLocations.BODY)]['required'] = required
-        self.__cached_models_dict = d
+        self.__cached = d
         return d
 
-    @property
     def method_dict(self):
         """Parse a json file made with the onshape JSON 'spec' into a valid set of swagger operation items, such that
         d = {(path, method): operation_definition}"""
@@ -215,14 +212,7 @@ class Converter:
 
         return d
 
-    @property
-    def filtered_method_dict(self):
-        """Filter the method dict based on the configuration. TODO: pull out the filtering logic into this method."""
-        config = self.config
-        d = self.method_dict
-        pass
 
-    @property
     def paths_dict(self):
         """A dictionary where each key is a path. This dictionary should be what Swagger is expecting under the path
         key."""
@@ -235,16 +225,15 @@ class Converter:
         return paths
 
     @staticmethod
-    def nondestructive_update_dict(d , d_add):
+    def nondestructive_update_dict(d, d_add):
         """Copy all keys from d_add into d that aren't already in d"""
         for k, v in d_add.items():
             if k not in d.keys():
                 d[k] = v
 
-    @property
     def converted_dict(self):
         """The dictionary in the form that Swagger expects."""
-        n_total_endpoints = sum([len(g) for g in self.groups_list])
+        n_total_endpoints = sum([len(g['endpoints']) for g in self.groups_list])
         n_total_models = len(self.models_dict)
         n_filtered_endpoints = len(self.method_dict)
         print("Total endpoints processed: {} \n"
@@ -598,6 +587,9 @@ class Converter:
 
 
 if __name__ == "__main__":
-    converter = Converter(path='./api_data/apiData.json', template_path='./api_data_templates/onshapeOpenApiSpecTemplate.yaml',
-                          config={'include_required': True, 'include_tags': True, 'inline_models': False, 'visible_permissions': ['public', 'undocumented']})
-    yaml.dump(converter.converted_dict, open(converter.path + "Auto.yaml", "w"))
+    converter = Converter(path='./api_data/apiData.json',
+                          template_path='./api_data_templates/onshapeOpenApiSpecTemplate.yaml',
+                          config={'include_required': True, 'include_tags': True, 'inline_models': False,
+                                  'visible_permissions': ['public', 'undocumented'], 'show_deprecated': True})
+    d = converter.converted_dict
+    yaml.dump(d, open(converter.path + "Auto.yaml", "w"))
