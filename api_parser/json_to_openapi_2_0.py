@@ -244,6 +244,12 @@ class Converter:
     @property
     def converted_dict(self):
         """The dictionary in the form that Swagger expects."""
+        n_total_endpoints = sum([len(g) for g in self.groups_list])
+        n_total_models = len(self.models_dict)
+        n_filtered_endpoints = len(self.method_dict)
+        print("Total endpoints processed: {} \n"
+              "Filtered endpoints: {} \n"
+              "Total models generated: {}".format(n_total_endpoints, n_filtered_endpoints, n_total_models))
         d = self.template_dict
         if not d['paths']:
             d['paths'] = {}
@@ -593,5 +599,5 @@ class Converter:
 
 if __name__ == "__main__":
     converter = Converter(path='./api_data/apiData.json', template_path='./api_data_templates/onshapeOpenApiSpecTemplate.yaml',
-                          config={'include_required': True, 'include_tags': True, 'inline_models': False})
+                          config={'include_required': True, 'include_tags': True, 'inline_models': False, 'visible_permissions': ['public', 'undocumented']})
     yaml.dump(converter.converted_dict, open(converter.path + "Auto.yaml", "w"))
