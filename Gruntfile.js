@@ -15,16 +15,6 @@ const defaults = {
     optionalParentDirectory: './generated'
 };
 
-function ensureDirectoryExistence(filePath) {
-    var dirname = path.dirname(filePath);
-    if (fs.existsSync(dirname)) {
-        return true;
-    }
-    ensureDirectoryExistence(dirname);
-    fs.mkdirSync(dirname);
-}
-
-
 module.exports = function (grunt) {
     grunt.initConfig({
         task: {},
@@ -47,9 +37,8 @@ module.exports = function (grunt) {
                         if (err) {
                             return console.log(err);
                         }
-                        console.log("Version data recieved, implementation version is: " + version["Implementation-Version"]);
+                        console.log("Version data received, implementation version is: " + version["Implementation-Version"]);
                         const d = {groups: JSON.parse(data), version: version};
-                        ensureDirectoryExistence(opts.api_data_file_path);
                         fs.writeFile(opts.api_data_file_path, JSON.stringify(d), function (err) {
                             if (err) {
                                 return console.log(err);
