@@ -55,9 +55,11 @@ public abstract class LibraryTarget {
         this.targetDir = targetDir;
         this.workingDir = workingDir;
         this.buildVersion = buildVersion;
-        System.out.println("Preparing " + language + " client in temporary directory " + workingDir);
-        cloneAndCleanGitRepository(repository, "master", new File(this.workingDir, language + "-master"));
-        cloneAndCleanGitRepository(repository, "gh-pages", new File(this.workingDir, language + "-gh-pages"));
+        if (!repository.isEmpty()) {
+            System.out.println("Preparing " + language + " client in temporary directory " + workingDir);
+            cloneAndCleanGitRepository(repository, "master", new File(this.workingDir, language + "-master"));
+            cloneAndCleanGitRepository(repository, "gh-pages", new File(this.workingDir, language + "-gh-pages"));
+        }
     }
 
     public OnshapeVersion getBuildVersion() {
@@ -94,7 +96,7 @@ public abstract class LibraryTarget {
 
     protected void cleanRecursive(File src) throws IOException {
         for (File f : src.listFiles()) {
-            if (f.getName().startsWith(".git")) {
+            if (f.getName().startsWith(".git") || f.getName().endsWith("config.yml")) {
                 return;
             }
             if (f.isDirectory()) {
@@ -113,18 +115,28 @@ public abstract class LibraryTarget {
         return args;
     }
 
-    public void finish() throws GeneratorException {
-        try {
-            // Copy LICENSE to master branch
-            Files.copy(new File(targetDir, "../src/main/resources/LICENSE"), new File(this.workingDir, language + "-master/LICENSE"));
-        } catch (IOException ex) {
-            throw new GeneratorException("Failed to copy LICENSE file", ex);
+    /**
+     * Finish code generation, optionally push to repository
+     *
+     * @param commit Whether to push to repository
+     * @throws GeneratorException On code generation error
+     */
+    public void finish(boolean commit) throws GeneratorException {
+        if (!repository.isEmpty()) {
+            try {
+                // Copy LICENSE to master branch
+                Files.copy(new File(targetDir, "../src/main/resources/LICENSE"), new File(this.workingDir, language + "-master/LICENSE"));
+            } catch (IOException ex) {
+                throw new GeneratorException("Failed to copy LICENSE file", ex);
+            }
+            if (commit) {
+                // Push master branch, push docs branch, tag master branch
+                String version = getBuildVersion().getImplementationVersion();
+                pushGitRepository(repository, "master", new File(this.workingDir, language + "-master"), "Generated API client version " + version);
+                pushGitRepository(repository, "gh-pages", new File(this.workingDir, language + "-gh-pages"), "Generated documentation for API client version " + version);
+                tagGitRepository(repository, "master", new File(this.workingDir, language + "-master"), version, "API client version " + version);
+            }
         }
-        // Push master branch, push docs branch, tag master branch
-        String version = getBuildVersion().getImplementationVersion();
-        pushGitRepository(repository, "master", new File(this.workingDir, language + "-master"), "Generated API client version " + version);
-        pushGitRepository(repository, "gh-pages", new File(this.workingDir, language + "-gh-pages"), "Generated documentation for API client version " + version);
-        tagGitRepository(repository, "master", new File(this.workingDir, language + "-master"), version, "API client version " + version);
     }
 
     /**
@@ -185,10 +197,10 @@ public abstract class LibraryTarget {
         String[] commitCommands = createArguments("git", "commit", "-m", "\"" + message + "\"");
         try {
             if (0 != new ProcessBuilder(commitCommands).directory(location).inheritIO().start().waitFor()) {
-                throw new GeneratorException("Failed to push to git repository " + repo);
+                throw new GeneratorException("Failed to commit to git repository " + repo);
             }
         } catch (IOException | InterruptedException ex) {
-            throw new GeneratorException("Failed to push to git repository " + repo, ex);
+            throw new GeneratorException("Failed to commit to git repository " + repo, ex);
         }
         // Push to origin
         String[] pushCommands = createArguments("git", "push", "origin", branch);

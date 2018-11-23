@@ -48,6 +48,8 @@ import java.util.List;
 import java.util.Map;
 import javax.lang.model.element.Modifier;
 import javax.validation.constraints.NotNull;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import tech.cae.javabard.BuilderSpec;
 import tech.cae.javabard.GetterSpec;
 
@@ -64,12 +66,18 @@ public class JavaEndpointTarget extends EndpointTarget {
 
     @Override
     public void create() throws GeneratorException {
+        if (!getReplacedBy().isEmpty()) {
+            return;
+        }
         String groupName = getGroupTarget().getGroup().getGroup();
+        checkPathParams();
         TypeSpec.Builder groupTypeBuilder = ((JavaGroupTarget) getGroupTarget()).getTypeBuilder();
         // Create the request type and any required local types
         createRequestType(groupName, groupTypeBuilder);
         // Create the response type
         createResponseType(groupName);
+        // Create the test method
+        createTest();
     }
 
     void createRequestType(String groupName, TypeSpec.Builder groupTypeBuilder) throws GeneratorException {
@@ -148,32 +156,51 @@ public class JavaEndpointTarget extends EndpointTarget {
                 .append(" method, ")
                 .append(getEndpoint().getDescription())
                 .append("\n@param document Document object from Onshape URL.\n@return Response object\n@throws OnshapeException On HTTP or serialization error\n");
+        boolean includeCall2 = false;
 
         if (getEndpoint().getParameters().getFields().containsKey("PathParam")) {
             Collection<Field> pathParams = getEndpoint().getParameters().getFields().get("PathParam");
             int i = 0;
             for (Field field : pathParams) {
                 String name = field.getField();
-                if ("wvm".equals(name)) {
-                    if (i > 0) {
-                        callStatement.append(", ");
-                        callStatement2.append(", ");
+                if (null != name) {
+                    switch (name) {
+                        case "wvm":
+                            if (i > 0) {
+                                callStatement.append(", ");
+                                callStatement2.append(", ");
+                            }
+                            callStatement.append("\"wvmType\", wvmType");
+                            callStatement2.append("\"wvmType\", WVM.Workspace");
+                            callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
+                            javadoc.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
+                            i++;
+                            break;
+                        case "wv":
+                            if (i > 0) {
+                                callStatement.append(", ");
+                                callStatement2.append(", ");
+                            }
+                            callStatement.append("\"wvType\", wvType");
+                            callStatement2.append("\"wvType\", WV.Workspace");
+                            callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
+                            javadoc.append("\n@param wvType Type of Workspace or Version\n");
+                            i++;
+                            break;
+                        case "oid":
+                            if (i > 0) {
+                                callStatement.append(", ");
+                                callStatement2.append(", ");
+                            }
+                            callStatement.append("\"cuType\", cuType");
+                            callStatement2.append("\"cuType\", CU.Company");
+                            callBuilder.addParameter(ClassName.get("com.onshape.api.types", "CU"), "cuType");
+                            javadoc.append("\n@param cuType Type of Company or User\n");
+                            i++;
+                            break;
+                        default:
+                            break;
                     }
-                    callStatement.append("\"wvmType\", wvmType");
-                    callStatement2.append("\"wvmType\", WVM.Workspace");
-                    callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
-                    javadoc.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
-                    i++;
-                } else if ("wv".equals(name)) {
-                    if (i > 0) {
-                        callStatement.append(", ");
-                        callStatement2.append(", ");
-                    }
-                    callStatement.append("\"wvType\", wvType");
-                    callStatement2.append("\"wvType\", WV.Workspace");
-                    callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
-                    javadoc.append("\n@param wvType Type of Workspace or Version\n");
-                    i++;
                 }
                 Class<?> type = JavaLibraryTarget.guessClass(field.getType());
                 if (i > 0) {
@@ -184,24 +211,30 @@ public class JavaEndpointTarget extends EndpointTarget {
                 callBuilder.addParameter(JavaLibraryTarget.getTypeName(type), name);
                 javadoc.append("\n@param ").append(name)
                         .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
-                switch (name) {
-                    case "did":
-                        callStatement2.append("\"did\", document.getDocumentId()");
-                        break;
-                    case "eid":
-                        callStatement2.append("\"eid\", document.getElementId()");
-                        break;
-                    case "wvm":
-                        callStatement2.append("\"wvm\", document.getWorkspaceId()");
-                        break;
-                    case "wv":
-                        callStatement2.append("\"wv\", document.getWorkspaceId()");
-                        break;
-                    default:
-                        callStatement2.append('"').append(name).append("\", ").append(name);
-                        callBuilder2.addParameter(JavaLibraryTarget.getTypeName(type), name);
-                        javadoc2.append("\n@param ").append(name)
-                                .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
+                if (null != name) {
+                    switch (name) {
+                        case "did":
+                            callStatement2.append("\"did\", document.getDocumentId()");
+                            includeCall2 = true;
+                            break;
+                        case "eid":
+                            callStatement2.append("\"eid\", document.getElementId()");
+                            includeCall2 = true;
+                            break;
+                        case "wvm":
+                            callStatement2.append("\"wvm\", document.getWorkspaceId()");
+                            includeCall2 = true;
+                            break;
+                        case "wv":
+                            callStatement2.append("\"wv\", document.getWorkspaceId()");
+                            includeCall2 = true;
+                            break;
+                        default:
+                            callStatement2.append('"').append(name).append("\", ").append(name);
+                            callBuilder2.addParameter(JavaLibraryTarget.getTypeName(type), name);
+                            javadoc2.append("\n@param ").append(name)
+                                    .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
+                    }
                 }
                 i++;
             }
@@ -244,12 +277,14 @@ public class JavaEndpointTarget extends EndpointTarget {
         callBuilder2.addStatement(callStatement2.toString());
         callBuilder2.addJavadoc(javadoc2.toString());
 
-        requestBuilder = BuilderSpec.forType("com.onshape.api.requests", requestBuilder)
+        BuilderSpec.Builder requestBuilderBuilder = BuilderSpec.forType("com.onshape.api.requests", requestBuilder)
                 .withBuildMethodModifiers(Modifier.PRIVATE)
                 .withAdditionalMethod(callBuilder.build())
-                .withAdditionalMethod(callBuilder2.build())
-                .withAdditionalField(FieldSpec.builder(ClassName.get("com.onshape.api", "Onshape"), "onshape").build())
-                .build();
+                .withAdditionalField(FieldSpec.builder(ClassName.get("com.onshape.api", "Onshape"), "onshape").build());
+        if (includeCall2) {
+            requestBuilderBuilder = requestBuilderBuilder.withAdditionalMethod(callBuilder2.build());
+        }
+        requestBuilder = requestBuilderBuilder.build();
 
         write("com.onshape.api.requests", requestBuilder, false);
         MethodSpec.Builder rootMethod = MethodSpec.methodBuilder(getEndpoint().getName())
@@ -260,7 +295,9 @@ public class JavaEndpointTarget extends EndpointTarget {
         groupTypeBuilder.addMethod(rootMethod.build());
     }
 
-    TypeName createLocalType(String packageName, String name, String typeName, String prefix, Collection<Field> fields, boolean builder) throws GeneratorException, GeneratorException {
+    TypeName createLocalType(String packageName, String name,
+            String typeName, String prefix,
+            Collection<Field> fields, boolean builder) throws GeneratorException, GeneratorException {
         Map<Field, TypeName> types = Maps.newLinkedHashMap();
         for (Field field : fields) {
             if (field.getField().startsWith(prefix) && !field.getField().equals(prefix + "0")) {
@@ -292,24 +329,24 @@ public class JavaEndpointTarget extends EndpointTarget {
             }
             boolean isArray = typeString.endsWith("[]");
             if (ref.toLowerCase().endsWith("id")
+                    || ref.toLowerCase().endsWith("abbreviation")
                     || ref.toLowerCase().endsWith("name")
                     || ref.toLowerCase().endsWith("email")) {
                 // It is an identifier, should be a String
-                System.out.println(getGroupTarget().getGroup().getGroup() + " " + getEndpoint().getName() + ": " + ref + " (" + typeString + " -> String" + (isArray ? "[]" : "") + ")");
+                System.out.println("Replaced type " + getGroupTarget().getGroup().getGroup() + " " + getEndpoint().getName() + ": " + ref + " (" + typeString + " -> String" + (isArray ? "[]" : "") + ")");
                 return ClassName.get(String.class);
             }
             if (ref.toLowerCase().endsWith("red")
                     || ref.toLowerCase().endsWith("green")
                     || ref.toLowerCase().endsWith("blue")) {
                 // It is a colour, should be a Number
-                System.out.println(getGroupTarget().getGroup().getGroup() + " " + getEndpoint().getName() + ": " + ref + " (" + typeString + " -> Number" + (isArray ? "[]" : "") + ")");
+                System.out.println("Replaced type " + getGroupTarget().getGroup().getGroup() + " " + getEndpoint().getName() + ": " + ref + " (" + typeString + " -> Number" + (isArray ? "[]" : "") + ")");
                 return ClassName.get(Number.class);
             }
             if (desc.contains("Base-64 encoded")) {
                 // It is base64 encoded, use a special type to handle decoding/encoding
                 return ClassName.get(Base64Encoded.class);
             }
-            System.out.println(getGroupTarget().getGroup().getGroup() + " " + getEndpoint().getName() + ": " + ref + " (" + typeString + " -> Map" + (isArray ? "[]" : "") + ")");
             return ClassName.get(Map.class);
         }
         TypeSpec.Builder typeSpecBuilder = TypeSpec.classBuilder(typeName)
@@ -353,10 +390,11 @@ public class JavaEndpointTarget extends EndpointTarget {
         boolean hasNextField = false;
         boolean hasPreviousField = false;
         boolean hasUrlField = false;
+        // Merge all response fields
         fieldMap.entrySet().stream().filter((fieldMapEntry) -> (fieldMapEntry.getKey().startsWith("Response"))).forEachOrdered((fieldMapEntry) -> {
             allResponseFields.addAll(fieldMapEntry.getValue());
         });
-        for (Field field : allResponseFields) {
+        for (Field field : applySpecialCases(allResponseFields)) {
             hasNextField = hasNextField || field.getField().equals("next");
             hasPreviousField = hasPreviousField || field.getField().equals("previous");
             hasUrlField = hasUrlField || field.getField().equals("href");
@@ -443,7 +481,46 @@ public class JavaEndpointTarget extends EndpointTarget {
         }
     }
 
-    void createTest() {
+    Map<String, Object> getTestInputs() {
+        return ((JavaGroupTarget) getGroupTarget()).getTestInputs().get(getEndpoint().getName());
+    }
 
+    void createTest() {
+        TypeSpec.Builder testTypeBuilder = ((JavaGroupTarget) getGroupTarget()).getTestTypeBuilder();
+        Map<String, Object> inputs = getTestInputs();
+        if (inputs == null) {
+            return;
+        }
+        if (!"get".equals(getEndpoint().getType().toLowerCase())) {
+            // Currently only supporting GET requests
+            return;
+        }
+        StringBuilder callBuilder = new StringBuilder();
+        if (getEndpoint().getParameters().getFields().containsKey("PathParam")) {
+            for (Field field : getEndpoint().getParameters().getFields().get("PathParam")) {
+                if (callBuilder.length() > 0) {
+                    callBuilder.append(", ");
+                }
+                callBuilder.append(inputs.get(field.getField()).toString());
+            }
+        }
+        if (getEndpoint().getParameters().getFields().containsKey("QueryParam")) {
+            for (Field field : getEndpoint().getParameters().getFields().get("QueryParam")) {
+                if (!field.isOptional()) {
+                    if (callBuilder.length() > 0) {
+                        callBuilder.append(", ");
+                    }
+                    callBuilder.append(inputs.get(field.getField()).toString());
+                }
+            }
+        }
+        testTypeBuilder.addMethod(MethodSpec.methodBuilder(getEndpoint().getName())
+                .addModifiers(Modifier.PUBLIC)
+                .addException(ClassName.get("com.onshape.api.exceptions", "OnshapeException"))
+                .addAnnotation(Test.class)
+                .addAnnotation(AnnotationSpec.builder(DisplayName.class)
+                        .addMember("value", "\"" + getEndpoint().getTitle() + "\"").build())
+                .addStatement("getGroup()." + getEndpoint().getName() + "().call(" + callBuilder.toString() + ")")
+                .build());
     }
 }

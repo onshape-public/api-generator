@@ -21,12 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.onshape.api.generator.java;
+package com.onshape.api.generator.tests;
+
+import com.onshape.api.generator.exceptions.GeneratorException;
+import com.onshape.api.generator.model.Endpoint;
+import com.onshape.api.generator.model.Group;
+import com.onshape.api.generator.targets.EndpointTarget;
+import com.onshape.api.generator.targets.GroupTarget;
+import com.onshape.api.generator.targets.LibraryTarget;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
+ * Generates a map of required inputs as a template for building tests.
  *
  * @author Peter Harman peter.harman@cae.tech
  */
-public class JavaEndpointTestTarget {
-    
+public class TestsGroupTarget extends GroupTarget {
+
+    private final Map<String, Map<String, Object>> tests;
+
+    public TestsGroupTarget(LibraryTarget libraryTarget, Group group) {
+        super(libraryTarget, group);
+        this.tests = new LinkedHashMap();
+    }
+
+    @Override
+    public EndpointTarget endpoint(Endpoint endpoint) {
+        return new TestsEndpointTarget(this, endpoint);
+    }
+
+    public Map<String, Map<String, Object>> getTests() {
+        return tests;
+    }
+
+    @Override
+    public void finish() throws GeneratorException {
+        ((TestsLibraryTarget) getLibraryTarget()).getTests().put(getGroup().getGroup(), tests);
+        super.finish();
+    }
+
 }
