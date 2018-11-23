@@ -1,0 +1,47 @@
+{
+  "Accounts" : {
+    "getPurchases" : { }
+  },
+  "AppAssociativeData" : { },
+  "AppElements" : { },
+  "ApplicationElements" : { },
+  "Applications" : { },
+  "Assemblies" : { },
+  "Billing" : { },
+  "BlobElements" : { },
+  "Companies" : {
+    "find" : { }
+  },
+  "Documents" : {
+    "getDocuments" : { }
+  },
+  "Drawings" : { },
+  "Elements" : { },
+  "Endpoints" : {
+    "getEndpoints" : { }
+  },
+  "FeatureStudios" : { },
+  "Folders" : { },
+  "Metadata" : { },
+  "Models" : { },
+  "PartStudios" : { },
+  "Parts" : { },
+  "ReleaseManagement" : { },
+  "Revisions" : { },
+  "Teams" : {
+    "find" : { }
+  },
+  "Thumbnails" : { },
+  "Translations" : {
+    "getTranslatorFormats" : { }
+  },
+  "Users" : {
+    "getSessionInfo" : { },
+    "getUserSettingsCurrentLoggedInUser" : { }
+  },
+  "Versions" : {
+    "testVersion1" : { },
+    "testVersion2" : { }
+  },
+  "Webhooks" : { }
+}

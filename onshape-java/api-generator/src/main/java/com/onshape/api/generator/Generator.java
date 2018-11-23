@@ -23,10 +23,10 @@
  */
 package com.onshape.api.generator;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
 import com.onshape.api.generator.targets.GroupTarget;
 import com.onshape.api.generator.targets.EndpointTarget;
-import com.onshape.api.generator.targets.LibraryTarget;
 import com.onshape.api.base.BaseClient;
 import com.onshape.api.exceptions.OnshapeException;
 import com.onshape.api.types.OnshapeVersion;
@@ -34,6 +34,8 @@ import com.onshape.api.generator.exceptions.GeneratorException;
 import com.onshape.api.generator.java.JavaLibraryTarget;
 import com.onshape.api.generator.model.Endpoint;
 import com.onshape.api.generator.model.Group;
+import com.onshape.api.generator.targets.LibraryTarget;
+import com.onshape.api.generator.tests.TestsLibraryTarget;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -55,11 +57,13 @@ public class Generator {
         if (args.length == 0) {
             throw new IOException("No base directory specified");
         }
+        boolean commit = args.length < 2 || Boolean.valueOf(args[1]);
         Generator generator = new Generator();
         File targetDir = new File(args[0]);
         File workingDir = Files.createTempDir();
-        JavaLibraryTarget libraryTarget = new JavaLibraryTarget();
-        generator.generate(targetDir, workingDir, libraryTarget);
+        JavaLibraryTarget javaLibraryTarget = new JavaLibraryTarget();
+        TestsLibraryTarget testsLibraryTarget = new TestsLibraryTarget();
+        generator.generate(targetDir, workingDir, commit, javaLibraryTarget, testsLibraryTarget);
     }
 
     /**
@@ -67,11 +71,12 @@ public class Generator {
      *
      * @param targetDir The /target directory in the api-generator Maven project
      * @param workingDir A working directory for git repos to be cloned
+     * @param commit Whether to push the code to the repository
      * @param targets Instances of LibraryTarget used for code generation
      * @throws OnshapeException
      * @throws GeneratorException
      */
-    void generate(File targetDir, File workingDir, LibraryTarget... targets) throws OnshapeException, GeneratorException {
+    void generate(File targetDir, File workingDir, boolean commit, LibraryTarget... targets) throws OnshapeException, GeneratorException {
         String accessKey = System.getenv("ONSHAPE_API_ACCESSKEY");
         String secretKey = System.getenv("ONSHAPE_API_SECRETKEY");
         if ((accessKey == null || accessKey.isEmpty()) || (secretKey == null || secretKey.isEmpty())) {
@@ -81,12 +86,19 @@ public class Generator {
         client.setAPICredentials(accessKey, secretKey);
         OnshapeVersion buildVersion = client.version();
         Group[] apiGroups = client.call("GET", "/endpoints", null, new HashMap<>(), new HashMap<>(), Group[].class);
+        Group[] augmentGroups;
+        try {
+            augmentGroups = new ObjectMapper().readValue(new File(targetDir, "classes/endpoints.augment.json"), Group[].class);
+            apiGroups = Group.merge(apiGroups, augmentGroups);
+        } catch (IOException ex) {
+            System.out.println("Using endpoints from server as no endpoints.augment.json file or not successfully read");
+        }
         for (LibraryTarget target : targets) {
             target.start(targetDir, workingDir, buildVersion);
             for (Group group : apiGroups) {
                 generateGroup(target, group);
             }
-            target.finish();
+            target.finish(commit);
         }
     }
 

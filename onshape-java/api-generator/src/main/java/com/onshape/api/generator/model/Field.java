@@ -23,12 +23,15 @@
  */
 package com.onshape.api.generator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
- * Represents a single field, either as a path parameter, query parameter, header,
- * call body, or response object.
- * 
+ * Represents a single field, either as a path parameter, query parameter,
+ * header, call body, or response object.
+ *
  * @author Peter Harman peter.harman@cae.tech
  */
 public class Field {
@@ -69,5 +72,22 @@ public class Field {
     public String getDescription() {
         return description;
     }
-    
+
+    @JsonIgnore
+    public Field withNewFieldName(String fieldName) {
+        Field out = new Field();
+        out.defaultValue = defaultValue;
+        out.description = description;
+        out.field = fieldName;
+        out.group = group;
+        out.optional = optional;
+        out.type = type;
+        return out;
+    }
+
+    public static Collection<Field> merge(Collection<Field> fields1, Collection<Field> fields2) {
+        Collection<Field> out = new ArrayList<>(fields1);
+        out.addAll(fields2);
+        return out;
+    }
 }

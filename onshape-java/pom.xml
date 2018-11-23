@@ -13,4 +13,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.jupiter.version>5.3.1</junit.jupiter.version>
     </properties>
+    <profiles>
+        <profile>
+            <id>dry-run</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <commitToGithub>false</commitToGithub>
+            </properties>
+        </profile>
+        <profile>
+            <id>commit</id>
+            <properties>
+                <commitToGithub>true</commitToGithub>
+            </properties>
+        </profile>
+    </profiles>
 </project>

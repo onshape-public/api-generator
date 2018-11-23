@@ -23,14 +23,18 @@
  */
 package com.onshape.api.generator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Maps;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Represents a single API endpoint
- * 
+ *
  * @author Peter Harman peter.harman@cae.tech
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -59,6 +63,8 @@ public class Endpoint {
     private FieldMap parameters = new FieldMap();
     @JsonProperty("header")
     private FieldMap headers = new FieldMap();
+    @JsonProperty("error")
+    private FieldMap error = new FieldMap();
     @JsonProperty("success")
     private FieldMap success = new FieldMap();
 
@@ -109,5 +115,43 @@ public class Endpoint {
     public FieldMap getSuccess() {
         return success;
     }
-    
+
+    public FieldMap getError() {
+        return error;
+    }
+
+    @JsonIgnore
+    public Endpoint merge(Endpoint other) {
+        Endpoint out = new Endpoint();
+        out.type = type;
+        out.url = url;
+        out.title = title;
+        out.name = name;
+        out.description = description;
+        out.group = group;
+        out.groupTitle = groupTitle;
+        out.version = version;
+        out.permissions = permissions;
+        out.parameters = parameters.merge(other.parameters);
+        out.headers = headers.merge(other.headers);
+        out.error = error.merge(other.error);
+        out.success = success.merge(other.success);
+        return out;
+    }
+
+    public static Collection<Endpoint> merge(Collection<Endpoint> endpoints1, Collection<Endpoint> endpoints2) {
+        Map<String, Endpoint> map = Maps.newLinkedHashMap();
+        endpoints1.forEach((endpoint) -> {
+            map.put(endpoint.getName(), endpoint);
+        });
+        endpoints2.forEach((endpoint) -> {
+            if (map.containsKey(endpoint.getName())) {
+                map.put(endpoint.getName(), map.get(endpoint.getName()).merge(endpoint));
+            } else {
+                map.put(endpoint.getName(), endpoint);
+            }
+        });
+        return new ArrayList<>(map.values());
+    }
+
 }
