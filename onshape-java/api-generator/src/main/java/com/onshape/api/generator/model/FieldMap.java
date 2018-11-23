@@ -49,4 +49,21 @@ public class FieldMap {
         return examples;
     }
     
+    public FieldMap merge(FieldMap other) {
+        FieldMap out = new FieldMap();
+        out.examples.addAll(examples);
+        out.examples.addAll(other.examples);
+        out.fields.putAll(fields);
+        other.fields.keySet().forEach((field) -> {
+            if(out.fields.containsKey(field)) {
+                out.fields.put(field, Field.merge(out.fields.get(field), other.fields.get(field)));
+            } else {
+                out.fields.put(field, other.fields.get(field));
+            }
+        });
+        return out;
+    }
+    
+    
+    
 }

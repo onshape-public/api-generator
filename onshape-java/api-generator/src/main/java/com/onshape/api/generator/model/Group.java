@@ -23,16 +23,19 @@
  */
 package com.onshape.api.generator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Maps;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Represents a group of related API endpoints.
- * 
+ *
  * @author Peter Harman peter.harman@cae.tech
  */
 @JsonInclude(Include.NON_NULL)
@@ -57,5 +60,28 @@ public class Group {
     public Collection<Endpoint> getEndpoints() {
         return endpoints;
     }
-    
+
+    @JsonIgnore
+    public Group merge(Group other) {
+        Group out = new Group();
+        out.group = group;
+        out.groupTitle = groupTitle;
+        out.endpoints = Endpoint.merge(endpoints, other.endpoints);
+        return out;
+    }
+
+    public static Group[] merge(Group[] groups1, Group[] groups2) {
+        Map<String, Group> map = Maps.newLinkedHashMap();
+        for (Group group : groups1) {
+            map.put(group.getGroup(), group);
+        }
+        for (Group group : groups2) {
+            if (map.containsKey(group.getGroup())) {
+                map.put(group.getGroup(), map.get(group.getGroup()).merge(group));
+            } else {
+                map.put(group.getGroup(), group);
+            }
+        }
+        return map.values().toArray(new Group[0]);
+    }
 }

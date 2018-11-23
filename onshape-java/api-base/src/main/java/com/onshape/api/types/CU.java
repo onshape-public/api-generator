@@ -21,12 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.onshape.api.generator.java;
+package com.onshape.api.types;
 
 /**
+ * Enumeration to choose whether identifier represents Company or User.
  *
  * @author Peter Harman peter.harman@cae.tech
  */
-public class JavaEndpointTestTarget {
-    
+public enum CU {
+    Company,
+    User;
+
+    @Override
+    public String toString() {
+        return name().substring(0, 1).toLowerCase();
+    }
+
 }

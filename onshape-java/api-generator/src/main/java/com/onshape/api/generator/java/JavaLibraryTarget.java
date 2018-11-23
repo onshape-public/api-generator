@@ -23,6 +23,7 @@
  */
 package com.onshape.api.generator.java;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
@@ -33,6 +34,7 @@ import com.onshape.api.generator.targets.GroupTarget;
 import com.onshape.api.generator.targets.LibraryTarget;
 import com.onshape.api.generator.exceptions.GeneratorException;
 import com.onshape.api.generator.model.Group;
+import com.onshape.api.types.Base64Encoded;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -48,6 +50,7 @@ import java.io.Writer;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.lang.model.element.Modifier;
@@ -62,6 +65,7 @@ public class JavaLibraryTarget extends LibraryTarget {
     private File baseDir;
     private String licenseString;
     private final TypeSpec.Builder typeBuilder;
+    private Map<String, Map<String, Map<String, Object>>> tests;
 
     public JavaLibraryTarget() {
         super("java", "git@github.com:onshape-public/java-client.git");
@@ -94,43 +98,6 @@ public class JavaLibraryTarget extends LibraryTarget {
         return ClassName.get(t);
     }
 
-    static Class<?> guessClass(String className) throws GeneratorException {
-        int dim = 0;
-        while (className.charAt(className.length() - 1) == ']') {
-            className = className.substring(0, className.length() - 2);
-            dim++;
-        }
-        Class<?> baseClass = null;
-        List<String> packages = Arrays.asList("", "java.lang.", "java.util.", "java.io.");
-        for (String pkg : packages) {
-            try {
-                baseClass = Class.forName(pkg + className);
-                break;
-            } catch (ClassNotFoundException ex) {
-            }
-        }
-        // Handle primitives
-        if (baseClass == null && className.indexOf('.') < 0 && Character.isLowerCase(className.charAt(0))) {
-            if ("char".equals(className)) {
-                baseClass = guessClass("Character");
-            } else {
-                baseClass = guessClass(new String(new char[]{Character.toUpperCase(className.charAt(0))}) + className.substring(1));
-            }
-        }
-        // Special cases
-        if ("Data".equals(className)) {
-            return Map.class;
-        }
-        if (baseClass == null) {
-            return null;
-        }
-        while (dim > 0) {
-            baseClass = Array.newInstance(baseClass, 1).getClass();
-            dim--;
-        }
-        return baseClass;
-    }
-
     static String safeName(String name) {
         if ("public".equals(name)) {
             return "isPublic";
@@ -161,10 +128,17 @@ public class JavaLibraryTarget extends LibraryTarget {
         } catch (IOException ex) {
             throw new GeneratorException("Failed to copy README.md", ex);
         }
+        // Read input data for tests
+        try {
+            tests = (Map<String, Map<String, Map<String, Object>>>) new ObjectMapper()
+                    .readValue(new File(baseDir, "../../src/main/resources/endpoints.tests.json"), Map.class);
+        } catch (IOException ex) {
+            throw new GeneratorException("Failed to read test input data", ex);
+        }
     }
 
     @Override
-    public void finish() throws GeneratorException {
+    public void finish(boolean commit) throws GeneratorException {
         // Add a method to get the build version
         typeBuilder.superclass(BaseClient.class)
                 .addJavadoc("Onshape API client class.\n&copy; 2018 Onshape Inc.\n")
@@ -185,6 +159,7 @@ public class JavaLibraryTarget extends LibraryTarget {
         } catch (IOException ex) {
             throw new GeneratorException("Error while writing class", ex);
         }
+
         try {
             // Copy api-base sources
             copyRecursive(new File(getTargetDir(), "../../api-base/src"), new File(baseDir, "src"));
@@ -205,7 +180,7 @@ public class JavaLibraryTarget extends LibraryTarget {
         } catch (IOException ex) {
             throw new GeneratorException("Failed to copy javadoc to git repo directory", ex);
         }
-        super.finish();
+        super.finish(commit);
     }
 
     public TypeSpec.Builder getTypeBuilder() {
@@ -222,6 +197,58 @@ public class JavaLibraryTarget extends LibraryTarget {
         } catch (IOException | InterruptedException ex) {
             throw new GeneratorException("Failed to run mvn command in " + location, ex);
         }
+    }
+
+    /**
+     * Return a Java class that matches the given simple name
+     *
+     * @param className Simple name of a class, e.g. "String" or "Number" or
+     * "String[]"
+     * @return A Java class, or null if no guess possible
+     * @throws GeneratorException
+     */
+    public static Class<?> guessClass(String className) throws GeneratorException {
+        int dim = 0;
+        while (className.charAt(className.length() - 1) == ']') {
+            className = className.substring(0, className.length() - 2);
+            dim++;
+        }
+        Class<?> baseClass = null;
+        List<String> packages = Arrays.asList("", "java.lang.", "java.util.", "java.io.");
+        for (String pkg : packages) {
+            try {
+                baseClass = Class.forName(pkg + className);
+                break;
+            } catch (ClassNotFoundException ex) {
+            }
+        }
+        // Handle primitives
+        if (baseClass == null && className.indexOf('.') < 0 && Character.isLowerCase(className.charAt(0))) {
+            if ("char".equals(className)) {
+                baseClass = guessClass("Character");
+            } else {
+                baseClass = guessClass(new String(new char[]{Character.toUpperCase(className.charAt(0))}) + className.substring(1));
+            }
+        }
+        // Special cases
+        if ("Data".equals(className)) {
+            return Map.class;
+        }
+        if (baseClass == null) {
+            return null;
+        }
+        if (File.class.equals(baseClass)) {
+            baseClass = Base64Encoded.class;
+        }
+        while (dim > 0) {
+            baseClass = Array.newInstance(baseClass, 1).getClass();
+            dim--;
+        }
+        return baseClass;
+    }
+
+    public Map<String, Map<String, Map<String, Object>>> getTestInputs() {
+        return tests;
     }
 
 }
