@@ -4,3 +4,5 @@
 /onshape-java/api-generator/target/
 /onshape-java/target/
 .onshape-build
+.idea/
+*.iml
