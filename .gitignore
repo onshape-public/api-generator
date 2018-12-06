@@ -16,3 +16,5 @@ api_data/apiData.jsonAuto.yaml
 /onshape-java/api-generator/target/
 /onshape-java/target/
 .onshape-build
+.idea/
+*.iml
