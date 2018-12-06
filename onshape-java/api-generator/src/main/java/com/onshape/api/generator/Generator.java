@@ -61,7 +61,8 @@ public class Generator {
         boolean commit = args.length < 2 || Boolean.valueOf(args[1]);
         Generator generator = new Generator();
         File targetDir = new File(args[0]);
-        File onshapeBuildFile = new File(targetDir, "../../../.onshape-build");
+        String userHome = System.getProperty("user.home");
+        File onshapeBuildFile = new File(userHome, "/.onshape-build");
         if(!onshapeBuildFile.exists()) {
             throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
         }
