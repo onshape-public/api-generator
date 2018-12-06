@@ -67,10 +67,20 @@ public class Generator {
             throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
         }
         JsonNode parameters = new ObjectMapper().readTree(onshapeBuildFile);
+        checkAPIKeyParameters(parameters);
         File workingDir = Files.createTempDir();
         JavaLibraryTarget javaLibraryTarget = new JavaLibraryTarget();
         TestsLibraryTarget testsLibraryTarget = new TestsLibraryTarget();
         generator.generate(parameters, targetDir, workingDir, commit, javaLibraryTarget, testsLibraryTarget);
+    }
+
+    private static void checkAPIKeyParameters(JsonNode parameters) throws OnshapeException {
+        if (parameters == null) {
+            throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
+        }
+        if (!parameters.has("onshape-api-accesskey") || !parameters.has("onshape-api-secretkey")) {
+            throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
+        }
     }
 
     /**
