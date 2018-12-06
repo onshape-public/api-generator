@@ -23,6 +23,7 @@
  */
 package com.onshape.api.generator;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
 import com.onshape.api.generator.targets.GroupTarget;
@@ -60,15 +61,21 @@ public class Generator {
         boolean commit = args.length < 2 || Boolean.valueOf(args[1]);
         Generator generator = new Generator();
         File targetDir = new File(args[0]);
+        File onshapeBuildFile = new File(targetDir, "../../../.onshape-build");
+        if(!onshapeBuildFile.exists()) {
+            throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
+        }
+        JsonNode parameters = new ObjectMapper().readTree(onshapeBuildFile);
         File workingDir = Files.createTempDir();
         JavaLibraryTarget javaLibraryTarget = new JavaLibraryTarget();
         TestsLibraryTarget testsLibraryTarget = new TestsLibraryTarget();
-        generator.generate(targetDir, workingDir, commit, javaLibraryTarget, testsLibraryTarget);
+        generator.generate(parameters, targetDir, workingDir, commit, javaLibraryTarget, testsLibraryTarget);
     }
 
     /**
      * Generate code with the given target libraries.
      *
+     * @param parameters JSON parameters from .onshape-build file
      * @param targetDir The /target directory in the api-generator Maven project
      * @param workingDir A working directory for git repos to be cloned
      * @param commit Whether to push the code to the repository
@@ -76,11 +83,11 @@ public class Generator {
      * @throws OnshapeException
      * @throws GeneratorException
      */
-    void generate(File targetDir, File workingDir, boolean commit, LibraryTarget... targets) throws OnshapeException, GeneratorException {
-        String accessKey = System.getenv("ONSHAPE_API_ACCESSKEY");
-        String secretKey = System.getenv("ONSHAPE_API_SECRETKEY");
+    void generate(JsonNode parameters, File targetDir, File workingDir, boolean commit, LibraryTarget... targets) throws OnshapeException, GeneratorException {
+        String accessKey = parameters.get("onshape-api-accesskey").asText();
+        String secretKey = parameters.get("onshape-api-secretkey").asText();
         if ((accessKey == null || accessKey.isEmpty()) || (secretKey == null || secretKey.isEmpty())) {
-            throw new OnshapeException("Please define ONSHAPE_API_ACCESSKEY and ONSHAPE_API_SECRETKEY environment variables");
+            throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
         }
         BaseClient client = new BaseClient();
         client.setAPICredentials(accessKey, secretKey);

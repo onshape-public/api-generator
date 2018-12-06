@@ -15,9 +15,14 @@ The following tools are required to run the API generator:
 
 In order to access the Onshape API, API access keys are required. See [Onshape Dev Portal](https://dev-portal.onshape.com/keys) to generate or manage API keys.
 
-These are provided in environment variables:
-* ONSHAPE_API_ACCESSKEY - The access key
-* ONSHAPE_API_SECRETKEY - The secret key
+These are provided via a file called `.onshape-build` placed at the top-level of the working-copy of this git repository. The required contents of `.onshape-build`
+is a JSON object containing:
+```
+{
+  "onshape-api-accesskey": "<PUT YOUR ACCESS KEY HERE>",
+  "onshape-api-secretkey": "<PUT YOUR SECRET KEY HERE>"
+}
+```
 
 It is expected that the active user in Git has sufficient privileges to push to the required Github repository if a push is requested.
 
