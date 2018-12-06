@@ -1,0 +1,17 @@
+[
+    {
+        "group": "Assemblies",
+        "endpoints": [
+            {
+                "name": "getAssemblyDefinition",
+                "success": {
+                    "fields": {
+                        "Response": [
+                            
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+]

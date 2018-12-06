@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.onshape</groupId>
+    <artifactId>onshape-java</artifactId>
+    <version>0.0.1</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>api-base</module>
+        <module>api-generator</module>
+    </modules>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.jupiter.version>5.3.1</junit.jupiter.version>
+    </properties>
+    <profiles>
+        <profile>
+            <id>dry-run</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <commitToGithub>false</commitToGithub>
+            </properties>
+        </profile>
+        <profile>
+            <id>commit</id>
+            <properties>
+                <commitToGithub>true</commitToGithub>
+            </properties>
+        </profile>
+    </profiles>
+</project>
