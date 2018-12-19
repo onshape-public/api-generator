@@ -61,15 +61,26 @@ public class Generator {
         boolean commit = args.length < 2 || Boolean.valueOf(args[1]);
         Generator generator = new Generator();
         File targetDir = new File(args[0]);
-        File onshapeBuildFile = new File(targetDir, "../../../.onshape-build");
+        String userHome = System.getProperty("user.home");
+        File onshapeBuildFile = new File(userHome, "/.onshape-build");
         if(!onshapeBuildFile.exists()) {
             throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
         }
         JsonNode parameters = new ObjectMapper().readTree(onshapeBuildFile);
+        checkAPIKeyParameters(parameters);
         File workingDir = Files.createTempDir();
         JavaLibraryTarget javaLibraryTarget = new JavaLibraryTarget();
         TestsLibraryTarget testsLibraryTarget = new TestsLibraryTarget();
         generator.generate(parameters, targetDir, workingDir, commit, javaLibraryTarget, testsLibraryTarget);
+    }
+
+    private static void checkAPIKeyParameters(JsonNode parameters) throws OnshapeException {
+        if (parameters == null) {
+            throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
+        }
+        if (!parameters.has("onshape-api-accesskey") || !parameters.has("onshape-api-secretkey")) {
+            throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
+        }
     }
 
     /**

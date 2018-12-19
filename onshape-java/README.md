@@ -15,7 +15,7 @@ The following tools are required to run the API generator:
 
 In order to access the Onshape API, API access keys are required. See [Onshape Dev Portal](https://dev-portal.onshape.com/keys) to generate or manage API keys.
 
-These are provided via a file called `.onshape-build` placed at the top-level of the working-copy of this git repository. The required contents of `.onshape-build`
+These are provided via a file called `.onshape-build` placed in the home directory of the user running maven. The required contents of `.onshape-build`
 is a JSON object containing:
 ```
 {

@@ -1,0 +1,1024 @@
+/parts/d/{did}/{wvm_char}/{wvm}:
+  post: {}
+  get: {}
+/appelements/d/{did}/w/{wid}/e/{eid}/references:
+  post: {}
+/partstudios/d/{did}/w/{wid}/e/{eid}/features:
+  post: {}
+/drawings/d/{did}/w/{wid}/e/{eid}/translationformats:
+  get: {}
+/partstudios/d/{did}/e/{eid}/namedViews:
+  get: {}
+/elements/d/{did}/w/{wid}/e/{eid}:
+  delete: {}
+/webhooks/{webhookid}:
+  post: {}
+  get: {}
+  delete: {}
+/applications/clients/{cid}/settings/users/{uid}:
+  post: {}
+  get: {}
+  delete: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/metadata:
+  post: {}
+  get: {}
+/assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/bom:
+  get: {}
+/documents/d/{did}/workspaces:
+  post: {}
+  get: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/sheetmetal/bendtable:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/stl:
+  get: {}
+/accounts/purchases/{pid}/consume:
+  post: {}
+/assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}:
+  get: {}
+/documents/d/{did}/externaldata/{fid}:
+  get: {}
+/assemblies/d/{did}/w/{wid}/e/{eid}/transformedinstances:
+  post: {}
+/assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/features:
+  get: {}
+/assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/featurespecs:
+  get: {}
+/assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/boundingboxes:
+  get: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}:
+  get: {}
+/users/sessioninfo:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/features:
+  get: {}
+/appelements/d/{did}/w/{wid}/e/{eid}/references/{rid}:
+  post: {}
+  delete: {}
+/parts/standardcontent/d/{did}/v/{vid}/e/{eid}/{cu_char}/{oid}/partid/{partid}/metadata:
+  post: {}
+  get: {}
+/blobelements/d/{did}/w/{wid}:
+  post: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/tessellatededges:
+  get: {}
+/assemblies/d/{did}/w/{wid}/e/{eid}/occurrencetransforms:
+  post: {}
+/appelements/d/{did}/w/{wid}/e/{eid}/transactions/{tid}:
+  post: {}
+/partstudios/d/{did}/w/{wid}:
+  post: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/boundingboxes:
+  get: {}
+/webhooks/{webhookid}/ping:
+  post: {}
+/assemblies/d/{did}/w/{wid}/e/{eid}/instances:
+  post: {}
+/elements/d/{did}/{wv_char}/{wv}/e/{eid}/metadata:
+  post: {}
+  get: {}
+/users/settings:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/idtranslations:
+  post: {}
+/accounts/plans/{planId}/purchases:
+  get: {}
+/endpoints:
+  get: {}
+/documents/{did}/permissionset:
+  get: {}
+/documents/{did}/share/{eid}:
+  delete: {}
+/teams:
+  get: {}
+/documents/d/{did}/versions:
+  post: {}
+  get: {}
+/documents/d/{did}/w/{wid}/moveelement:
+  post: {}
+/appelements/d/{did}/{wvm_char}/{wvm}/e/{eid}/content:
+  get: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/boundingboxes:
+  get: {}
+/assemblies/d/{did}/w/{wid}:
+  post: {}
+/translations/translationformats:
+  get: {}
+/documents/{did}/workspaces/{wid}/copy:
+  post: {}
+/assemblies/d/{did}/w/{wid}/e/{eid}/bomelement:
+  post: {}
+/appelements/d/{did}/w/{wid}/e/{eid}/content:
+  post: {}
+/partstudios/d/{did}/w/{wid}/e/{eid}/configuration:
+  post: {}
+/metadata/d/{did}/{wvm_char}/{wvm}/e/{eid}/p:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/sketches/{sid}/boundingboxes:
+  get: {}
+/blobelements/d/{did}/{wv_char}/{wv}/e/{eid}/translations:
+  post: {}
+/assemblies/d/{did}/e/{eid}/namedViews:
+  get: {}
+/accounts/{aid}/purchases/{pid}:
+  delete: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/tessellatedfaces:
+  get: {}
+/appelements/d/{did}/{wvm_char}/{wvm}/e/{eid}/content/history:
+  get: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/parasolid:
+  get: {}
+/metadataschema/properties:
+  get: {}
+/appelements/d/{did}/w/{wid}/e/{eid}/transactions/:
+  post: {}
+/assemblies/d/{did}/w/{wid}/e/{eid}/instance/nodeid/{nid}:
+  delete: {}
+/partstudios/d/{did}/w/{wid}/e/{eid}/features/updates:
+  post: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/shadedviews:
+  get: {}
+/thumbnails/d/{did}/v/{vid}:
+  get: {}
+/documents/d/{did}/v/{vid}/insertables:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/parasolid:
+  get: {}
+/drawings/d/{did}/{wv_char}/{wv}/e/{eid}/translations:
+  post: {}
+/teams/{tid}:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/configuration:
+  get: {}
+/assemblies/d/{did}/{wv_char}/{wv}/e/{eid}/translations:
+  post: {}
+/translations/d/{did}:
+  get: {}
+/revisions/companies/{cid}/partnumber/{pnum}:
+  get: {}
+/elements/d/{did}/e/{eid}/configurationencodings:
+  post: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/bodydetails:
+  get: {}
+/elements/d/{did}/{wvm_char}/{wvm}/e/{eid}/configurationencodings/{cid}:
+  get: {}
+/assemblies/d/{did}/w/{wid}/e/{eid}/translationformats:
+  get: {}
+/users/{uid}/settings:
+  get: {}
+/assemblies/d/{did}/w/{wid}/e/{eid}/features/featureid/{fid}:
+  post: {}
+  delete: {}
+/thumbnails/d/{did}:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/compare:
+  get: {}
+/webhooks:
+  post: {}
+/thumbnails/d/{did}/w/{wid}/e/{eid}/c/{cid}/s/{sz}:
+  get: {}
+/partstudios/d/{did}/{wv_char}/{wv}/e/{eid}/translations:
+  post: {}
+/folders/{fid}/share:
+  post: {}
+/appelements/d/{did}/{wvm_char}/{wvm}/e/{eid}/content/ids/:
+  get: {}
+/accounts/purchases:
+  get: [    {
+              "state": 6,
+              "lastModified": null,
+              "duration": 0,
+              "currency": "USD",
+              "group": "Monthly",
+              "accountId": "5a7895a860f66d0ff7d9d433",
+              "planId": "56613269e4b072c6fb9767b1",
+              "plan": {
+                "group": "Monthly",
+                "clientId": null,
+                "discountInfo": null,
+                "trialPeriodDays": 0,
+                "hidden": false,
+                "description": "Free monthly usage",
+                "applicationId": "566118f5e4b05ce235f2051b",
+                "onshapePlan": false,
+                "interval": null,
+                "deprecated": false,
+                "planType": 0,
+                "consumableQuantity": 0,
+                "amountCents": 0,
+                "companyPlan": false,
+                "id": "56613269e4b072c6fb9767b1",
+                "href": null,
+                "name": "FREE"
+              },
+              "seats": 1,
+              "subscriptionBeginAt": "2018-09-28T15:31:47.962+0000",
+              "subscriptionEndAt": null,
+              "subscriptionId": null,
+              "application": {
+                "state": 0,
+                "description": "This application exports Onshape Part Studios & Assemblies to 3D PDF (.pdf) format. These PDF files can be opened in most of the PDF readers like Adobe Acrobat Reader & hence are easy to share.",
+                "id": "566118f5e4b05ce235f2051b",
+                "clientId": "FRJZLUZ4RMV6JMG2MWFFSW7GPPL42GUT6XLBJ6Y=",
+                "href": "https://cad.onshape.com/api/applications/566118f5e4b05ce235f2051b",
+                "name": "3D PDF Exporter"
+              },
+              "clientId": "FRJZLUZ4RMV6JMG2MWFFSW7GPPL42GUT6XLBJ6Y=",
+              "paymentType": 0,
+              "subscribers": null,
+              "planType": 0,
+              "amountCents": 0,
+              "card": {
+                "type": null,
+                "last4": null,
+                "expMonth": 0,
+                "expYear": 0,
+                "billingAddress": null
+              },
+              "lightSeats": 0,
+              "canceledAt": null,
+              "couponPercentOff": null,
+              "actualAmountPaidCents": 0,
+              "planName": "FREE",
+              "trialEnd": null,
+              "resellerName": null,
+              "purchaseDate": "2018-09-28T15:31:47.962+0000",
+              "pendingCancelation": false,
+              "nextCharge": null,
+              "proratedCharges": null,
+              "proratedTotal": null,
+              "couponAmountOff": null,
+              "durationMonths": null,
+              "id": "5bae4963a660e40d9781ec06",
+              "href": null,
+              "name": null
+            }, {
+              "state": 6,
+              "lastModified": null,
+              "duration": 0,
+              "currency": "USD",
+              "group": "Monthly",
+              "accountId": "5a7895a860f66d0ff7d9d433",
+              "planId": "5901e1e8552fb91015e4b3c2",
+              "plan": {
+                "group": "Monthly",
+                "clientId": null,
+                "discountInfo": null,
+                "trialPeriodDays": 0,
+                "hidden": false,
+                "description": "Free monthly usage",
+                "applicationId": "58bd261152da550ecc1dd62c",
+                "onshapePlan": false,
+                "interval": null,
+                "deprecated": false,
+                "planType": 0,
+                "consumableQuantity": 0,
+                "amountCents": 0,
+                "companyPlan": false,
+                "id": "5901e1e8552fb91015e4b3c2",
+                "href": null,
+                "name": "FREE"
+              },
+              "seats": 1,
+              "subscriptionBeginAt": "2018-09-26T21:15:33.760+0000",
+              "subscriptionEndAt": null,
+              "subscriptionId": null,
+              "application": {
+                "state": 0,
+                "description": "XperDi CAD Configurator for Onshape allows to generate configurable version of your products using Onshape 3D model libraries .",
+                "id": "58bd261152da550ecc1dd62c",
+                "clientId": "BI7WVMMLTLIHXWRN26NVM7TNTFPTAXB4YTOFI5Q=",
+                "href": "https://cad.onshape.com/api/applications/58bd261152da550ecc1dd62c",
+                "name": "Xperdi Cad Configurator"
+              },
+              "clientId": "BI7WVMMLTLIHXWRN26NVM7TNTFPTAXB4YTOFI5Q=",
+              "paymentType": 0,
+              "subscribers": null,
+              "planType": 0,
+              "amountCents": 0,
+              "card": {
+                "type": null,
+                "last4": null,
+                "expMonth": 0,
+                "expYear": 0,
+                "billingAddress": null
+              },
+              "lightSeats": 0,
+              "canceledAt": null,
+              "couponPercentOff": null,
+              "actualAmountPaidCents": 0,
+              "planName": "FREE",
+              "trialEnd": null,
+              "resellerName": null,
+              "purchaseDate": "2018-09-26T21:15:33.761+0000",
+              "pendingCancelation": false,
+              "nextCharge": null,
+              "proratedCharges": null,
+              "proratedTotal": null,
+              "couponAmountOff": null,
+              "durationMonths": null,
+              "id": "5babf6f5baddba0e9c350664",
+              "href": null,
+              "name": null
+            }, {
+              "state": 6,
+              "lastModified": null,
+              "duration": 0,
+              "currency": "USD",
+              "group": "Monthly",
+              "accountId": "5a7895a860f66d0ff7d9d433",
+              "planId": "5ba7c095a660e40d97e9c2f1",
+              "plan": {
+                "group": "Monthly",
+                "clientId": null,
+                "discountInfo": null,
+                "trialPeriodDays": 0,
+                "hidden": false,
+                "description": "Free monthly usage",
+                "applicationId": "5ba7bd883f77bb0e58b7e013",
+                "onshapePlan": false,
+                "interval": null,
+                "deprecated": false,
+                "planType": 0,
+                "consumableQuantity": 0,
+                "amountCents": 0,
+                "companyPlan": false,
+                "id": "5ba7c095a660e40d97e9c2f1",
+                "href": null,
+                "name": "FREE"
+              },
+              "seats": 1,
+              "subscriptionBeginAt": "2018-09-23T16:35:15.533+0000",
+              "subscriptionEndAt": null,
+              "subscriptionId": null,
+              "application": {
+                "state": 0,
+                "description": "Use python equations to create Onshape parts!",
+                "id": "5ba7bd883f77bb0e58b7e013",
+                "clientId": "OLDWL6HQZRRXYLKG2I5QWZFK3RAPKYV3NWJFYCA=",
+                "href": "https://cad.onshape.com/api/applications/5ba7bd883f77bb0e58b7e013",
+                "name": "Jake"
+              },
+              "clientId": "OLDWL6HQZRRXYLKG2I5QWZFK3RAPKYV3NWJFYCA=",
+              "paymentType": 0,
+              "subscribers": null,
+              "planType": 0,
+              "amountCents": 0,
+              "card": {
+                "type": null,
+                "last4": null,
+                "expMonth": 0,
+                "expYear": 0,
+                "billingAddress": null
+              },
+              "lightSeats": 0,
+              "canceledAt": null,
+              "couponPercentOff": null,
+              "actualAmountPaidCents": 0,
+              "planName": "FREE",
+              "trialEnd": null,
+              "resellerName": null,
+              "purchaseDate": "2018-09-23T16:35:15.534+0000",
+              "pendingCancelation": false,
+              "nextCharge": null,
+              "proratedCharges": null,
+              "proratedTotal": null,
+              "couponAmountOff": null,
+              "durationMonths": null,
+              "id": "5ba7c0c3a660e40d97e9c5a2",
+              "href": null,
+              "name": null
+            }, {
+              "state": 6,
+              "lastModified": null,
+              "duration": 0,
+              "currency": "USD",
+              "group": "Monthly",
+              "accountId": "5a7895a860f66d0ff7d9d433",
+              "planId": "56d0e431e4b004e3adaf2de0",
+              "plan": {
+                "group": "Monthly",
+                "clientId": null,
+                "discountInfo": null,
+                "trialPeriodDays": 0,
+                "hidden": false,
+                "description": "Public: Non-commercial",
+                "applicationId": "56d0e397e4b004e3adaf2ddf",
+                "onshapePlan": false,
+                "interval": null,
+                "deprecated": false,
+                "planType": 0,
+                "consumableQuantity": 0,
+                "amountCents": 0,
+                "companyPlan": false,
+                "id": "56d0e431e4b004e3adaf2de0",
+                "href": null,
+                "name": "Public"
+              },
+              "seats": 1,
+              "subscriptionBeginAt": "2018-09-23T14:30:29.048+0000",
+              "subscriptionEndAt": null,
+              "subscriptionId": null,
+              "application": {
+                "state": 0,
+                "description": "Perform engineering calculations to directly drive Onshape variables",
+                "id": "56d0e397e4b004e3adaf2ddf",
+                "clientId": "KQ5H3ZDPXICD2PJKVGR6RJZ3HFNAJ2IQQMBBZFQ=",
+                "href": "https://cad.onshape.com/api/applications/56d0e397e4b004e3adaf2ddf",
+                "name": "Swift Calcs"
+              },
+              "clientId": "KQ5H3ZDPXICD2PJKVGR6RJZ3HFNAJ2IQQMBBZFQ=",
+              "paymentType": 0,
+              "subscribers": null,
+              "planType": 0,
+              "amountCents": 0,
+              "card": {
+                "type": null,
+                "last4": null,
+                "expMonth": 0,
+                "expYear": 0,
+                "billingAddress": null
+              },
+              "lightSeats": 0,
+              "canceledAt": null,
+              "couponPercentOff": null,
+              "actualAmountPaidCents": 0,
+              "planName": "Public",
+              "trialEnd": null,
+              "resellerName": null,
+              "purchaseDate": "2018-09-23T14:30:29.049+0000",
+              "pendingCancelation": false,
+              "nextCharge": null,
+              "proratedCharges": null,
+              "proratedTotal": null,
+              "couponAmountOff": null,
+              "durationMonths": null,
+              "id": "5ba7a385baddba0e9ccf6bf7",
+              "href": null,
+              "name": null
+            }, {
+              "state": 6,
+              "lastModified": null,
+              "duration": 0,
+              "currency": "USD",
+              "group": "Monthly",
+              "accountId": "5a7895a860f66d0ff7d9d433",
+              "planId": "577539a1e4b0ba984a252a39",
+              "plan": {
+                "group": "Monthly",
+                "clientId": null,
+                "discountInfo": null,
+                "trialPeriodDays": 0,
+                "hidden": false,
+                "description": "BOM for Onshape",
+                "applicationId": "57753304e4b0ba984a24c7a9",
+                "onshapePlan": false,
+                "interval": null,
+                "deprecated": false,
+                "planType": 0,
+                "consumableQuantity": 0,
+                "amountCents": 0,
+                "companyPlan": false,
+                "id": "577539a1e4b0ba984a252a39",
+                "href": null,
+                "name": "FREE"
+              },
+              "seats": 1,
+              "subscriptionBeginAt": "2018-08-26T10:52:11.819+0000",
+              "subscriptionEndAt": null,
+              "subscriptionId": null,
+              "application": {
+                "state": 0,
+                "description": "OpenBOM is a tool to manage Bill of Materials, Part Catalogs, product orders and coordinate the work between engineers, manufacturing, supply chain and contractors.",
+                "id": "57753304e4b0ba984a24c7a9",
+                "clientId": "IL7KBBHCXND3CH46RW7HUVIFVDJ2O6UM2L3EOUI=",
+                "href": "https://cad.onshape.com/api/applications/57753304e4b0ba984a24c7a9",
+                "name": "OpenBOM"
+              },
+              "clientId": "IL7KBBHCXND3CH46RW7HUVIFVDJ2O6UM2L3EOUI=",
+              "paymentType": 0,
+              "subscribers": null,
+              "planType": 0,
+              "amountCents": 0,
+              "card": {
+                "type": null,
+                "last4": null,
+                "expMonth": 0,
+                "expYear": 0,
+                "billingAddress": null
+              },
+              "lightSeats": 0,
+              "canceledAt": null,
+              "couponPercentOff": null,
+              "actualAmountPaidCents": 0,
+              "planName": "FREE",
+              "trialEnd": null,
+              "resellerName": null,
+              "purchaseDate": "2018-08-26T10:52:11.820+0000",
+              "pendingCancelation": false,
+              "nextCharge": null,
+              "proratedCharges": null,
+              "proratedTotal": null,
+              "couponAmountOff": null,
+              "durationMonths": null,
+              "id": "5b82865b9912ea0fe9627b6d",
+              "href": null,
+              "name": null
+            }, {
+              "state": 6,
+              "lastModified": null,
+              "duration": 0,
+              "currency": "USD",
+              "group": "Monthly",
+              "accountId": "5a7895a860f66d0ff7d9d433",
+              "planId": "5a7211eb79ac020f396046fc",
+              "plan": {
+                "group": "Monthly",
+                "clientId": null,
+                "discountInfo": null,
+                "trialPeriodDays": 0,
+                "hidden": false,
+                "description": "Free 14-day trial",
+                "applicationId": "5a72110279ac020f3960253b",
+                "onshapePlan": false,
+                "interval": null,
+                "deprecated": false,
+                "planType": 0,
+                "consumableQuantity": 0,
+                "amountCents": 0,
+                "companyPlan": false,
+                "id": "5a7211eb79ac020f396046fc",
+                "href": null,
+                "name": "FREE"
+              },
+              "seats": 1,
+              "subscriptionBeginAt": "2018-08-12T00:47:18.517+0000",
+              "subscriptionEndAt": null,
+              "subscriptionId": null,
+              "application": {
+                "state": 0,
+                "description": "The new generation in FEA, SIMSOLID performs structural static and modal analyses directly on fully featured CAD assemblies and does not use a mesh",
+                "id": "5a72110279ac020f3960253b",
+                "clientId": "CV5T7SGGDWOPC3D6ES4TPYCXAU5YLTTR4YHIQDY=",
+                "href": "https://cad.onshape.com/api/applications/5a72110279ac020f3960253b",
+                "name": "SIMSOLID Cloud"
+              },
+              "clientId": "CV5T7SGGDWOPC3D6ES4TPYCXAU5YLTTR4YHIQDY=",
+              "paymentType": 0,
+              "subscribers": null,
+              "planType": 0,
+              "amountCents": 0,
+              "card": {
+                "type": null,
+                "last4": null,
+                "expMonth": 0,
+                "expYear": 0,
+                "billingAddress": null
+              },
+              "lightSeats": 0,
+              "canceledAt": null,
+              "couponPercentOff": null,
+              "actualAmountPaidCents": 0,
+              "planName": "FREE",
+              "trialEnd": null,
+              "resellerName": null,
+              "purchaseDate": "2018-08-12T00:47:18.518+0000",
+              "pendingCancelation": false,
+              "nextCharge": null,
+              "proratedCharges": null,
+              "proratedTotal": null,
+              "couponAmountOff": null,
+              "durationMonths": null,
+              "id": "5b6f8396854d550fc36dbcde",
+              "href": null,
+              "name": null
+            }, {
+              "state": 6,
+              "lastModified": null,
+              "duration": 0,
+              "currency": "USD",
+              "group": "Monthly",
+              "accountId": "5a7895a860f66d0ff7d9d433",
+              "planId": "568c6e4ae4b0d556c8625e68",
+              "plan": {
+                "group": "Monthly",
+                "clientId": null,
+                "discountInfo": null,
+                "trialPeriodDays": 0,
+                "hidden": false,
+                "description": "Free monthly usage",
+                "applicationId": "568c6d69e4b0d556c8625e5b",
+                "onshapePlan": false,
+                "interval": null,
+                "deprecated": false,
+                "planType": 0,
+                "consumableQuantity": 0,
+                "amountCents": 0,
+                "companyPlan": false,
+                "id": "568c6e4ae4b0d556c8625e68",
+                "href": null,
+                "name": "FREE"
+              },
+              "seats": 1,
+              "subscriptionBeginAt": "2018-05-26T21:44:19.704+0000",
+              "subscriptionEndAt": null,
+              "subscriptionId": null,
+              "application": {
+                "state": 0,
+                "description": "CAM/CNC 2.5-axis tool-path generation for facing, roughing and finishing. 3D Printing mode provides powerful slicing and customizable GCode output. An additional Laser mode offers slicing and tiling for stacked models with DXF/SVG output.",
+                "id": "568c6d69e4b0d556c8625e5b",
+                "clientId": "EAAEWYIOMQKBENEMYW2N7MF253CT4WYL6SUJGEY=",
+                "href": "https://cad.onshape.com/api/applications/568c6d69e4b0d556c8625e5b",
+                "name": "Kiri:Moto"
+              },
+              "clientId": "EAAEWYIOMQKBENEMYW2N7MF253CT4WYL6SUJGEY=",
+              "paymentType": 0,
+              "subscribers": null,
+              "planType": 0,
+              "amountCents": 0,
+              "card": {
+                "type": null,
+                "last4": null,
+                "expMonth": 0,
+                "expYear": 0,
+                "billingAddress": null
+              },
+              "lightSeats": 0,
+              "canceledAt": null,
+              "couponPercentOff": null,
+              "actualAmountPaidCents": 0,
+              "planName": "FREE",
+              "trialEnd": null,
+              "resellerName": null,
+              "purchaseDate": "2018-05-26T21:44:19.704+0000",
+              "pendingCancelation": false,
+              "nextCharge": null,
+              "proratedCharges": null,
+              "proratedTotal": null,
+              "couponAmountOff": null,
+              "durationMonths": null,
+              "id": "5b09d5333c4c9b0fba5bd83a",
+              "href": null,
+              "name": null
+            }, {
+              "state": 6,
+              "lastModified": null,
+              "duration": 0,
+              "currency": "USD",
+              "group": "Monthly",
+              "accountId": "5a7895a860f66d0ff7d9d433",
+              "planId": "578d222ee4b0278e7d4f37e3",
+              "plan": {
+                "group": "Monthly",
+                "clientId": null,
+                "discountInfo": null,
+                "trialPeriodDays": 0,
+                "hidden": false,
+                "description": "Free monthly usage",
+                "applicationId": "578d2117e4b0095f1ee108bc",
+                "onshapePlan": false,
+                "interval": null,
+                "deprecated": false,
+                "planType": 0,
+                "consumableQuantity": 0,
+                "amountCents": 0,
+                "companyPlan": false,
+                "id": "578d222ee4b0278e7d4f37e3",
+                "href": null,
+                "name": "FREE"
+              },
+              "seats": 1,
+              "subscriptionBeginAt": "2018-05-26T14:34:35.481+0000",
+              "subscriptionEndAt": null,
+              "subscriptionId": null,
+              "application": {
+                "state": 0,
+                "description": "The API Explorer documents the Onshape REST API and includes a \"try it\" feature to experiment with API calls.",
+                "id": "578d2117e4b0095f1ee108bc",
+                "clientId": "WOUI6RB5BTJJIZALI7BQ6HT5GTVXOFXX4X5K7FQ=",
+                "href": "https://cad.onshape.com/api/applications/578d2117e4b0095f1ee108bc",
+                "name": "API Explorer"
+              },
+              "clientId": "WOUI6RB5BTJJIZALI7BQ6HT5GTVXOFXX4X5K7FQ=",
+              "paymentType": 0,
+              "subscribers": null,
+              "planType": 0,
+              "amountCents": 0,
+              "card": {
+                "type": null,
+                "last4": null,
+                "expMonth": 0,
+                "expYear": 0,
+                "billingAddress": null
+              },
+              "lightSeats": 0,
+              "canceledAt": null,
+              "couponPercentOff": null,
+              "actualAmountPaidCents": 0,
+              "planName": "FREE",
+              "trialEnd": null,
+              "resellerName": null,
+              "purchaseDate": "2018-05-26T14:34:35.481+0000",
+              "pendingCancelation": false,
+              "nextCharge": null,
+              "proratedCharges": null,
+              "proratedTotal": null,
+              "couponAmountOff": null,
+              "durationMonths": null,
+              "id": "5b09707b3c4c9b0fba55c79c",
+              "href": null,
+              "name": null
+            }, {
+              "state": 6,
+              "lastModified": null,
+              "duration": 0,
+              "currency": "USD",
+              "group": "Monthly",
+              "accountId": "5a7895a860f66d0ff7d9d433",
+              "planId": "5899875c838e190ee0d7526c",
+              "plan": {
+                "group": "Monthly",
+                "clientId": null,
+                "discountInfo": null,
+                "trialPeriodDays": 0,
+                "hidden": false,
+                "description": "14 day free trial",
+                "applicationId": "589904dcf6017f0eef3bfb25",
+                "onshapePlan": false,
+                "interval": null,
+                "deprecated": false,
+                "planType": 0,
+                "consumableQuantity": 0,
+                "amountCents": 0,
+                "companyPlan": false,
+                "id": "5899875c838e190ee0d7526c",
+                "href": null,
+                "name": "FREE"
+              },
+              "seats": 1,
+              "subscriptionBeginAt": "2018-05-24T20:19:18.033+0000",
+              "subscriptionEndAt": null,
+              "subscriptionId": null,
+              "application": {
+                "state": 0,
+                "description": "VisualCAMc is a fully cloud hosted production level CAM application for Onshape.  VisualCAMc leverages the production tested MecSoft's desktop CAM software VisualCAM, running fully on the cloud.",
+                "id": "589904dcf6017f0eef3bfb25",
+                "clientId": "IRQRA6GGUC27TRHCCFDUBEEN7C75FUDT54T73SY=",
+                "href": "https://cad.onshape.com/api/applications/589904dcf6017f0eef3bfb25",
+                "name": "VisualCAMc"
+              },
+              "clientId": "IRQRA6GGUC27TRHCCFDUBEEN7C75FUDT54T73SY=",
+              "paymentType": 0,
+              "subscribers": null,
+              "planType": 0,
+              "amountCents": 0,
+              "card": {
+                "type": null,
+                "last4": null,
+                "expMonth": 0,
+                "expYear": 0,
+                "billingAddress": null
+              },
+              "lightSeats": 0,
+              "canceledAt": null,
+              "couponPercentOff": null,
+              "actualAmountPaidCents": 0,
+              "planName": "FREE",
+              "trialEnd": null,
+              "resellerName": null,
+              "purchaseDate": "2018-05-24T20:19:18.037+0000",
+              "pendingCancelation": false,
+              "nextCharge": null,
+              "proratedCharges": null,
+              "proratedTotal": null,
+              "couponAmountOff": null,
+              "durationMonths": null,
+              "id": "5b071e46f5e3510fd218b9a2",
+              "href": null,
+              "name": null
+            }, {
+              "state": 6,
+              "lastModified": null,
+              "duration": 0,
+              "currency": "USD",
+              "group": "Monthly",
+              "accountId": "5a7895a860f66d0ff7d9d433",
+              "planId": "58febcfb1f0c0e0fc287aa63",
+              "plan": {
+                "group": "Monthly",
+                "clientId": null,
+                "discountInfo": null,
+                "trialPeriodDays": 0,
+                "hidden": false,
+                "description": "Free monthly usage",
+                "applicationId": "58fea83d42fc1b0f8305edb3",
+                "onshapePlan": false,
+                "interval": null,
+                "deprecated": false,
+                "planType": 0,
+                "consumableQuantity": 0,
+                "amountCents": 0,
+                "companyPlan": false,
+                "id": "58febcfb1f0c0e0fc287aa63",
+                "href": null,
+                "name": "FREE"
+              },
+              "seats": 1,
+              "subscriptionBeginAt": "2018-05-15T19:02:04.889+0000",
+              "subscriptionEndAt": null,
+              "subscriptionId": null,
+              "application": {
+                "state": 0,
+                "description": "Real time engineering calculations displayed in proper mathematical format. Units, plots, text, tables, and numerous other items. Build your system in a part tree that updates design automatically.",
+                "id": "58fea83d42fc1b0f8305edb3",
+                "clientId": "JWF64IPEH32MCCUOU3SPZHOWFTE5MNA6EPNSW6A=",
+                "href": "https://cad.onshape.com/api/applications/58fea83d42fc1b0f8305edb3",
+                "name": "CADWOLF"
+              },
+              "clientId": "JWF64IPEH32MCCUOU3SPZHOWFTE5MNA6EPNSW6A=",
+              "paymentType": 0,
+              "subscribers": null,
+              "planType": 0,
+              "amountCents": 0,
+              "card": {
+                "type": null,
+                "last4": null,
+                "expMonth": 0,
+                "expYear": 0,
+                "billingAddress": null
+              },
+              "lightSeats": 0,
+              "canceledAt": null,
+              "couponPercentOff": null,
+              "actualAmountPaidCents": 0,
+              "planName": "FREE",
+              "trialEnd": null,
+              "resellerName": null,
+              "purchaseDate": "2018-05-15T19:02:04.890+0000",
+              "pendingCancelation": false,
+              "nextCharge": null,
+              "proratedCharges": null,
+              "proratedTotal": null,
+              "couponAmountOff": null,
+              "durationMonths": null,
+              "id": "5afb2eac466a7e0ebcd58be0",
+              "href": null,
+              "name": null
+            } ]
+/metadata/d/{did}/{wvm_char}/{wvm}/e/{eid}/p/{pid}:
+  get: {}
+/companies:
+  get: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/stl:
+  get: {}
+/folders/{fid}/acl:
+  get: {}
+/appelements/d/{did}/{wvm_char}/{wvm}/e/{eid}/references/{rid}:
+  get: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/massproperties:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/tessellatedfaces:
+  get: {}
+/metadataschema/property/{pid}:
+  get: {}
+/folders/{fid}/share/{eid}:
+  delete: {}
+/documents/d/{did}/{wvm_char}/{wvm}/elements:
+  get: {}
+/documents/d/{did}/{wv_char}/{wv}/e/{eid}/export:
+  post: {}
+  get: {}
+/releasepackages/{rpid}:
+  post: {}
+  get: {}
+/assemblies/d/{did}/w/{wid}/e/{eid}/features:
+  post: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/tessellatededges:
+  get: {}
+/assemblies/d/{did}/{wvm_char}/{wvm}/e/{eid}/shadedviews:
+  get: {}
+/blobelements/d/{did}/w/{wid}/e/{eid}:
+  post: {}
+/metadata/standardcontent/d/{did}/v/{vid}/e/{eid}/{cu_char}/{oid}/p/{pid}:
+  post: {}
+  get: {}
+/blobelements/d/{did}/{wvm_char}/{wvm}/e/{eid}:
+  get: {}
+/featurestudios/d/{did}/w/{wid}/e/{eid}:
+  post: {}
+/metadataschema:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/metadata:
+  get: [ {
+           "description": null,
+           "state": "IN_PROGRESS",
+           "partId": "JHD",
+           "configurationId": "QYJAIRQDAFGJSDQCTKMZTGMZTG4T6CADAEAAEAHABYAAAALITEHAFGUZTGMZTGNZH4EAGAIAAIAOADQAAAAXPGIOAKNJTGMZTGM3SPYIAMAQAAQA4AHAAAAAAA======",
+           "revision": null,
+           "elementId": "0639ea3c439aa0947744d29a",
+           "microversionId": "e26022ce9bc8414946bf09b4",
+           "partNumber": null,
+           "partQuery": "query=qCompressed(1.0,\"&1bb$eJx9UE1zgjAQ/TPbYx2CQPEIIVhsBU1oHXthgkTJVA2FOC3++gaZ6aUzHnff7vt6CF1YX0TbL12GbKhkx0+lPFy4luoccc0DtLT/I3nfCIamkNFknqTBaxGRFUkjkuItm4Fq5UGe+bELHGwZYg7irKXuh6+QA/kbmAMkmhNWQi07rdpx6QOmJMiTLDWAakR7k0yq0IakChBDaOJB/N6/7a8EpQtc1ygqrG/Ziqwx6l9DnBtRBeyF5Pi5IGme5FsmoPsUelePBpKK7QzR1WuXG0uxNcWrUmmtToNn6lCXevSJ+pTTku5oxR6RPZmCVs0d3IGj2Os7By6YbmpNHeyZ8GEWbccjXI7BZhB7H7m/aOYstv1DHxeWasiPbi+VoKVpkm3IKi+Gx1+jUo4n\",id);",
+           "bodyType": "solid",
+           "isFlattenedBody": false,
+           "isMesh": false,
+           "appearance": {
+             "isGenerated": true,
+             "color": {
+               "blue": 237,
+               "red": 157,
+               "green": 207
+             },
+             "opacity": 255
+           },
+           "thumbnailConfigurationId": "PNGD2NBVHEYTQNZQGE4DAMBWGY4TKNZXGIZCA3LFORSXELBANA6TINJZGE4DOMBRHAYDANRWHE2TONZSGIQG2ZLUMVZCYIDXHU2DKOJRHA3TAMJYGAYDMNRZGU3TOMRSEBWWK5DFOJ6Q",
+           "isHidden": false,
+           "ordinal": 0,
+           "propertySourceTypes": {
+             "57f3fb8efa3416c06701d60d": 0
+           },
+           "name": "Part 1"
+         } ]
+/releasepackages/release/{wfid}:
+  post: {}
+/blobelements/d/{did}/w/{wid}/e/{eid}/translationformats:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/bodydetails:
+  get: {}
+/metadata/d/{did}/{wv_char}/{wv}:
+  post: {}
+  get: {}
+/documents:
+  post: {}
+  get: {}
+/parts/d/{did}/{wvm_char}/{wvm}/e/{eid}/partid/{partid}/shadedviews:
+  get: {}
+/appelements/d/{did}/{wvm_char}/{wvm}/e/{eid}/content/subelements/{sid}:
+  delete: {}
+/documents/d/{did}/workspaces/{wid}:
+  delete: {}
+/documents/{did}:
+  post: {}
+  get: {}
+  delete: {}
+/companies/{cid}:
+  get: {}
+/documents/{did}/acl:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/featurespecs:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/sketches/{sid}/tessellatedentities:
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/featurescript:
+  post: {}
+/featurestudios/d/{did}/w/{wid}:
+  post: {}
+/featurestudios/d/{did}/{wvm_char}/{wvm}/e/{eid}:
+  get: {}
+/releasepackages/obsoletion/{wfid}:
+  post: {}
+/documents/d/{did}/versions/{vid}:
+  get: {}
+/documents/d/{did}/w/{wid}/e/{eid}/latestdocumentreferences:
+  post: {}
+/translations/d/{did}/w/{wid}:
+  post: {}
+/thumbnails/d/{did}/w/{wid}/e/{eid}/s/{sz}:
+  get: {}
+/thumbnails/d/{did}/{wv_char}/{wv}/e/{eid}:
+  post: {}
+  delete: {}
+  get: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/sketches:
+  get: {}
+/billing/plans/client/{cid}:
+  get: {}
+/thumbnails/d/{did}/w/{wid}/s/{sz}:
+  get: {}
+/partstudios/d/{did}/w/{wid}/e/{eid}/features/rollback:
+  post: {}
+/partstudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/massproperties:
+  get: {}
+/featurestudios/d/{did}/{wvm_char}/{wvm}/e/{eid}/featurespecs:
+  get: {}
+/metadataschema/{sid}:
+  get: {}
+/partstudios/d/{did}/w/{wid}/e/{eid}/translationformats:
+  get: {}
+/translations/{tid}:
+  delete: {}
+  get: {}
+/versions/test:
+  get: {}
+/documents/{did}/share:
+  post: {}
+/releasepackages/companyreleaseworkflow:
+  get: {}
+/partstudios/d/{did}/w/{wid}/e/{eid}/features/featureid/{fid}:
+  post: {}
+  delete: {}
+/documents/d/{did}/{wv_char}/{wv}/currentmicroversion:
+  get: {}
+/appelements/d/{did}/w/{wid}:
+  post: {}
+/thumbnails/d/{did}/w/{wid}:
+  get: {}
