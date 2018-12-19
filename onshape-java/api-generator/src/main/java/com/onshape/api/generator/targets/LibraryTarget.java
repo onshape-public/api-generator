@@ -23,6 +23,7 @@
  */
 package com.onshape.api.generator.targets;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Iterables;
 import com.google.common.io.Files;
 import com.onshape.api.types.OnshapeVersion;
@@ -43,6 +44,7 @@ public abstract class LibraryTarget {
     private OnshapeVersion buildVersion;
     private File targetDir;
     private File workingDir;
+    private JsonNode parameters;
 
     protected LibraryTarget(String language, String repository) {
         this.language = language;
@@ -51,10 +53,11 @@ public abstract class LibraryTarget {
 
     public abstract GroupTarget group(Group group);
 
-    public void start(File targetDir, File workingDir, OnshapeVersion buildVersion) throws GeneratorException {
+    public void start(File targetDir, File workingDir, OnshapeVersion buildVersion, JsonNode parameters) throws GeneratorException {
         this.targetDir = targetDir;
         this.workingDir = workingDir;
         this.buildVersion = buildVersion;
+        this.parameters = parameters;
         if (!repository.isEmpty()) {
             System.out.println("Preparing " + language + " client in temporary directory " + workingDir);
             cloneAndCleanGitRepository(repository, "master", new File(this.workingDir, language + "-master"));
@@ -64,6 +67,10 @@ public abstract class LibraryTarget {
 
     public OnshapeVersion getBuildVersion() {
         return buildVersion;
+    }
+
+    public JsonNode getParameters() {
+        return parameters;
     }
 
     public String getLanguage() {

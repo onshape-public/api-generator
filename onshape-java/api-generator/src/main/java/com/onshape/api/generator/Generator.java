@@ -101,7 +101,7 @@ public class Generator {
             System.out.println("Using endpoints from server as no endpoints.augment.json file or not successfully read");
         }
         for (LibraryTarget target : targets) {
-            target.start(targetDir, workingDir, buildVersion);
+            target.start(targetDir, workingDir, buildVersion, parameters);
             for (Group group : apiGroups) {
                 generateGroup(target, group);
             }

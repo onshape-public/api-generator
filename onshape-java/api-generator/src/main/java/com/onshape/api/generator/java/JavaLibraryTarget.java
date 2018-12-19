@@ -23,6 +23,7 @@
  */
 package com.onshape.api.generator.java;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
@@ -105,8 +106,8 @@ public class JavaLibraryTarget extends LibraryTarget {
     }
 
     @Override
-    public void start(File targetDir, File workingDir, OnshapeVersion buildVersion) throws GeneratorException {
-        super.start(targetDir, workingDir, buildVersion);
+    public void start(File targetDir, File workingDir, OnshapeVersion buildVersion, JsonNode parameters) throws GeneratorException {
+        super.start(targetDir, workingDir, buildVersion, parameters);
         this.baseDir = new File(targetDir, "java-build");
         new File(baseDir, "src/main").mkdirs();
         new File(baseDir, "src/test").mkdirs();
@@ -187,10 +188,16 @@ public class JavaLibraryTarget extends LibraryTarget {
     }
 
     void build(File location) throws GeneratorException {
+        // Get credentials for tests
+        String accessKey = getParameters().get("onshape-api-accesskey").asText();
+        String secretKey = getParameters().get("onshape-api-secretkey").asText();
         // Create tag
         String[] buildCommands = createArguments("mvn", "clean", "install", "javadoc:javadoc");
         try {
-            if (0 != new ProcessBuilder(buildCommands).directory(location).inheritIO().start().waitFor()) {
+            ProcessBuilder processBuilder = new ProcessBuilder(buildCommands).directory(location).inheritIO();
+            processBuilder.environment().put("ONSHAPE_API_ACCESSKEY", accessKey);
+            processBuilder.environment().put("ONSHAPE_API_SECRETKEY", secretKey);
+            if (0 != processBuilder.start().waitFor()) {
                 throw new GeneratorException("Failed to run mvn command in " + location);
             }
         } catch (IOException | InterruptedException ex) {
