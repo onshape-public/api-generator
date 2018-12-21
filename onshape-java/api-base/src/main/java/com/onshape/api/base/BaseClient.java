@@ -336,7 +336,7 @@ public class BaseClient {
             case REDIRECTION:
                 return call(method, response.getHeaderString("Location"), payload, urlParameters, queryParameters);
             default:
-                throw new OnshapeException(response.getStatusInfo().getReasonPhrase());
+                throw new OnshapeException(response.getStatusInfo().getStatusCode(), response.getStatusInfo().getReasonPhrase());
         }
     }
 
