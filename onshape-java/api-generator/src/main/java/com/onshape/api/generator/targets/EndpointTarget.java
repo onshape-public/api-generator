@@ -27,8 +27,6 @@ import com.google.common.collect.Sets;
 import com.onshape.api.generator.exceptions.GeneratorException;
 import com.onshape.api.generator.model.Endpoint;
 import com.onshape.api.generator.model.Field;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,22 +55,6 @@ public abstract class EndpointTarget {
 
     public abstract void create() throws GeneratorException;
 
-    protected Collection<Field> applySpecialCases(Collection<Field> fields) {
-        Collection<Field> out = new ArrayList<>(fields.size());
-        fields.forEach((field) -> {
-            out.add(field);
-            // The following special case is needed for Assembly Definition
-            if ("subAssemblies.0.instances.0".equals(field.getField())) {
-                fields.forEach((otherfield) -> {
-                    if (otherfield.getField().startsWith("rootAssembly.instances.0.")) {
-                        out.add(otherfield.withNewFieldName(otherfield.getField().replace("rootAssembly.instances.0.", "subAssemblies.0.instances.0.")));
-                    }
-                });
-            }
-        });
-        return out;
-    }
-
     protected String getReplacedBy() {
         String replacedBy = "";
         if (getEndpoint().getError().getFields().containsKey("ReplacedBy")) {
@@ -80,7 +62,7 @@ public abstract class EndpointTarget {
                 if (field.getField().equals("replacedBy")) {
                     replacedBy = field.getDescription();
                 }
-            };
+            }
         }
         return replacedBy;
     }
