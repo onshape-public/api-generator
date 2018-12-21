@@ -41,6 +41,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -394,7 +395,7 @@ public class JavaEndpointTarget extends EndpointTarget {
         fieldMap.entrySet().stream().filter((fieldMapEntry) -> (fieldMapEntry.getKey().startsWith("Response"))).forEachOrdered((fieldMapEntry) -> {
             allResponseFields.addAll(fieldMapEntry.getValue());
         });
-        for (Field field : applySpecialCases(allResponseFields)) {
+        for (Field field : allResponseFields) {
             hasNextField = hasNextField || field.getField().equals("next");
             hasPreviousField = hasPreviousField || field.getField().equals("previous");
             hasUrlField = hasUrlField || field.getField().equals("href");
@@ -410,6 +411,9 @@ public class JavaEndpointTarget extends EndpointTarget {
                         String typeName = newClassName + Utilities.toCamelCase(name);
                         TypeName ref = createLocalType("com.onshape.api.responses", name, typeName, name + ".", allResponseFields, false);
                         fieldType = ArrayTypeName.of(ref);
+                    } else if (field.getField().equals("file") && t.equals(Base64Encoded.class) && allResponseFields.size() == 1) {
+                        // An object with single field called "file" is treated differently by the client, as the response is just the File content
+                        fieldType = JavaLibraryTarget.getTypeName(File.class);
                     } else {
                         fieldType = JavaLibraryTarget.getTypeName(t);
                     }

@@ -6,9 +6,84 @@
                 "name": "getAssemblyDefinition",
                 "success": {
                     "fields": {
-                        "Response": [
-                            
-                        ]
+                        "Response": [{
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.id",
+                                "defaultValue": null,
+                                "description": "Instance ID"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.name",
+                                "defaultValue": null,
+                                "description": "Part/feature/assembly name"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.type",
+                                "defaultValue": null,
+                                "description": "Instance type. Current valid values are Part,\n            Assembly, Feature. Other values may be added in the future. Note that \"Part\" may mean a reference to\n            a surface or a solid and that \"Feature\" currently means a reference to a Sketch, but support for\n            other feature types may be added in the future. For Part, a specific bodyType is included in the\n            parts information and for Feature, a specific featureType is included in the partStudioFeatures\n            information."
+                            }, {
+                                "group": "Response",
+                                "type": "Boolean",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.suppressed",
+                                "defaultValue": null,
+                                "description": "Instance suppressed or not"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.documentId",
+                                "defaultValue": null,
+                                "description": "Document ID for the document containing the\n            included instance"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.documentMicroversion",
+                                "defaultValue": null,
+                                "description": "Microversion ID of document\n            containing the included instance"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.documentVersion",
+                                "defaultValue": null,
+                                "description": "Version ID of document containing the\n            included instance, if reached through one or more version references"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.elementId",
+                                "defaultValue": null,
+                                "description": "Element ID of the part/assembly instance"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.partId",
+                                "defaultValue": null,
+                                "description": "Deterministic part ID if type is Part. If the\n            part cannot be resolved, the value will be the empty string. This can happen if a change in the\n            source part studio causes the part that was originally referenced to be missing."
+                            }, {
+                                "group": "Response",
+                                "type": "Boolean",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.isStandardContent",
+                                "defaultValue": null,
+                                "description": "If type is Part this field\n            indicates whether the part is Standard Content."
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "subAssemblies.0.instances.0.configuration",
+                                "defaultValue": null,
+                                "description": "Configuration of the Part studio element\n                   if the instance references a Part studio."
+                            }]
                     }
                 }
             }
