@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.onshape.api.exceptions.OnshapeException;
+import com.onshape.api.types.Blob;
 import com.onshape.api.types.OAuthTokenResponse;
 import com.onshape.api.types.OnshapeVersion;
 import java.io.File;
@@ -180,7 +181,6 @@ public class BaseClient {
             default:
                 throw new OnshapeException(response.getStatusInfo().getReasonPhrase());
         }
-
     }
 
     void refreshOAuthToken() throws OnshapeException {
@@ -250,9 +250,8 @@ public class BaseClient {
         } else {
             String ext = response.getMediaType().getSubtype();
             if (File.class.equals(type)) {
-                try {
+                try (InputStream input = (InputStream) response.getEntity()) {
                     File f = File.createTempFile("onshape", "." + ext, workingDir);
-                    InputStream input = (InputStream) response.getEntity();
                     try (FileOutputStream fos = new FileOutputStream(f)) {
                         int n;
                         byte[] buffer = new byte[1024];
@@ -265,29 +264,45 @@ public class BaseClient {
                 } catch (IOException ex) {
                     throw new OnshapeException("Error while copying to local file", ex);
                 }
-            } else if (type.getDeclaredFields().length == 1 && "file".equals(type.getDeclaredFields()[0].getName()) && File.class.equals(type.getDeclaredFields()[0].getType())) {
-                try {
-                    File f = File.createTempFile("onshape", "." + ext, workingDir);
-                    InputStream input = (InputStream) response.getEntity();
-                    try (FileOutputStream fos = new FileOutputStream(f)) {
-                        int n;
-                        byte[] buffer = new byte[1024];
-                        while ((n = input.read(buffer)) > -1) {
-                            fos.write(buffer, 0, n);
+            } else if (type.getDeclaredFields().length == 1) {
+                if (File.class.equals(type.getDeclaredFields()[0].getType())) {
+                    try (InputStream input = (InputStream) response.getEntity()) {
+                        File f = File.createTempFile("onshape", "." + ext, workingDir);
+                        try (FileOutputStream fos = new FileOutputStream(f)) {
+                            int n;
+                            byte[] buffer = new byte[1024];
+                            while ((n = input.read(buffer)) > -1) {
+                                fos.write(buffer, 0, n);
+                            }
+                            fos.flush();
                         }
-                        fos.flush();
+                        Constructor<T> constructor = type.getDeclaredConstructor();
+                        constructor.setAccessible(true);
+                        T out = constructor.newInstance();
+                        Field field = type.getDeclaredFields()[0];
+                        field.setAccessible(true);
+                        field.set(out, f);
+                        return out;
+                    } catch (IOException | IllegalArgumentException | IllegalAccessException
+                            | InstantiationException | InvocationTargetException
+                            | NoSuchMethodException | SecurityException ex) {
+                        throw new OnshapeException("Error while copying to local file", ex);
                     }
-                    Constructor<T> constructor = type.getDeclaredConstructor();
-                    constructor.setAccessible(true);
-                    T out = constructor.newInstance();
-                    Field field = type.getDeclaredFields()[0];
-                    field.setAccessible(true);
-                    field.set(out, f);
-                    return out;
-                } catch (IOException | IllegalArgumentException | IllegalAccessException
-                        | InstantiationException | InvocationTargetException
-                        | NoSuchMethodException | SecurityException ex) {
-                    throw new OnshapeException("Error while copying to local file", ex);
+                } else if (Blob.class.equals(type.getDeclaredFields()[0].getType())) {
+                    try {
+                        Blob blob = new Blob((InputStream) response.getEntity());
+                        Constructor<T> constructor = type.getDeclaredConstructor();
+                        constructor.setAccessible(true);
+                        T out = constructor.newInstance();
+                        Field field = type.getDeclaredFields()[0];
+                        field.setAccessible(true);
+                        field.set(out, blob);
+                        return out;
+                    } catch (IOException | IllegalArgumentException | IllegalAccessException
+                            | InstantiationException | InvocationTargetException
+                            | NoSuchMethodException | SecurityException ex) {
+                        throw new OnshapeException("Error while creating blob", ex);
+                    }
                 }
             }
         }
@@ -372,7 +387,7 @@ public class BaseClient {
         queryParameters.entrySet().stream().filter((queryParameter) -> (queryParameter.getValue() != null))
                 .forEachOrdered((queryParameter) -> {
                     uriBuilder.replaceQueryParam(queryParameter.getKey(), queryParameter.getValue());
-                });        
+                });
         try {
             return uriBuilder.buildFromMap(urlParameters);
         } catch (IllegalArgumentException iae) {
