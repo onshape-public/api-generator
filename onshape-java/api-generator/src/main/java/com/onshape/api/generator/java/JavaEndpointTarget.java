@@ -33,6 +33,7 @@ import com.onshape.api.generator.exceptions.GeneratorException;
 import com.onshape.api.generator.model.Endpoint;
 import com.onshape.api.generator.model.Field;
 import com.onshape.api.types.Base64Encoded;
+import com.onshape.api.types.Blob;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
@@ -346,7 +347,13 @@ public class JavaEndpointTarget extends EndpointTarget {
             }
             if (desc.contains("Base-64 encoded")) {
                 // It is base64 encoded, use a special type to handle decoding/encoding
+                System.out.println("Replaced type " + getGroupTarget().getGroup().getGroup() + " " + getEndpoint().getName() + ": " + ref + " (" + typeString + " -> Base64Encoded" + (isArray ? "[]" : "") + ")");
                 return ClassName.get(Base64Encoded.class);
+            }
+            if ("data".equals(ref)) {
+                // It is raw data, we will copy to a blob
+                System.out.println("Replaced type " + getGroupTarget().getGroup().getGroup() + " " + getEndpoint().getName() + ": " + ref + " (" + typeString + " -> Blob" + (isArray ? "[]" : "") + ")");
+                return ClassName.get(Blob.class);
             }
             return ClassName.get(Map.class);
         }
