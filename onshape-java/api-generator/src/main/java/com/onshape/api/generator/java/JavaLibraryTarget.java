@@ -238,13 +238,12 @@ public class JavaLibraryTarget extends LibraryTarget {
         }
         // Special cases
         if ("Data".equals(className)) {
-            return Map.class;
+            // We make this an object, because when used as a featureSpec it should be
+            // When used as data it will be changed to a Blob in JavaEndpointTarget
+            baseClass = Object.class;
         }
         if (baseClass == null) {
             return null;
-        }
-        if (File.class.equals(baseClass)) {
-            baseClass = Base64Encoded.class;
         }
         while (dim > 0) {
             baseClass = Array.newInstance(baseClass, 1).getClass();
