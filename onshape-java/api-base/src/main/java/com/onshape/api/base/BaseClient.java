@@ -82,7 +82,7 @@ import org.hashids.Hashids;
  */
 public class BaseClient {
 
-    private String baseURL = "https://cad.onshape.com/api";
+    private String baseURL = "https://cad.onshape.com";
     private final Client client;
     private final Hashids hashids = new Hashids("cloudCADIsGreat", 25, "abcdefghijklmnopqrstuvwxyz01234567890");
     private final ObjectMapper objectMapper;
@@ -516,7 +516,7 @@ public class BaseClient {
     URI buildURI(String path, Map<String, Object> urlParameters, Map<String, Object> queryParameters) throws OnshapeException {
         UriBuilder uriBuilder;
         if (path.startsWith("/")) {
-            uriBuilder = UriBuilder.fromUri(baseURL + path
+            uriBuilder = UriBuilder.fromUri(baseURL + "/api" + path
                     .replaceAll(":([^\\/:]+)", "{$1}")
                     .replace("[wvm]", "{wvmType}")
                     .replace("[wv]", "{wvType}")
