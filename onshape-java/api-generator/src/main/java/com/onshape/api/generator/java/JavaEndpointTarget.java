@@ -26,6 +26,7 @@ package com.onshape.api.generator.java;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.onshape.api.generator.targets.EndpointTarget;
 import com.onshape.api.generator.targets.GroupTarget;
 import com.onshape.api.generator.Utilities;
@@ -34,6 +35,8 @@ import com.onshape.api.generator.model.Endpoint;
 import com.onshape.api.generator.model.Field;
 import com.onshape.api.types.Base64Encoded;
 import com.onshape.api.types.Blob;
+import com.onshape.api.types.OnshapeDocument;
+import com.onshape.api.types.WVM;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
@@ -46,8 +49,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.lang.model.element.Modifier;
 import javax.validation.constraints.NotNull;
 import org.junit.jupiter.api.DisplayName;
@@ -173,7 +178,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                                 callStatement2.append(", ");
                             }
                             callStatement.append("\"wvmType\", wvmType");
-                            callStatement2.append("\"wvmType\", WVM.Workspace");
+                            callStatement2.append("\"wvmType\", document.getWVM()");
                             callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
                             javadoc.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
                             i++;
@@ -184,7 +189,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                                 callStatement2.append(", ");
                             }
                             callStatement.append("\"wvType\", wvType");
-                            callStatement2.append("\"wvType\", WV.Workspace");
+                            callStatement2.append("\"wvType\", document.getWV()");
                             callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
                             javadoc.append("\n@param wvType Type of Workspace or Version\n");
                             i++;
@@ -224,11 +229,15 @@ public class JavaEndpointTarget extends EndpointTarget {
                             includeCall2 = true;
                             break;
                         case "wvm":
-                            callStatement2.append("\"wvm\", document.getWorkspaceId()");
+                            callStatement2.append("\"wvm\", document.getWVMId()");
                             includeCall2 = true;
                             break;
                         case "wv":
-                            callStatement2.append("\"wv\", document.getWorkspaceId()");
+                            callStatement2.append("\"wv\", document.getWVId()");
+                            includeCall2 = true;
+                            break;
+                        case "wid":
+                            callStatement2.append("\"wid\", document.getWorkspaceId()");
                             includeCall2 = true;
                             break;
                         default:
@@ -273,9 +282,11 @@ public class JavaEndpointTarget extends EndpointTarget {
             }
         }
         callStatement.append("), ").append("com.onshape.api.responses.").append(groupName).append(Utilities.toCamelCase(getEndpoint().getName())).append("Response.class)");
+        callBuilder.addStatement("onshape.validate(build())");
         callBuilder.addStatement(callStatement.toString());
         callBuilder.addJavadoc(javadoc.toString());
         callStatement2.append("), ").append("com.onshape.api.responses.").append(groupName).append(Utilities.toCamelCase(getEndpoint().getName())).append("Response.class)");
+        callBuilder2.addStatement("onshape.validate(build())");
         callBuilder2.addStatement(callStatement2.toString());
         callBuilder2.addJavadoc(javadoc2.toString());
 
@@ -362,6 +373,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                 .addJavadoc("Object used in calls to " + getEndpoint().getName() + " API endpoint.\n&copy; 2018 Onshape Inc.\n")
                 .addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
                         .addMember("ignoreUnknown", "$L", Boolean.TRUE).build());
+        Set<String> hasDocumentFields = new HashSet<>();
         for (Map.Entry<Field, TypeName> field : types.entrySet()) {
             String javadoc = field.getKey().getDescription() == null ? "" : field.getKey().getDescription().replace("$", "");
             if (javadoc == null) {
@@ -373,15 +385,33 @@ public class JavaEndpointTarget extends EndpointTarget {
                             .addMember("value", "$S", getFieldName(field.getKey()))
                             .build())
                     .addJavadoc(Utilities.escape(javadoc) + "\n").build());
+            if (DOCUMENT_FIELD_NAMES.contains(fieldName)) {
+                hasDocumentFields.add(fieldName);
+            }
         }
         typeSpecBuilder = GetterSpec.forType(typeSpecBuilder).build();
         if (builder) {
             typeSpecBuilder = BuilderSpec.forType(packageName, typeSpecBuilder).build();
         }
+        if (!builder && hasDocumentFields.contains("documentId")) {
+            StringBuilder documentBuilder = new StringBuilder("return new OnshapeDocument(documentId, ");
+            documentBuilder.append(hasDocumentFields.contains("workspaceId") ? "workspaceId, " : "null, ");
+            documentBuilder.append(hasDocumentFields.contains("documentVersion") ? "documentVersion, " : "null, ");
+            documentBuilder.append(hasDocumentFields.contains("documentMicroversion") ? "documentMicroversion, " : "null, ");
+            documentBuilder.append(hasDocumentFields.contains("elementId") ? "elementId)" : "null)");
+            typeSpecBuilder.addMethod(MethodSpec.methodBuilder("getDocument")
+                    .returns(ClassName.get(OnshapeDocument.class))
+                    .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
+                    .addStatement(documentBuilder.toString(), WVM.class)
+                    .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
+                    .build());
+        }
         addToString(typeSpecBuilder);
         write(packageName, typeSpecBuilder, false);
         return ClassName.get(packageName, typeName);
     }
+
+    private static final Set<String> DOCUMENT_FIELD_NAMES = Sets.newHashSet("documentId", "documentVersion", "workspaceId", "documentMicroversion", "elementId");
 
     void createResponseType(String groupName) throws GeneratorException {
         String newClassName = groupName + Utilities.toCamelCase(getEndpoint().getName()) + "Response";
@@ -398,6 +428,7 @@ public class JavaEndpointTarget extends EndpointTarget {
         boolean hasNextField = false;
         boolean hasPreviousField = false;
         boolean hasUrlField = false;
+        Set<String> hasDocumentFields = new HashSet<>();
         // Merge all response fields
         fieldMap.entrySet().stream().filter((fieldMapEntry) -> (fieldMapEntry.getKey().startsWith("Response"))).forEachOrdered((fieldMapEntry) -> {
             allResponseFields.addAll(fieldMapEntry.getValue());
@@ -406,6 +437,9 @@ public class JavaEndpointTarget extends EndpointTarget {
             hasNextField = hasNextField || field.getField().equals("next");
             hasPreviousField = hasPreviousField || field.getField().equals("previous");
             hasUrlField = hasUrlField || field.getField().equals("href");
+            if (DOCUMENT_FIELD_NAMES.contains(field.getField())) {
+                hasDocumentFields.add(field.getField());
+            }
             if (field.getField().indexOf('.') == -1) {
                 String name = field.getField();
                 Class<?> t = JavaLibraryTarget.guessClass(field.getType());
@@ -465,6 +499,19 @@ public class JavaEndpointTarget extends EndpointTarget {
                     .addException(ClassName.get("com.onshape.api.exceptions", "OnshapeException"))
                     .addStatement("return onshape.get(href, " + newClassName + ".class)")
                     .addJavadoc("Refresh this page of results\n@param onshape The Onshape client object.\n@return Updated response.\n@throws OnshapeException On HTTP or serialization error.\n")
+                    .build());
+        }
+        if (hasDocumentFields.contains("documentId")) {
+            StringBuilder documentBuilder = new StringBuilder("return new OnshapeDocument(documentId, ");
+            documentBuilder.append(hasDocumentFields.contains("workspaceId") ? "workspaceId, " : "null, ");
+            documentBuilder.append(hasDocumentFields.contains("documentVersion") ? "documentVersion, " : "null, ");
+            documentBuilder.append(hasDocumentFields.contains("documentMicroversion") ? "documentMicroversion, " : "null, ");
+            documentBuilder.append(hasDocumentFields.contains("elementId") ? "elementId)" : "null)");
+            responseBuilder.addMethod(MethodSpec.methodBuilder("getDocument")
+                    .returns(ClassName.get(OnshapeDocument.class))
+                    .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
+                    .addStatement(documentBuilder.toString(), WVM.class)
+                    .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
                     .build());
         }
         responseBuilder = GetterSpec.forType(responseBuilder).build();
