@@ -52,9 +52,14 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -413,7 +418,7 @@ public class BaseClient {
                 }
             }
             fileField.setAccessible(true);
-            multipart.bodyPart(new FileDataBodyPart("file", (File)fileField.get(payload), MediaType.WILDCARD_TYPE));
+            multipart.bodyPart(new FileDataBodyPart("file", (File) fileField.get(payload), MediaType.WILDCARD_TYPE));
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             throw new OnshapeException("Failed to convert payload to multipart form", ex);
         }
@@ -553,6 +558,25 @@ public class BaseClient {
             return TOSTRINGMAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Use javax.validation framework to validate request object before sending
+     * to server.
+     *
+     * @param <T> Request object type
+     * @param obj Request object
+     * @throws OnshapeException If required fields are missing
+     */
+    public <T> void validate(T obj) throws OnshapeException {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<T>> violations = validator.validate(obj);
+        if (!violations.isEmpty()) {
+            StringBuilder message = new StringBuilder("Validation of request object failed");
+            violations.forEach((violation) -> message.append(", ").append(violation.getMessage()));
+            throw new OnshapeException(message.toString());
         }
     }
 }
