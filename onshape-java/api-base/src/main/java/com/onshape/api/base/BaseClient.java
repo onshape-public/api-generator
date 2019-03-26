@@ -82,7 +82,7 @@ import org.hashids.Hashids;
  */
 public class BaseClient {
 
-    private final String baseURL = "https://cad.onshape.com/api";
+    private String baseURL = "https://cad.onshape.com/api";
     private final Client client;
     private final Hashids hashids = new Hashids("cloudCADIsGreat", 25, "abcdefghijklmnopqrstuvwxyz01234567890");
     private final ObjectMapper objectMapper;
@@ -110,6 +110,24 @@ public class BaseClient {
         clientConfig.register(MultiPartFeature.class);
         client = ClientBuilder.newClient(clientConfig);
         workingDir = new File(System.getProperty("java.io.tmpdir"));
+    }
+
+    /**
+     * Get the base URL this client is currently pointed at
+     *
+     * @return base URL
+     */
+    public String getBaseURL() {
+        return baseURL;
+    }
+
+    /**
+     * Set the base URL this client should point at
+     *
+     * @param baseURL base URL
+     */
+    public void setBaseURL(String baseURL) {
+        this.baseURL = baseURL;
     }
 
     /**
