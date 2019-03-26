@@ -258,6 +258,17 @@ public class BaseClient {
         // Call the HTTP method
         Response response = call(method, url, payload, urlParameters, queryParameters, jsonResponse);
         // Deserialize the response
+        if (response.getMediaType() == null) {
+            if (type.getDeclaredFields().length == 0) {
+                try {
+                    // Response type is just an empty object, create one
+                    return type.newInstance();
+                } catch (IllegalAccessException | InstantiationException ex) {
+                    throw new OnshapeException("Failed to create response object");
+                }
+            }
+            throw new OnshapeException("No entity in response");
+        }
         if (response.getMediaType().toString().startsWith(MediaType.APPLICATION_JSON)) {
             String stringEntity = response.readEntity(String.class);
             // Special case: If it is an array, and the response type has a single array field, then read that
