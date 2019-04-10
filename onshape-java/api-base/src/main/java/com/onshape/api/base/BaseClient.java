@@ -94,6 +94,7 @@ public class BaseClient {
     private String clientId;
     private String clientSecret;
     private File workingDir;
+    private PollingHandler pollingHandler;
     private static final ObjectMapper TOSTRINGMAPPER;
 
     static {
@@ -616,5 +617,17 @@ public class BaseClient {
             violations.forEach((violation) -> message.append(", ").append(violation.getMessage()));
             throw new OnshapeException(message.toString());
         }
+    }
+
+    /**
+     * Fetches utility object for polling GET requests via this client.
+     * 
+     * @return PollingHandler instance
+     */
+    public PollingHandler getPollingHandler() {
+        if (pollingHandler == null) {
+            pollingHandler = new PollingHandler(this);
+        }
+        return pollingHandler;
     }
 }
