@@ -43,6 +43,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.io.File;
@@ -53,6 +54,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import javax.lang.model.element.Modifier;
 import javax.validation.constraints.NotNull;
 import org.junit.jupiter.api.DisplayName;
@@ -428,6 +430,7 @@ public class JavaEndpointTarget extends EndpointTarget {
         boolean hasNextField = false;
         boolean hasPreviousField = false;
         boolean hasUrlField = false;
+        boolean hasRequestStateField = false;
         Set<String> hasDocumentFields = new HashSet<>();
         // Merge all response fields
         fieldMap.entrySet().stream().filter((fieldMapEntry) -> (fieldMapEntry.getKey().startsWith("Response"))).forEachOrdered((fieldMapEntry) -> {
@@ -437,6 +440,7 @@ public class JavaEndpointTarget extends EndpointTarget {
             hasNextField = hasNextField || field.getField().equals("next");
             hasPreviousField = hasPreviousField || field.getField().equals("previous");
             hasUrlField = hasUrlField || field.getField().equals("href");
+            hasRequestStateField = hasRequestStateField || field.getField().equals("requestState");
             if (DOCUMENT_FIELD_NAMES.contains(field.getField())) {
                 hasDocumentFields.add(field.getField());
             }
@@ -499,6 +503,20 @@ public class JavaEndpointTarget extends EndpointTarget {
                     .addException(ClassName.get("com.onshape.api.exceptions", "OnshapeException"))
                     .addStatement("return onshape.get(href, " + newClassName + ".class)")
                     .addJavadoc("Refresh this page of results\n@param onshape The Onshape client object.\n@return Updated response.\n@throws OnshapeException On HTTP or serialization error.\n")
+                    .build());
+        }
+        if (hasRequestStateField && hasUrlField) {
+            responseBuilder.addMethod(MethodSpec.methodBuilder("asFuture")
+                    .returns(ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), ClassName.get("com.onshape.api.responses", newClassName)))
+                    .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
+                    .addParameter(ParameterSpec.builder(ClassName.get("com.onshape.api", "Onshape"), "onshape").build())
+                    .beginControlFlow("if (!\"ACTIVE\".equals(getRequestState()))")
+                    .addStatement("CompletableFuture<" + newClassName + "> completableFuture = new CompletableFuture<>()")
+                    .addStatement("completableFuture.complete(this)")
+                    .addStatement("return completableFuture")
+                    .endControlFlow()
+                    .addStatement("return onshape.getPollingHandler().poll(href, " + newClassName + ".class, (response) -> !\"ACTIVE\".equals(response.getRequestState()))")
+                    .addJavadoc("Returns a CompletableFuture that will be complete when this process is no longer in an \"ACTIVE\" state\n@param onshape The Onshape client object.\n@return Future for this response.\n")
                     .build());
         }
         if (hasDocumentFields.contains("documentId")) {
