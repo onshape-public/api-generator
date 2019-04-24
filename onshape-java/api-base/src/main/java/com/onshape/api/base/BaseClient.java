@@ -95,6 +95,7 @@ public class BaseClient {
     private String clientId;
     private String clientSecret;
     private File workingDir;
+    private PollingHandler pollingHandler;
     private boolean usingValidation;
     private static final ObjectMapper TOSTRINGMAPPER;
 
@@ -643,5 +644,17 @@ public class BaseClient {
                 throw new OnshapeException(message.toString());
             }
         }
+    }
+
+    /**
+     * Fetches utility object for polling GET requests via this client.
+     * 
+     * @return PollingHandler instance
+     */
+    public PollingHandler getPollingHandler() {
+        if (pollingHandler == null) {
+            pollingHandler = new PollingHandler(this);
+        }
+        return pollingHandler;
     }
 }
