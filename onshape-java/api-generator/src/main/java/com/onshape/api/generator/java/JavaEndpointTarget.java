@@ -46,6 +46,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.TypeVariableName;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -450,8 +451,15 @@ public class JavaEndpointTarget extends EndpointTarget {
                 TypeName fieldType;
                 if (t != null) {
                     if (t.equals(Object.class)) {
-                        String typeName = newClassName + Utilities.toCamelCase(name);
-                        fieldType = createLocalType("com.onshape.api.responses", name, typeName, name + ".", allResponseFields, false);
+                        if (allResponseFields.stream().map((f) -> f.getField()).anyMatch((n) -> n.equals(name + ".key"))) {
+                            // It is a map, create a value type
+                            String valueTypeName = newClassName + Utilities.toCamelCase(name) + "Value";
+                            TypeName valueType = createLocalType("com.onshape.api.responses", name, valueTypeName, name + ".key.", allResponseFields, false);
+                            fieldType = ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), valueType);
+                        } else {
+                            String typeName = newClassName + Utilities.toCamelCase(name);
+                            fieldType = createLocalType("com.onshape.api.responses", name, typeName, name + ".", allResponseFields, false);
+                        }
                     } else if (t.equals(Object[].class)) {
                         String typeName = newClassName + Utilities.toCamelCase(name);
                         TypeName ref = createLocalType("com.onshape.api.responses", name, typeName, name + ".", allResponseFields, false);
