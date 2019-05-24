@@ -23,6 +23,7 @@
  */
 package com.onshape.api.generator.java;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Maps;
@@ -46,7 +47,6 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import com.squareup.javapoet.TypeVariableName;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -405,6 +405,7 @@ public class JavaEndpointTarget extends EndpointTarget {
             typeSpecBuilder.addMethod(MethodSpec.methodBuilder("getDocument")
                     .returns(ClassName.get(OnshapeDocument.class))
                     .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
+                    .addAnnotation(JsonIgnore.class)
                     .addStatement(documentBuilder.toString(), WVM.class)
                     .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
                     .build());
