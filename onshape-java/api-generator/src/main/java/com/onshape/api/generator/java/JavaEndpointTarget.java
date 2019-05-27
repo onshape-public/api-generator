@@ -271,7 +271,13 @@ public class JavaEndpointTarget extends EndpointTarget {
                     requestBuilder.addField(fieldBuilder.build());
                 } else {
                     callBuilder.addParameter(JavaLibraryTarget.getTypeName(type), JavaLibraryTarget.safeName(name));
+                    callBuilder2.addParameter(JavaLibraryTarget.getTypeName(type), JavaLibraryTarget.safeName(name));
                     javadoc.append("\n@param ")
+                            .append(JavaLibraryTarget.safeName(name)).append(" ")
+                            .append(Utilities.escape(field.getDescription()))
+                            .append(" (Default: ")
+                            .append(field.getDefaultValue()).append(")");
+                    javadoc2.append("\n@param ")
                             .append(JavaLibraryTarget.safeName(name)).append(" ")
                             .append(Utilities.escape(field.getDescription()))
                             .append(" (Default: ")
@@ -279,8 +285,10 @@ public class JavaEndpointTarget extends EndpointTarget {
                 }
                 if (i > 0) {
                     callStatement.append(", ");
+                    callStatement2.append(", ");
                 }
-                callStatement.append('"').append(name).append("\", ").append(name.replace('-', '_'));
+                callStatement.append('"').append(name).append("\", ").append(JavaLibraryTarget.safeName(name));
+                callStatement2.append('"').append(name).append("\", ").append(JavaLibraryTarget.safeName(name));
                 i++;
             }
         }
