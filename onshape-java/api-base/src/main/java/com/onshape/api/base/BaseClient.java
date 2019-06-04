@@ -54,6 +54,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.zip.GZIPInputStream;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.validation.ConstraintViolation;
@@ -108,6 +109,7 @@ public class BaseClient {
         objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
+        objectMapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);
         JacksonJaxbJsonProvider jacksonProvider = new JacksonJaxbJsonProvider();
         jacksonProvider.setMapper(objectMapper);
         ClientConfig clientConfig = new ClientConfig(jacksonProvider);
@@ -316,7 +318,7 @@ public class BaseClient {
         if (response.getMediaType().toString().startsWith(MediaType.APPLICATION_JSON)) {
             String stringEntity = response.readEntity(String.class);
             // Special case: Return a String
-            if(String.class.equals(type)) {
+            if (String.class.equals(type)) {
                 return type.cast(stringEntity);
             }
             // Special case: If it is an array, and the response type has a single array field, then read that
@@ -332,24 +334,11 @@ public class BaseClient {
             }
         } else {
             String ext = response.getMediaType().getSubtype();
-            if (File.class.equals(type)) {
-                try (InputStream input = (InputStream) response.getEntity()) {
-                    File f = File.createTempFile("onshape", "." + ext, workingDir);
-                    try (FileOutputStream fos = new FileOutputStream(f)) {
-                        int n;
-                        byte[] buffer = new byte[1024];
-                        while ((n = input.read(buffer)) > -1) {
-                            fos.write(buffer, 0, n);
-                        }
-                        fos.flush();
-                    }
-                    return type.cast(f);
-                } catch (IOException ex) {
-                    throw new OnshapeException("Error while copying to local file", ex);
-                }
-            } else if (type.getDeclaredFields().length == 1) {
-                if (File.class.equals(type.getDeclaredFields()[0].getType())) {
-                    try (InputStream input = (InputStream) response.getEntity()) {
+            try (InputStream input = response.getHeaderString("Content-Encoding").equals("gzip")
+                    ? new GZIPInputStream((InputStream) response.getEntity())
+                    : (InputStream) response.getEntity()) {
+                if (File.class.equals(type)) {
+                    try {
                         File f = File.createTempFile("onshape", "." + ext, workingDir);
                         try (FileOutputStream fos = new FileOutputStream(f)) {
                             int n;
@@ -359,34 +348,53 @@ public class BaseClient {
                             }
                             fos.flush();
                         }
-                        Constructor<T> constructor = type.getDeclaredConstructor();
-                        constructor.setAccessible(true);
-                        T out = constructor.newInstance();
-                        Field field = type.getDeclaredFields()[0];
-                        field.setAccessible(true);
-                        field.set(out, f);
-                        return out;
-                    } catch (IOException | IllegalArgumentException | IllegalAccessException
-                            | InstantiationException | InvocationTargetException
-                            | NoSuchMethodException | SecurityException ex) {
+                        return type.cast(f);
+                    } catch (IOException ex) {
                         throw new OnshapeException("Error while copying to local file", ex);
                     }
-                } else if (Blob.class.equals(type.getDeclaredFields()[0].getType())) {
-                    try {
-                        Blob blob = new Blob((InputStream) response.getEntity());
-                        Constructor<T> constructor = type.getDeclaredConstructor();
-                        constructor.setAccessible(true);
-                        T out = constructor.newInstance();
-                        Field field = type.getDeclaredFields()[0];
-                        field.setAccessible(true);
-                        field.set(out, blob);
-                        return out;
-                    } catch (IOException | IllegalArgumentException | IllegalAccessException
-                            | InstantiationException | InvocationTargetException
-                            | NoSuchMethodException | SecurityException ex) {
-                        throw new OnshapeException("Error while creating blob", ex);
+                } else if (type.getDeclaredFields().length == 1) {
+                    if (File.class.equals(type.getDeclaredFields()[0].getType())) {
+                        try {
+                            File f = File.createTempFile("onshape", "." + ext, workingDir);
+                            try (FileOutputStream fos = new FileOutputStream(f)) {
+                                int n;
+                                byte[] buffer = new byte[1024];
+                                while ((n = input.read(buffer)) > -1) {
+                                    fos.write(buffer, 0, n);
+                                }
+                                fos.flush();
+                            }
+                            Constructor<T> constructor = type.getDeclaredConstructor();
+                            constructor.setAccessible(true);
+                            T out = constructor.newInstance();
+                            Field field = type.getDeclaredFields()[0];
+                            field.setAccessible(true);
+                            field.set(out, f);
+                            return out;
+                        } catch (IOException | IllegalArgumentException | IllegalAccessException
+                                | InstantiationException | InvocationTargetException
+                                | NoSuchMethodException | SecurityException ex) {
+                            throw new OnshapeException("Error while copying to local file", ex);
+                        }
+                    } else if (Blob.class.equals(type.getDeclaredFields()[0].getType())) {
+                        try {
+                            Blob blob = new Blob(input);
+                            Constructor<T> constructor = type.getDeclaredConstructor();
+                            constructor.setAccessible(true);
+                            T out = constructor.newInstance();
+                            Field field = type.getDeclaredFields()[0];
+                            field.setAccessible(true);
+                            field.set(out, blob);
+                            return out;
+                        } catch (IOException | IllegalArgumentException | IllegalAccessException
+                                | InstantiationException | InvocationTargetException
+                                | NoSuchMethodException | SecurityException ex) {
+                            throw new OnshapeException("Error while creating blob", ex);
+                        }
                     }
                 }
+            } catch (IOException ex) {
+                throw new OnshapeException("Error while decompressing gzip stream", ex);
             }
         }
         throw new OnshapeException("Unable to convert media-type " + response.getMediaType() + " to type " + type);
