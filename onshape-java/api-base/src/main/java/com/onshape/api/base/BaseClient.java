@@ -49,11 +49,14 @@ import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -85,7 +88,7 @@ import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator
  * @author Peter Harman peter.harman@cae.tech
  */
 public class BaseClient {
-    
+
     private String baseURL = "https://cad.onshape.com";
     private final Client client;
     private final Hashids hashids = new Hashids("cloudCADIsGreat", 25, "abcdefghijklmnopqrstuvwxyz01234567890");
@@ -99,13 +102,14 @@ public class BaseClient {
     private File workingDir;
     private PollingHandler pollingHandler;
     private boolean usingValidation;
+    private final Set<RequestListener> requestListeners;
     private static final ObjectMapper TOSTRINGMAPPER;
-    
+
     static {
         TOSTRINGMAPPER = new ObjectMapper();
         TOSTRINGMAPPER.enable(SerializationFeature.INDENT_OUTPUT);
     }
-    
+
     public BaseClient() {
         objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -119,6 +123,7 @@ public class BaseClient {
         client = ClientBuilder.newClient(clientConfig);
         workingDir = new File(System.getProperty("java.io.tmpdir"));
         usingValidation = true;
+        requestListeners = new HashSet<>();
     }
 
     /**
@@ -240,7 +245,7 @@ public class BaseClient {
                 throw new OnshapeException(response.getStatusInfo().getReasonPhrase());
         }
     }
-    
+
     void refreshOAuthToken() throws OnshapeException {
         WebTarget target = client.target("https://oauth.onshape.com/oauth/token");
         MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
@@ -413,7 +418,7 @@ public class BaseClient {
     public final <T> T get(String url, Class<T> type) throws OnshapeException {
         return call("get", url, null, buildMap(), buildMap(), type);
     }
-    
+
     Response call(String method, String url, Object payload, Map<String, Object> urlParameters, Map<String, Object> queryParameters, boolean jsonResponse) throws OnshapeException {
         // Construct the URI from the parameters
         URI uri = buildURI(url, urlParameters, queryParameters);
@@ -448,9 +453,12 @@ public class BaseClient {
         } else if (accessKey != null && secretKey != null) {
             invocationBuilder = signature(invocationBuilder, uri, method, entity == null ? MediaType.APPLICATION_JSON_TYPE : entity.getMediaType());
         }
+        // Notify listeners
+        List<ResponseListener> responseListeners = requestListeners.stream().map((rl) -> rl.request(method, uri, entity)).collect(Collectors.toList());
         // Perform the method call
         Response response = entity == null ? invocationBuilder.method(method.toUpperCase()) : invocationBuilder.method(method.toUpperCase(), entity);
         // Handle the response
+        responseListeners.forEach((rl) -> rl.response(response));
         switch (response.getStatusInfo().getFamily()) {
             case SUCCESSFUL:
                 return response;
@@ -532,20 +540,20 @@ public class BaseClient {
      * Represents response from /api/clientinfo/xsrf method
      */
     static class XSRFResponse {
-        
+
         @JsonProperty
         private String xsrfTokenName;
         @JsonProperty
         private String xsrfHeaderName;
-        
+
         public String getXsrfTokenName() {
             return xsrfTokenName;
         }
-        
+
         public String getXsrfHeaderName() {
             return xsrfHeaderName;
         }
-        
+
     }
 
     /**
@@ -561,7 +569,7 @@ public class BaseClient {
         }
         return out;
     }
-    
+
     URI buildURI(String path, Map<String, Object> urlParameters, Map<String, Object> queryParameters) throws OnshapeException {
         UriBuilder uriBuilder;
         if (path.startsWith("/")) {
@@ -587,9 +595,9 @@ public class BaseClient {
             throw new OnshapeException("Path parameters missing in call to " + path, iae);
         }
     }
-    
+
     private long count = 0L;
-    
+
     Invocation.Builder signature(Invocation.Builder builder, URI uri, String method, MediaType mediaType) throws OnshapeException {
         String date = getDateString();
         String onNonce = hashids.encode(new Date().getTime(), count++);
@@ -603,7 +611,7 @@ public class BaseClient {
         builder.header("Authorization", auth);
         return builder;
     }
-    
+
     String encodeSignature(String data) throws OnshapeException {
         try {
             Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
@@ -614,7 +622,7 @@ public class BaseClient {
             throw new OnshapeException("Error while encoding API signature", ex);
         }
     }
-    
+
     String getDateString() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -673,4 +681,53 @@ public class BaseClient {
         }
         return pollingHandler;
     }
+
+    /**
+     * Add a listener to capture request and response for each HTTP call
+     *
+     * @param listener The RequestListener implementation
+     */
+    public void addRequestListener(RequestListener listener) {
+        requestListeners.add(listener);
     }
+
+    /**
+     * Remove a listener
+     *
+     * @param listener The RequestListener implementation
+     */
+    public void removeRequestListener(RequestListener listener) {
+        requestListeners.remove(listener);
+    }
+
+    /**
+     * Listener interface for HTTP requests and their responses. The
+     * RequestListener returns a new ResponseListener for each call, to ensure
+     * that requests and responses are associated even from different threads.
+     */
+    public static interface RequestListener {
+
+        /**
+         *
+         * @param method HTTP method
+         * @param uri The URI called, including path and query parameters
+         * @param entity The Entity object used or null
+         * @return A ResponseListener object to capture the response to this
+         * HTTP call
+         */
+        public ResponseListener request(String method, URI uri, Entity entity);
+    }
+
+    /**
+     * Listener for response objects, returned from a RequestListener
+     */
+    public static interface ResponseListener {
+
+        /**
+         * Called for each HTTP response (successful or not)
+         *
+         * @param response The HTTP response
+         */
+        public void response(Response response);
+    }
+}
