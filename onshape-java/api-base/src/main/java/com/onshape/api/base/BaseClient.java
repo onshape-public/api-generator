@@ -72,6 +72,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.media.multipart.Boundary;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -84,7 +85,7 @@ import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator
  * @author Peter Harman peter.harman@cae.tech
  */
 public class BaseClient {
-
+    
     private String baseURL = "https://cad.onshape.com";
     private final Client client;
     private final Hashids hashids = new Hashids("cloudCADIsGreat", 25, "abcdefghijklmnopqrstuvwxyz01234567890");
@@ -99,12 +100,12 @@ public class BaseClient {
     private PollingHandler pollingHandler;
     private boolean usingValidation;
     private static final ObjectMapper TOSTRINGMAPPER;
-
+    
     static {
         TOSTRINGMAPPER = new ObjectMapper();
         TOSTRINGMAPPER.enable(SerializationFeature.INDENT_OUTPUT);
     }
-
+    
     public BaseClient() {
         objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -239,7 +240,7 @@ public class BaseClient {
                 throw new OnshapeException(response.getStatusInfo().getReasonPhrase());
         }
     }
-
+    
     void refreshOAuthToken() throws OnshapeException {
         WebTarget target = client.target("https://oauth.onshape.com/oauth/token");
         MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
@@ -412,12 +413,12 @@ public class BaseClient {
     public final <T> T get(String url, Class<T> type) throws OnshapeException {
         return call("get", url, null, buildMap(), buildMap(), type);
     }
-
+    
     Response call(String method, String url, Object payload, Map<String, Object> urlParameters, Map<String, Object> queryParameters, boolean jsonResponse) throws OnshapeException {
         // Construct the URI from the parameters
         URI uri = buildURI(url, urlParameters, queryParameters);
         // Create a WebTarget for the URI
-        WebTarget target = client.target(uri);
+        WebTarget target = client.target(uri).property(ClientProperties.FOLLOW_REDIRECTS, Boolean.FALSE);
         Invocation.Builder invocationBuilder = target.request(jsonResponse ? MediaType.APPLICATION_JSON_TYPE : MediaType.APPLICATION_OCTET_STREAM_TYPE)
                 .header("Accept", jsonResponse ? "application/vnd.onshape.v1+json" : "application/vnd.onshape.v1+octet-stream");
         // Accept gzip compressed responses
@@ -454,7 +455,7 @@ public class BaseClient {
             case SUCCESSFUL:
                 return response;
             case REDIRECTION:
-                return call(method, response.getHeaderString("Location"), payload, urlParameters, queryParameters, jsonResponse);
+                return call(method, response.getHeaderString("Location"), payload, buildMap(), buildMap(), jsonResponse);
             default:
                 throw new OnshapeException(response.getStatusInfo().getStatusCode(), response.getStatusInfo().getReasonPhrase());
         }
@@ -531,20 +532,20 @@ public class BaseClient {
      * Represents response from /api/clientinfo/xsrf method
      */
     static class XSRFResponse {
-
+        
         @JsonProperty
         private String xsrfTokenName;
         @JsonProperty
         private String xsrfHeaderName;
-
+        
         public String getXsrfTokenName() {
             return xsrfTokenName;
         }
-
+        
         public String getXsrfHeaderName() {
             return xsrfHeaderName;
         }
-
+        
     }
 
     /**
@@ -560,18 +561,18 @@ public class BaseClient {
         }
         return out;
     }
-
+    
     URI buildURI(String path, Map<String, Object> urlParameters, Map<String, Object> queryParameters) throws OnshapeException {
         UriBuilder uriBuilder;
         if (path.startsWith("/")) {
             uriBuilder = UriBuilder.fromUri(baseURL + "/api" + path
-                    .replaceAll(":([^\\/:]+)", "{$1}")
+                    .replaceAll(":([a-zA-Z][a-zA-Z0-9]*)", "{$1}")
                     .replace("[wvm]", "{wvmType}")
                     .replace("[wv]", "{wvType}")
                     .replace("[cu]", "{cuType}"));
         } else {
             uriBuilder = UriBuilder.fromUri(path
-                    .replaceAll(":([^\\/:]+)", "{$1}")
+                    .replaceAll(":([a-zA-Z][a-zA-Z0-9]*)", "{$1}")
                     .replace("[wvm]", "{wvmType}")
                     .replace("[wv]", "{wvType}")
                     .replace("[cu]", "{cuType}"));
@@ -586,14 +587,14 @@ public class BaseClient {
             throw new OnshapeException("Path parameters missing in call to " + path, iae);
         }
     }
-
+    
     private long count = 0L;
-
+    
     Invocation.Builder signature(Invocation.Builder builder, URI uri, String method, MediaType mediaType) throws OnshapeException {
         String date = getDateString();
         String onNonce = hashids.encode(new Date().getTime(), count++);
-        String path = uri.getPath();
-        String query = uri.getQuery() == null ? "" : uri.getQuery();
+        String path = uri.getRawPath();
+        String query = uri.getRawQuery() == null ? "" : uri.getRawQuery();
         String str = (method + '\n' + onNonce + '\n' + date + '\n' + mediaType.toString() + '\n'
                 + path + '\n' + query + '\n').toLowerCase();
         String auth = "On " + accessKey + ":HmacSHA256:" + encodeSignature(str);
@@ -602,7 +603,7 @@ public class BaseClient {
         builder.header("Authorization", auth);
         return builder;
     }
-
+    
     String encodeSignature(String data) throws OnshapeException {
         try {
             Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
@@ -613,7 +614,7 @@ public class BaseClient {
             throw new OnshapeException("Error while encoding API signature", ex);
         }
     }
-
+    
     String getDateString() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -672,4 +673,4 @@ public class BaseClient {
         }
         return pollingHandler;
     }
-}
+    }
