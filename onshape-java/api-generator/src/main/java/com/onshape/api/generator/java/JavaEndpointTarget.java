@@ -475,7 +475,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                         fieldType = ArrayTypeName.of(ref);
                     } else if (field.getField().equals("file") && t.equals(Base64Encoded.class) && allResponseFields.size() == 1) {
                         // An object with single field called "file" is treated differently by the client, as the response is just the File content
-                        fieldType = JavaLibraryTarget.getTypeName(File.class);
+                        fieldType = JavaLibraryTarget.getTypeName(Blob.class);
                     } else {
                         fieldType = JavaLibraryTarget.getTypeName(t);
                     }
