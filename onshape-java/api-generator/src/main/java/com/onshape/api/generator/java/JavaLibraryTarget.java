@@ -35,7 +35,7 @@ import com.onshape.api.generator.targets.GroupTarget;
 import com.onshape.api.generator.targets.LibraryTarget;
 import com.onshape.api.generator.exceptions.GeneratorException;
 import com.onshape.api.generator.model.Group;
-import com.onshape.api.types.Base64Encoded;
+import com.onshape.api.types.Blob;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -241,6 +241,9 @@ public class JavaLibraryTarget extends LibraryTarget {
             // We make this an object, because when used as a featureSpec it should be
             // When used as data it will be changed to a Blob in JavaEndpointTarget
             baseClass = Object.class;
+        }
+        if ("File".equals(className)) {
+            baseClass = Blob.class;
         }
         if (baseClass == null) {
             return null;
