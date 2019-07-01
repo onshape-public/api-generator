@@ -664,7 +664,9 @@ public class BaseClient {
             Set<ConstraintViolation<T>> violations = validator.validate(obj);
             if (!violations.isEmpty()) {
                 StringBuilder message = new StringBuilder("Validation of request object failed");
-                violations.forEach((violation) -> message.append(", ").append(violation.getMessage()));
+                violations.forEach((violation) -> message.append(", ")
+                        .append(violation.getPropertyPath().toString())
+                        .append(" ").append(violation.getMessage()));
                 throw new OnshapeException(message.toString());
             }
         }
