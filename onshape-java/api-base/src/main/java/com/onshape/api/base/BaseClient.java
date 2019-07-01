@@ -340,7 +340,7 @@ public class BaseClient {
             }
         } else {
             String ext = response.getMediaType().getSubtype();
-            try (InputStream input = response.getHeaderString("Content-Encoding").equals("gzip")
+            try (InputStream input = "gzip".equals(response.getHeaderString("Content-Encoding"))
                     ? new GZIPInputStream((InputStream) response.getEntity())
                     : (InputStream) response.getEntity()) {
                 if (File.class.equals(type)) {
