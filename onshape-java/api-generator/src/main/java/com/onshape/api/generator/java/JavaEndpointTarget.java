@@ -36,6 +36,7 @@ import com.onshape.api.generator.model.Endpoint;
 import com.onshape.api.generator.model.Field;
 import com.onshape.api.types.Base64Encoded;
 import com.onshape.api.types.Blob;
+import com.onshape.api.types.InputStreamWithHeaders;
 import com.onshape.api.types.OnshapeDocument;
 import com.onshape.api.types.WVM;
 import com.squareup.javapoet.AnnotationSpec;
@@ -47,7 +48,6 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -82,15 +82,15 @@ public class JavaEndpointTarget extends EndpointTarget {
         String groupName = getGroupTarget().getGroup().getGroup();
         checkPathParams();
         TypeSpec.Builder groupTypeBuilder = ((JavaGroupTarget) getGroupTarget()).getTypeBuilder();
-        // Create the request type and any required local types
-        createRequestType(groupName, groupTypeBuilder);
         // Create the response type
-        createResponseType(groupName);
+        boolean includeStreamResponse = createResponseType(groupName);
+        // Create the request type and any required local types
+        createRequestType(groupName, groupTypeBuilder, includeStreamResponse);
         // Create the test method
         createTest();
     }
 
-    void createRequestType(String groupName, TypeSpec.Builder groupTypeBuilder) throws GeneratorException {
+    void createRequestType(String groupName, TypeSpec.Builder groupTypeBuilder, boolean includeStreamResponse) throws GeneratorException {
         String methodName = getEndpoint().getName();
         boolean deprecated = methodName.contains("Deprecated");
         // Create a new class for the request object
@@ -167,6 +167,19 @@ public class JavaEndpointTarget extends EndpointTarget {
                 .append(getEndpoint().getDescription())
                 .append("\n@param document Document object from Onshape URL.\n@return Response object\n@throws OnshapeException On HTTP or serialization error\n");
         boolean includeCall2 = false;
+        // callBuilder3 = is CallToStream(...) method
+        MethodSpec.Builder callBuilder3 = MethodSpec.methodBuilder("callToStream")
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addException(ClassName.get("com.onshape.api.exceptions", "OnshapeException"))
+                .returns(ClassName.get(InputStreamWithHeaders.class));
+        StringBuilder callStatement3 = new StringBuilder("return onshape.call(\"")
+                .append(getEndpoint().getType()).append("\", \"").append(getEndpoint().getUrl())
+                .append("\", build(), onshape.buildMap(");
+        StringBuilder javadoc3 = new StringBuilder("Calls ")
+                .append(getEndpoint().getName())
+                .append(" method, ")
+                .append(getEndpoint().getDescription())
+                .append("\n@return InputStreamWithHeaders stream with headers\n@throws OnshapeException On HTTP error\n");
 
         if (getEndpoint().getParameters().getFields().containsKey("PathParam")) {
             Collection<Field> pathParams = getEndpoint().getParameters().getFields().get("PathParam");
@@ -179,33 +192,45 @@ public class JavaEndpointTarget extends EndpointTarget {
                             if (i > 0) {
                                 callStatement.append(", ");
                                 callStatement2.append(", ");
+                                callStatement3.append(", ");
                             }
                             callStatement.append("\"wvmType\", wvmType");
                             callStatement2.append("\"wvmType\", document.getWVM()");
+                            callStatement3.append("\"wvmType\", wvmType");
                             callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
                             javadoc.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
+                            callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
+                            javadoc3.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
                             i++;
                             break;
                         case "wv":
                             if (i > 0) {
                                 callStatement.append(", ");
                                 callStatement2.append(", ");
+                                callStatement3.append(", ");
                             }
                             callStatement.append("\"wvType\", wvType");
                             callStatement2.append("\"wvType\", document.getWV()");
+                            callStatement3.append("\"wvType\", wvType");
                             callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
                             javadoc.append("\n@param wvType Type of Workspace or Version\n");
+                            callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
+                            javadoc3.append("\n@param wvType Type of Workspace or Version\n");
                             i++;
                             break;
                         case "oid":
                             if (i > 0) {
                                 callStatement.append(", ");
                                 callStatement2.append(", ");
+                                callStatement3.append(", ");
                             }
                             callStatement.append("\"cuType\", cuType");
                             callStatement2.append("\"cuType\", CU.Company");
+                            callStatement3.append("\"cuType\", cuType");
                             callBuilder.addParameter(ClassName.get("com.onshape.api.types", "CU"), "cuType");
                             javadoc.append("\n@param cuType Type of Company or User\n");
+                            callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "CU"), "cuType");
+                            javadoc3.append("\n@param cuType Type of Company or User\n");
                             i++;
                             break;
                         default:
@@ -216,10 +241,15 @@ public class JavaEndpointTarget extends EndpointTarget {
                 if (i > 0) {
                     callStatement.append(", ");
                     callStatement2.append(", ");
+                    callStatement3.append(", ");
                 }
                 callStatement.append('"').append(name).append("\", ").append(name);
                 callBuilder.addParameter(JavaLibraryTarget.getTypeName(type), name);
                 javadoc.append("\n@param ").append(name)
+                        .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
+                callStatement3.append('"').append(name).append("\", ").append(name);
+                callBuilder3.addParameter(JavaLibraryTarget.getTypeName(type), name);
+                javadoc3.append("\n@param ").append(name)
                         .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
                 if (null != name) {
                     switch (name) {
@@ -255,6 +285,7 @@ public class JavaEndpointTarget extends EndpointTarget {
         }
         callStatement.append("), onshape.buildMap(");
         callStatement2.append("), onshape.buildMap(");
+        callStatement3.append("), onshape.buildMap(");
         if (getEndpoint().getParameters().getFields().containsKey("QueryParam")) {
             Collection<Field> queryParams = getEndpoint().getParameters().getFields().get("QueryParam");
             int i = 0;
@@ -272,6 +303,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                 } else {
                     callBuilder.addParameter(JavaLibraryTarget.getTypeName(type), JavaLibraryTarget.safeName(name));
                     callBuilder2.addParameter(JavaLibraryTarget.getTypeName(type), JavaLibraryTarget.safeName(name));
+                    callBuilder3.addParameter(JavaLibraryTarget.getTypeName(type), JavaLibraryTarget.safeName(name));
                     javadoc.append("\n@param ")
                             .append(JavaLibraryTarget.safeName(name)).append(" ")
                             .append(Utilities.escape(field.getDescription()))
@@ -282,13 +314,20 @@ public class JavaEndpointTarget extends EndpointTarget {
                             .append(Utilities.escape(field.getDescription()))
                             .append(" (Default: ")
                             .append(field.getDefaultValue()).append(")");
+                    javadoc3.append("\n@param ")
+                            .append(JavaLibraryTarget.safeName(name)).append(" ")
+                            .append(Utilities.escape(field.getDescription()))
+                            .append(" (Default: ")
+                            .append(field.getDefaultValue()).append(")");
                 }
                 if (i > 0) {
                     callStatement.append(", ");
                     callStatement2.append(", ");
+                    callStatement3.append(", ");
                 }
                 callStatement.append('"').append(name).append("\", ").append(JavaLibraryTarget.safeName(name));
                 callStatement2.append('"').append(name).append("\", ").append(JavaLibraryTarget.safeName(name));
+                callStatement3.append('"').append(name).append("\", ").append(JavaLibraryTarget.safeName(name));
                 i++;
             }
         }
@@ -300,6 +339,10 @@ public class JavaEndpointTarget extends EndpointTarget {
         callBuilder2.addStatement("onshape.validate(build())");
         callBuilder2.addStatement(callStatement2.toString());
         callBuilder2.addJavadoc(javadoc2.toString());
+        callStatement3.append("), ").append("InputStreamWithHeaders.class)");
+        callBuilder3.addStatement("onshape.validate(build())");
+        callBuilder3.addStatement(callStatement3.toString());
+        callBuilder3.addJavadoc(javadoc3.toString());
 
         BuilderSpec.Builder requestBuilderBuilder = BuilderSpec.forType("com.onshape.api.requests", requestBuilder)
                 .withBuildMethodModifiers(Modifier.PRIVATE)
@@ -307,6 +350,9 @@ public class JavaEndpointTarget extends EndpointTarget {
                 .withAdditionalField(FieldSpec.builder(ClassName.get("com.onshape.api", "Onshape"), "onshape").build());
         if (includeCall2) {
             requestBuilderBuilder = requestBuilderBuilder.withAdditionalMethod(callBuilder2.build());
+        }
+        if (includeStreamResponse) {
+            requestBuilderBuilder = requestBuilderBuilder.withAdditionalMethod(callBuilder3.build());
         }
         requestBuilder = requestBuilderBuilder.build();
 
@@ -425,7 +471,7 @@ public class JavaEndpointTarget extends EndpointTarget {
 
     private static final Set<String> DOCUMENT_FIELD_NAMES = Sets.newHashSet("documentId", "documentVersion", "workspaceId", "documentMicroversion", "elementId");
 
-    void createResponseType(String groupName) throws GeneratorException {
+    boolean createResponseType(String groupName) throws GeneratorException {
         String newClassName = groupName + Utilities.toCamelCase(getEndpoint().getName()) + "Response";
         boolean deprecated = getEndpoint().getName().contains("Deprecated");
         TypeSpec.Builder responseBuilder = TypeSpec.classBuilder(newClassName)
@@ -441,6 +487,7 @@ public class JavaEndpointTarget extends EndpointTarget {
         boolean hasPreviousField = false;
         boolean hasUrlField = false;
         boolean hasRequestStateField = false;
+        boolean hasFileField = false;
         Set<String> hasDocumentFields = new HashSet<>();
         // Merge all response fields
         fieldMap.entrySet().stream().filter((fieldMapEntry) -> (fieldMapEntry.getKey().startsWith("Response"))).forEachOrdered((fieldMapEntry) -> {
@@ -451,6 +498,7 @@ public class JavaEndpointTarget extends EndpointTarget {
             hasPreviousField = hasPreviousField || field.getField().equals("previous");
             hasUrlField = hasUrlField || field.getField().equals("href");
             hasRequestStateField = hasRequestStateField || field.getField().equals("requestState");
+            hasFileField = field.getField().equals("file") && allResponseFields.size() == 1;
             if (DOCUMENT_FIELD_NAMES.contains(field.getField())) {
                 hasDocumentFields.add(field.getField());
             }
@@ -545,6 +593,7 @@ public class JavaEndpointTarget extends EndpointTarget {
             responseBuilder.addMethod(MethodSpec.methodBuilder("getDocument")
                     .returns(ClassName.get(OnshapeDocument.class))
                     .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
+                    .addAnnotation(JsonIgnore.class)
                     .addStatement(documentBuilder.toString(), WVM.class)
                     .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
                     .build());
@@ -552,6 +601,7 @@ public class JavaEndpointTarget extends EndpointTarget {
         responseBuilder = GetterSpec.forType(responseBuilder).build();
         addToString(responseBuilder);
         write("com.onshape.api.responses", responseBuilder, false);
+        return hasFileField;
     }
 
     TypeSpec.Builder addToString(TypeSpec.Builder builder) {
