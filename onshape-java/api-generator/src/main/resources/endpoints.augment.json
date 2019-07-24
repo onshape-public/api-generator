@@ -1,5 +1,44 @@
 [
     {
+        "group": "Documents",
+        "endpoints": [
+            {
+                "name": "getVersion",
+                "success": {
+                    "fields": {
+                        "Response": [
+                            {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "version.name",
+                                "defaultValue": null,
+                                "description": "Version name"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "getVersions",
+                "success": {
+                    "fields": {
+                        "Response": [
+                            {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "versions.0.name",
+                                "defaultValue": null,
+                                "description": "Version name"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
         "group": "Assemblies",
         "endpoints": [
             {
