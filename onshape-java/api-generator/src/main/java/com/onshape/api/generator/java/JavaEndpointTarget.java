@@ -498,7 +498,7 @@ public class JavaEndpointTarget extends EndpointTarget {
             hasPreviousField = hasPreviousField || field.getField().equals("previous");
             hasUrlField = hasUrlField || field.getField().equals("href");
             hasRequestStateField = hasRequestStateField || field.getField().equals("requestState");
-            hasFileField = field.getField().equals("file") && allResponseFields.size() == 1;
+            hasFileField = (field.getField().equals("file") || field.getField().equals("data")) && allResponseFields.size() == 1;
             if (DOCUMENT_FIELD_NAMES.contains(field.getField())) {
                 hasDocumentFields.add(field.getField());
             }
