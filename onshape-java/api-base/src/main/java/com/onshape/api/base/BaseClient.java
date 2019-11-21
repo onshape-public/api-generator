@@ -331,7 +331,7 @@ public class BaseClient {
             }
             throw new OnshapeException("No entity in response");
         }
-        if (response.getMediaType().toString().startsWith(MediaType.APPLICATION_JSON)) {
+        if (response.getMediaType().toString().startsWith(MediaType.APPLICATION_JSON) | response.getMediaType().toString().startsWith("application/vnd.onshape.v2+json")) {
             String stringEntity = response.readEntity(String.class);
             // Special case: Return a String
             if (String.class.equals(type)) {
@@ -437,7 +437,7 @@ public class BaseClient {
         // Create a WebTarget for the URI
         WebTarget target = client.target(uri).property(ClientProperties.FOLLOW_REDIRECTS, Boolean.FALSE);
         Invocation.Builder invocationBuilder = target.request(jsonResponse ? MediaType.APPLICATION_JSON_TYPE : MediaType.APPLICATION_OCTET_STREAM_TYPE)
-                .header("Accept", jsonResponse ? "application/vnd.onshape.v1+json" : "application/vnd.onshape.v1+octet-stream");
+                .header("Accept", jsonResponse ? "application/vnd.onshape.v2+json" : "application/vnd.onshape.v2+octet-stream");
         // Accept gzip compressed responses
         invocationBuilder.header("Accept-Encoding", "gzip");
         // Set the content-type and build the entity
