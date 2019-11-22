@@ -109,6 +109,9 @@ public class BaseClient {
     //Set TIMEOUT to 10 minutes to match Onshape TIMEOUT.
     private final int TIMEOUT = 600000;
 
+    public static final String ONSHAPE_JSON = "application/vnd.onshape.v2+json";
+    public static final String ONSHAPE_OCTET_STREAM = "application/vnd.onshape.v2+octet-stream";
+
     static {
         TOSTRINGMAPPER = new ObjectMapper();
         TOSTRINGMAPPER.enable(SerializationFeature.INDENT_OUTPUT);
@@ -194,10 +197,10 @@ public class BaseClient {
     /**
      * Set a previously requested OAuth token
      *
-     * @param token         Token object from server
+     * @param token Token object from server
      * @param tokenReceived Date that token was received
-     * @param clientId      Client id of application
-     * @param clientSecret  Client secret of application
+     * @param clientId Client id of application
+     * @param clientSecret Client secret of application
      */
     public void setOAuthTokenResponse(OAuthTokenResponse token, Date tokenReceived, String clientId, String clientSecret) {
         this.token = token;
@@ -227,12 +230,12 @@ public class BaseClient {
     /**
      * Set an access code received from an OAuth request.
      *
-     * @param code         Code returned from server
-     * @param clientId     Client id of application
+     * @param code Code returned from server
+     * @param clientId Client id of application
      * @param clientSecret Client secret of application
-     * @param redirectURI  URI to redirect to after authentication
+     * @param redirectURI URI to redirect to after authentication
      * @throws com.onshape.api.exceptions.OnshapeException On HTTP or
-     *                                                     serialization error.
+     * serialization error.
      */
     public void setOAuthAccessCode(String code, String clientId, String clientSecret, String redirectURI) throws OnshapeException {
         WebTarget target = client.target("https://oauth.onshape.com/oauth/token");
@@ -290,16 +293,16 @@ public class BaseClient {
     /**
      * Performs the HTTP call and transforms the result to the required class.
      *
-     * @param <T>             Return type
-     * @param method          HTTP method
-     * @param url             URL
-     * @param payload         Payload object for POST/PUT calls
-     * @param urlParameters   Map of path parameters
+     * @param <T> Return type
+     * @param method HTTP method
+     * @param url URL
+     * @param payload Payload object for POST/PUT calls
+     * @param urlParameters Map of path parameters
      * @param queryParameters Map of query parameters
-     * @param type            Return type
+     * @param type Return type
      * @return Response object
      * @throws com.onshape.api.exceptions.OnshapeException On HTTP or
-     *                                                     serialization error.
+     * serialization error.
      */
     public final <T> T call(String method, String url, Object payload, Map<String, Object> urlParameters, Map<String, Object> queryParameters, Class<T> type) throws OnshapeException {
         // Determine if the response type should be binary or JSON
@@ -331,7 +334,8 @@ public class BaseClient {
             }
             throw new OnshapeException("No entity in response");
         }
-        if (response.getMediaType().toString().startsWith(MediaType.APPLICATION_JSON)) {
+        if (response.getMediaType().toString().startsWith(MediaType.APPLICATION_JSON)
+                || response.getMediaType().toString().startsWith(ONSHAPE_JSON)) {
             String stringEntity = response.readEntity(String.class);
             // Special case: Return a String
             if (String.class.equals(type)) {
@@ -421,8 +425,8 @@ public class BaseClient {
     /**
      * Shortcut for GET of specific URL
      *
-     * @param <T>  Return type
-     * @param url  URL
+     * @param <T> Return type
+     * @param url URL
      * @param type Return type
      * @return Response object
      * @throws OnshapeException On HTTP or serialization error
@@ -437,7 +441,7 @@ public class BaseClient {
         // Create a WebTarget for the URI
         WebTarget target = client.target(uri).property(ClientProperties.FOLLOW_REDIRECTS, Boolean.FALSE);
         Invocation.Builder invocationBuilder = target.request(jsonResponse ? MediaType.APPLICATION_JSON_TYPE : MediaType.APPLICATION_OCTET_STREAM_TYPE)
-                .header("Accept", jsonResponse ? "application/vnd.onshape.v1+json" : "application/vnd.onshape.v1+octet-stream");
+                .header("Accept", jsonResponse ? ONSHAPE_JSON : ONSHAPE_OCTET_STREAM);
         // Accept gzip compressed responses
         invocationBuilder.header("Accept-Encoding", "gzip");
         // Set the content-type and build the entity
@@ -446,7 +450,7 @@ public class BaseClient {
             case "GET":
             case "HEAD":
             case "DELETE":
-                invocationBuilder.header("Content-Type", MediaType.APPLICATION_JSON_TYPE.toString());
+                invocationBuilder.header("Content-Type", MediaType.APPLICATION_JSON);
                 entity = null;
                 break;
             default:
@@ -723,7 +727,7 @@ public class BaseClient {
 
         /**
          * @param method HTTP method
-         * @param uri    The URI called, including path and query parameters
+         * @param uri The URI called, including path and query parameters
          * @param entity The Entity object used or null
          * @return A ResponseListener object to capture the response to this
          * HTTP call
