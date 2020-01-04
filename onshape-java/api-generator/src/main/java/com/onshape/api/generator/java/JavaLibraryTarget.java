@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Onshape Inc.
+ * Copyright 2018-Present Onshape Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -141,7 +141,7 @@ public class JavaLibraryTarget extends LibraryTarget {
     public void finish(boolean commit) throws GeneratorException {
         // Add a method to get the build version
         typeBuilder.superclass(BaseClient.class)
-                .addJavadoc("Onshape API client class.\n&copy; 2018 Onshape Inc.\n")
+                .addJavadoc("Onshape API client class.\n&copy; 2018-Present Onshape Inc.\n")
                 .addField(FieldSpec
                         .builder(OnshapeVersion.class, "buildVersion", Modifier.FINAL, Modifier.PRIVATE)
                         .initializer("new $T($S, $S, $S)",
