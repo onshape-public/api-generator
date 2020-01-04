@@ -32,6 +32,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.onshape.api.exceptions.OnshapeException;
 import com.onshape.api.types.Blob;
 import com.onshape.api.types.InputStreamWithHeaders;
+import com.onshape.api.types.JsonObjectOrArrayInputStream;
 import com.onshape.api.types.OAuthTokenResponse;
 import com.onshape.api.types.OnshapeVersion;
 
@@ -336,21 +337,16 @@ public class BaseClient {
         }
         if (response.getMediaType().toString().startsWith(MediaType.APPLICATION_JSON)
                 || response.getMediaType().toString().startsWith(ONSHAPE_JSON)) {
-            String stringEntity = response.readEntity(String.class);
             // Special case: Return a String
             if (String.class.equals(type)) {
-                return type.cast(stringEntity);
+                return type.cast(response.readEntity(String.class));
             }
-            // Special case: If it is an array, and the response type has a single array field, then read that
             try {
-                if (stringEntity.startsWith("[") && type.getDeclaredFields().length == 1 && type.getDeclaredFields()[0].getType().isArray()) {
-                    String fieldName = type.getDeclaredFields()[0].getName();
-                    return objectMapper.readValue("{ \"" + fieldName + "\" : " + stringEntity + " }", type);
-                } else {
-                    return objectMapper.readValue(stringEntity, type);
-                }
+                // Special case: If it is an array, and the response type has a single array field, then read that
+                InputStream inputStream = new JsonObjectOrArrayInputStream(type, response.readEntity(InputStream.class));
+                return objectMapper.readValue(inputStream, type);
             } catch (IOException | SecurityException ex) {
-                throw new OnshapeException("Error while deserializing response, response was\n" + stringEntity, ex);
+                throw new OnshapeException("Error while deserializing response", ex);
             }
         } else {
             String ext = response.getMediaType().getSubtype();
