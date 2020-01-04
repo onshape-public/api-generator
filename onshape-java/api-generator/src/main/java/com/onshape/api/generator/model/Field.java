@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Onshape Inc.
+ * Copyright 2018-Present Onshape Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,9 @@ package com.onshape.api.generator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
+import com.google.common.collect.Maps;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Represents a single field, either as a path parameter, query parameter,
@@ -85,9 +86,18 @@ public class Field {
         return out;
     }
 
-    public static Collection<Field> merge(Collection<Field> fields1, Collection<Field> fields2) {
-        Collection<Field> out = new ArrayList<>(fields1);
-        out.addAll(fields2);
-        return out;
+    public static Collection<Field> merge(Collection<Field> fields1, Collection<Field> fields2, boolean add) {
+        Map<String, Field> map = Maps.newLinkedHashMap();
+        fields1.forEach((field) -> {
+            map.put(field.getField(), field);
+        });
+        fields2.forEach((field) -> {
+            if (add) {
+                map.put(field.getField(), field);
+            } else {
+                map.remove(field.getField());
+            }
+        });
+        return map.values();
     }
 }
