@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Onshape Inc.
+ * Copyright 2018-Present Onshape Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -105,9 +105,16 @@ public class Generator {
         OnshapeVersion buildVersion = client.version();
         Group[] apiGroups = client.call("GET", "/endpoints", null, new HashMap<>(), new HashMap<>(), Group[].class);
         Group[] augmentGroups;
+        Group[] deleteGroups;
+        try {
+            deleteGroups = new ObjectMapper().readValue(new File(targetDir, "classes/endpoints.delete.json"), Group[].class);
+            apiGroups = Group.merge(apiGroups, deleteGroups, false);
+        } catch (IOException ex) {
+            System.out.println("No endpoints.delete.json file or not successfully read");
+        }
         try {
             augmentGroups = new ObjectMapper().readValue(new File(targetDir, "classes/endpoints.augment.json"), Group[].class);
-            apiGroups = Group.merge(apiGroups, augmentGroups);
+            apiGroups = Group.merge(apiGroups, augmentGroups, true);
         } catch (IOException ex) {
             System.out.println("Using endpoints from server as no endpoints.augment.json file or not successfully read");
         }

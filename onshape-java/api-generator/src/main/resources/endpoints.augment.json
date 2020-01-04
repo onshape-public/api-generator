@@ -127,5 +127,67 @@
                 }
             }
         ]
+    },
+    {
+        "group": "PartStudios",
+        "endpoints": [
+            {
+                "name": "getFeatures",
+                "success": {
+                    "fields": {
+                        "Response": [{
+                                "group": "Response",
+                                "type": "Object",
+                                "optional": false,
+                                "field": "features.0",
+                                "defaultValue": null,
+                                "description": "The serialized feature definition"
+                            }, {
+                                "group": "Response",
+                                "type": "Object",
+                                "optional": false,
+                                "field": "featureStates",
+                                "defaultValue": null,
+                                "description": "Map of feature state information"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "featuresStates.key",
+                                "defaultValue": null,
+                                "description": "Feature id"
+                            }, {
+                                "group": "Response",
+                                "type": "Object",
+                                "optional": false,
+                                "field": "imports.0",
+                                "defaultValue": null,
+                                "description": "The import definition"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "imports.0.namespace",
+                                "defaultValue": null,
+                                "description": "The namespace for an import"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "imports.0.path",
+                                "defaultValue": null,
+                                "description": "The path for an import"
+                            }, {
+                                "group": "Response",
+                                "type": "String",
+                                "optional": false,
+                                "field": "imports.0.version",
+                                "defaultValue": null,
+                                "description": "The version for an import"
+                            }]
+                    }
+                }
+            }
+        ]
     }
 ]
