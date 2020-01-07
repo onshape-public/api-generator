@@ -38,6 +38,7 @@ import com.onshape.api.types.Base64Encoded;
 import com.onshape.api.types.Blob;
 import com.onshape.api.types.InputStreamWithHeaders;
 import com.onshape.api.types.OnshapeDocument;
+import com.onshape.api.types.ResponseWithDocument;
 import com.onshape.api.types.WVM;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ArrayTypeName;
@@ -454,13 +455,15 @@ public class JavaEndpointTarget extends EndpointTarget {
             documentBuilder.append(hasDocumentFields.contains("documentVersion") ? "documentVersion, " : "null, ");
             documentBuilder.append(hasDocumentFields.contains("documentMicroversion") ? "documentMicroversion, " : "null, ");
             documentBuilder.append(hasDocumentFields.contains("elementId") ? "elementId)" : "null)");
-            typeSpecBuilder.addMethod(MethodSpec.methodBuilder("getDocument")
-                    .returns(ClassName.get(OnshapeDocument.class))
-                    .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
-                    .addAnnotation(JsonIgnore.class)
-                    .addStatement(documentBuilder.toString(), WVM.class)
-                    .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
-                    .build());
+            typeSpecBuilder.addSuperinterface(ClassName.get(ResponseWithDocument.class))
+                    .addMethod(MethodSpec.methodBuilder("getDocument")
+                            .returns(ClassName.get(OnshapeDocument.class))
+                            .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
+                            .addAnnotation(JsonIgnore.class)
+                            .addAnnotation(Override.class)
+                            .addStatement(documentBuilder.toString(), WVM.class)
+                            .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
+                            .build());
         }
         if (!builder) {
             typeSpecBuilder = addUnknownPropertiesHandler(typeSpecBuilder);
@@ -598,13 +601,15 @@ public class JavaEndpointTarget extends EndpointTarget {
             documentBuilder.append(hasDocumentFields.contains("documentVersion") ? "documentVersion, " : "null, ");
             documentBuilder.append(hasDocumentFields.contains("documentMicroversion") ? "documentMicroversion, " : "null, ");
             documentBuilder.append(hasDocumentFields.contains("elementId") ? "elementId)" : "null)");
-            responseBuilder.addMethod(MethodSpec.methodBuilder("getDocument")
-                    .returns(ClassName.get(OnshapeDocument.class))
-                    .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
-                    .addAnnotation(JsonIgnore.class)
-                    .addStatement(documentBuilder.toString(), WVM.class)
-                    .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
-                    .build());
+            responseBuilder.addSuperinterface(ClassName.get(ResponseWithDocument.class))
+                    .addMethod(MethodSpec.methodBuilder("getDocument")
+                            .returns(ClassName.get(OnshapeDocument.class))
+                            .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
+                            .addAnnotation(JsonIgnore.class)
+                            .addAnnotation(Override.class)
+                            .addStatement(documentBuilder.toString(), WVM.class)
+                            .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
+                            .build());
         }
         responseBuilder = GetterSpec.forType(responseBuilder).build();
         responseBuilder = addUnknownPropertiesHandler(responseBuilder);
