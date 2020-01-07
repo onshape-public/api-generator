@@ -1,5 +1,34 @@
 [
     {
+        "group": "Assemblies",
+        "endpoints": [
+            {
+                "name": "getFeatures",
+                "success": {
+                    "fields": {
+                        "Response": [{
+                                "field": "features.0.message"
+                            }, {
+                                "field": "featureStates.0"
+                            }, {
+                                "field": "featureStates.0.key"
+                            }, {
+                                "field": "featureStates.0.value"
+                            }, {
+                                "field": "imports.0.message"
+                            }, {
+                                "field": "imports.0.message.namespace"
+                            }, {
+                                "field": "imports.0.message.path"
+                            }, {
+                                "field": "imports.0.message.version"
+                            }]
+                    }
+                }
+            }
+        ]
+    },
+    {
         "group": "PartStudios",
         "endpoints": [
             {
@@ -9,9 +38,11 @@
                         "Response": [{
                                 "field": "features.0.message"
                             }, {
+                                "field": "featureStates.0"
+                            }, {
                                 "field": "featureStates.0.key"
                             }, {
-                                "field": "featuresStates.0.value"
+                                "field": "featureStates.0.value"
                             }, {
                                 "field": "imports.0.message"
                             }, {
