@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018-Present Onshape Inc.
+ * Copyright 2019 Onshape Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,26 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.onshape.api.generator.model;
+package com.onshape.api.types;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Represents a single permission type for an endpoint.
- *
+ * Base class for response objects that captures unknown properties into a map
+ * 
  * @author Peter Harman peter.harman@cae.tech
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Permission {
+public class AbstractResponseObject {
 
-    @JsonProperty
-    private String name;
+    @JsonAnySetter
+    private final Map<String, Object> otherProperties = new HashMap<>();
 
-    public String getName() {
-        return name;
+    @JsonAnyGetter
+    public final Map<String, Object> getOtherProperties() {
+        return otherProperties;
     }
 
 }

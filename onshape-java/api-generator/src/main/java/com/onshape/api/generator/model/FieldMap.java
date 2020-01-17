@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Onshape Inc.
+ * Copyright 2018-Present Onshape Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,15 +49,15 @@ public class FieldMap {
         return examples;
     }
     
-    public FieldMap merge(FieldMap other) {
+    public FieldMap merge(FieldMap other, boolean add) {
         FieldMap out = new FieldMap();
         out.examples.addAll(examples);
         out.examples.addAll(other.examples);
         out.fields.putAll(fields);
         other.fields.keySet().forEach((field) -> {
             if(out.fields.containsKey(field)) {
-                out.fields.put(field, Field.merge(out.fields.get(field), other.fields.get(field)));
-            } else {
+                out.fields.put(field, Field.merge(out.fields.get(field), other.fields.get(field), add));
+            } else if (add) {
                 out.fields.put(field, other.fields.get(field));
             }
         });

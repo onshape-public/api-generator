@@ -4,7 +4,7 @@ Onshape API Java Client
 This is a Java library for accessing the Onshape APIs from both cloud and
 desktop applications.
 
-Copyright 2018 Onshape Inc.
+Copyright 2018-Present Onshape Inc.
 
 [Javadoc documentation](http://onshape-public.github.io/java-client/index.html?com/onshape/api/Onshape.html)
 

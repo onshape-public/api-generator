@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Onshape Inc.
+ * Copyright 2018-Present Onshape Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 package com.onshape.api.generator.java;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -34,10 +33,12 @@ import com.onshape.api.generator.Utilities;
 import com.onshape.api.generator.exceptions.GeneratorException;
 import com.onshape.api.generator.model.Endpoint;
 import com.onshape.api.generator.model.Field;
+import com.onshape.api.types.AbstractResponseObject;
 import com.onshape.api.types.Base64Encoded;
 import com.onshape.api.types.Blob;
 import com.onshape.api.types.InputStreamWithHeaders;
 import com.onshape.api.types.OnshapeDocument;
+import com.onshape.api.types.ResponseWithDocument;
 import com.onshape.api.types.WVM;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ArrayTypeName;
@@ -96,7 +97,7 @@ public class JavaEndpointTarget extends EndpointTarget {
         // Create a new class for the request object
         String newClassName = getGroupTarget().getGroup().getGroup() + Utilities.toCamelCase(methodName) + "Request";
         TypeSpec.Builder requestBuilder = TypeSpec.classBuilder(newClassName)
-                .addJavadoc("Request object for " + methodName + " API endpoint.\n&copy; 2018 Onshape Inc.\n")
+                .addJavadoc("Request object for " + methodName + " API endpoint.\n&copy; 2018-Present Onshape Inc.\n")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         if (deprecated) {
             requestBuilder.addAnnotation(Deprecated.class);
@@ -427,9 +428,7 @@ public class JavaEndpointTarget extends EndpointTarget {
         }
         TypeSpec.Builder typeSpecBuilder = TypeSpec.classBuilder(typeName)
                 .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
-                .addJavadoc("Object used in calls to " + getEndpoint().getName() + " API endpoint.\n&copy; 2018 Onshape Inc.\n")
-                .addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
-                        .addMember("ignoreUnknown", "$L", Boolean.TRUE).build());
+                .addJavadoc("Object used in calls to " + getEndpoint().getName() + " API endpoint.\n&copy; 2018-Present Onshape Inc.\n");
         Set<String> hasDocumentFields = new HashSet<>();
         for (Map.Entry<Field, TypeName> field : types.entrySet()) {
             String javadoc = field.getKey().getDescription() == null ? "" : field.getKey().getDescription().replace("$", "");
@@ -456,15 +455,20 @@ public class JavaEndpointTarget extends EndpointTarget {
             documentBuilder.append(hasDocumentFields.contains("documentVersion") ? "documentVersion, " : "null, ");
             documentBuilder.append(hasDocumentFields.contains("documentMicroversion") ? "documentMicroversion, " : "null, ");
             documentBuilder.append(hasDocumentFields.contains("elementId") ? "elementId)" : "null)");
-            typeSpecBuilder.addMethod(MethodSpec.methodBuilder("getDocument")
-                    .returns(ClassName.get(OnshapeDocument.class))
-                    .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
-                    .addAnnotation(JsonIgnore.class)
-                    .addStatement(documentBuilder.toString(), WVM.class)
-                    .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
-                    .build());
+            typeSpecBuilder.addSuperinterface(ClassName.get(ResponseWithDocument.class))
+                    .addMethod(MethodSpec.methodBuilder("getDocument")
+                            .returns(ClassName.get(OnshapeDocument.class))
+                            .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
+                            .addAnnotation(JsonIgnore.class)
+                            .addAnnotation(Override.class)
+                            .addStatement(documentBuilder.toString(), WVM.class)
+                            .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
+                            .build());
         }
-        addToString(typeSpecBuilder);
+        if (!builder) {
+            typeSpecBuilder = addUnknownPropertiesHandler(typeSpecBuilder);
+        }
+        typeSpecBuilder = addToString(typeSpecBuilder);
         write(packageName, typeSpecBuilder, false);
         return ClassName.get(packageName, typeName);
     }
@@ -475,8 +479,7 @@ public class JavaEndpointTarget extends EndpointTarget {
         String newClassName = groupName + Utilities.toCamelCase(getEndpoint().getName()) + "Response";
         boolean deprecated = getEndpoint().getName().contains("Deprecated");
         TypeSpec.Builder responseBuilder = TypeSpec.classBuilder(newClassName)
-                .addJavadoc("Response object for " + getEndpoint().getName() + " API endpoint.\n&copy; 2018 Onshape Inc.\n")
-                .addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class).addMember("ignoreUnknown", "$L", Boolean.TRUE).build())
+                .addJavadoc("Response object for " + getEndpoint().getName() + " API endpoint.\n&copy; 2018-Present Onshape Inc.\n")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         if (deprecated) {
             responseBuilder.addAnnotation(Deprecated.class);
@@ -518,9 +521,17 @@ public class JavaEndpointTarget extends EndpointTarget {
                             fieldType = createLocalType("com.onshape.api.responses", name, typeName, name + ".", allResponseFields, false);
                         }
                     } else if (t.equals(Object[].class)) {
-                        String typeName = newClassName + Utilities.toCamelCase(name);
-                        TypeName ref = createLocalType("com.onshape.api.responses", name, typeName, name + ".", allResponseFields, false);
-                        fieldType = ArrayTypeName.of(ref);
+                        if (allResponseFields.stream().map((f) -> f.getField()).anyMatch((n) -> n.equals(name + ".0.key"))) {
+                            // It is a map, create a value type
+                            String valueTypeName = newClassName + Utilities.toCamelCase(name) + "Value";
+                            TypeName valueType = createLocalType("com.onshape.api.responses", name, valueTypeName, name + ".0.key.", allResponseFields, false);
+                            TypeName ref = ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), valueType);
+                            fieldType = ArrayTypeName.of(ref);
+                        } else {
+                            String typeName = newClassName + Utilities.toCamelCase(name);
+                            TypeName ref = createLocalType("com.onshape.api.responses", name, typeName, name + ".", allResponseFields, false);
+                            fieldType = ArrayTypeName.of(ref);
+                        }
                     } else if (field.getField().equals("file") && t.equals(Base64Encoded.class) && allResponseFields.size() == 1) {
                         // An object with single field called "file" is treated differently by the client, as the response is just the File content
                         fieldType = JavaLibraryTarget.getTypeName(Blob.class);
@@ -590,15 +601,18 @@ public class JavaEndpointTarget extends EndpointTarget {
             documentBuilder.append(hasDocumentFields.contains("documentVersion") ? "documentVersion, " : "null, ");
             documentBuilder.append(hasDocumentFields.contains("documentMicroversion") ? "documentMicroversion, " : "null, ");
             documentBuilder.append(hasDocumentFields.contains("elementId") ? "elementId)" : "null)");
-            responseBuilder.addMethod(MethodSpec.methodBuilder("getDocument")
-                    .returns(ClassName.get(OnshapeDocument.class))
-                    .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
-                    .addAnnotation(JsonIgnore.class)
-                    .addStatement(documentBuilder.toString(), WVM.class)
-                    .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
-                    .build());
+            responseBuilder.addSuperinterface(ClassName.get(ResponseWithDocument.class))
+                    .addMethod(MethodSpec.methodBuilder("getDocument")
+                            .returns(ClassName.get(OnshapeDocument.class))
+                            .addModifiers(Modifier.FINAL, Modifier.PUBLIC)
+                            .addAnnotation(JsonIgnore.class)
+                            .addAnnotation(Override.class)
+                            .addStatement(documentBuilder.toString(), WVM.class)
+                            .addJavadoc("Returns an OnshapeDocument object that can be used in subsequent calls to the related document\n@return The OnshapeDocument object.\n")
+                            .build());
         }
         responseBuilder = GetterSpec.forType(responseBuilder).build();
+        responseBuilder = addUnknownPropertiesHandler(responseBuilder);
         addToString(responseBuilder);
         write("com.onshape.api.responses", responseBuilder, false);
         return hasFileField;
@@ -610,6 +624,10 @@ public class JavaEndpointTarget extends EndpointTarget {
                 .returns(TypeName.get(String.class))
                 .addAnnotation(Override.class)
                 .addStatement("return $T.toString(this)", ClassName.get("com.onshape.api", "Onshape")).build());
+    }
+
+    TypeSpec.Builder addUnknownPropertiesHandler(TypeSpec.Builder builder) {
+        return builder.superclass(ClassName.get(AbstractResponseObject.class));
     }
 
     String getFieldName(Field field) {

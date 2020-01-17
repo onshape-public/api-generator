@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Onshape Inc.
+ * Copyright 2018-Present Onshape Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -121,7 +121,7 @@ public class Endpoint {
     }
 
     @JsonIgnore
-    public Endpoint merge(Endpoint other) {
+    public Endpoint merge(Endpoint other, boolean add) {
         Endpoint out = new Endpoint();
         out.type = type;
         out.url = url;
@@ -132,22 +132,22 @@ public class Endpoint {
         out.groupTitle = groupTitle;
         out.version = version;
         out.permissions = permissions;
-        out.parameters = parameters.merge(other.parameters);
-        out.headers = headers.merge(other.headers);
-        out.error = error.merge(other.error);
-        out.success = success.merge(other.success);
+        out.parameters = parameters.merge(other.parameters, add);
+        out.headers = headers.merge(other.headers, add);
+        out.error = error.merge(other.error, add);
+        out.success = success.merge(other.success, add);
         return out;
     }
 
-    public static Collection<Endpoint> merge(Collection<Endpoint> endpoints1, Collection<Endpoint> endpoints2) {
+    public static Collection<Endpoint> merge(Collection<Endpoint> endpoints1, Collection<Endpoint> endpoints2, boolean add) {
         Map<String, Endpoint> map = Maps.newLinkedHashMap();
         endpoints1.forEach((endpoint) -> {
             map.put(endpoint.getName(), endpoint);
         });
         endpoints2.forEach((endpoint) -> {
             if (map.containsKey(endpoint.getName())) {
-                map.put(endpoint.getName(), map.get(endpoint.getName()).merge(endpoint));
-            } else {
+                map.put(endpoint.getName(), map.get(endpoint.getName()).merge(endpoint, add));
+            } else if (add) {
                 map.put(endpoint.getName(), endpoint);
             }
         });

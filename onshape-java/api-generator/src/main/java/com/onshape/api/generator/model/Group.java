@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Onshape Inc.
+ * Copyright 2018-Present Onshape Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -62,23 +62,23 @@ public class Group {
     }
 
     @JsonIgnore
-    public Group merge(Group other) {
+    public Group merge(Group other, boolean add) {
         Group out = new Group();
         out.group = group;
         out.groupTitle = groupTitle;
-        out.endpoints = Endpoint.merge(endpoints, other.endpoints);
+        out.endpoints = Endpoint.merge(endpoints, other.endpoints, add);
         return out;
     }
 
-    public static Group[] merge(Group[] groups1, Group[] groups2) {
+    public static Group[] merge(Group[] groups1, Group[] groups2, boolean add) {
         Map<String, Group> map = Maps.newLinkedHashMap();
         for (Group group : groups1) {
             map.put(group.getGroup(), group);
         }
         for (Group group : groups2) {
             if (map.containsKey(group.getGroup())) {
-                map.put(group.getGroup(), map.get(group.getGroup()).merge(group));
-            } else {
+                map.put(group.getGroup(), map.get(group.getGroup()).merge(group, add));
+            } else if (add) {
                 map.put(group.getGroup(), group);
             }
         }

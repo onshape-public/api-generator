@@ -67,7 +67,7 @@ public class JavaGroupTarget extends GroupTarget {
     @Override
     public void finish() throws GeneratorException {
         // Complete group object
-        typeBuilder.addJavadoc(getGroup().getGroupTitle() + ": API endpoints for " + getGroup().getGroup() + " group.\n&copy; 2018 Onshape Inc.\n")
+        typeBuilder.addJavadoc(getGroup().getGroupTitle() + ": API endpoints for " + getGroup().getGroup() + " group.\n&copy; 2018-Present Onshape Inc.\n")
                 .addMethod(MethodSpec.constructorBuilder()
                         .addParameter(ClassName.get("com.onshape.api", "Onshape"), "onshape")
                         .addStatement("this.onshape = onshape")

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018-Present Onshape Inc.
+ * Copyright 2019 Onshape Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,26 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.onshape.api.generator.model;
+package com.onshape.api.types;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Represents a single permission type for an endpoint.
+ * A response object that references an Onshape document
  *
  * @author Peter Harman peter.harman@cae.tech
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Permission {
+public interface ResponseWithDocument {
 
-    @JsonProperty
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
+    /**
+     * Returns an OnshapeDocument object that can be used in subsequent calls to
+     * the related document
+     *
+     * @return The OnshapeDocument object.
+     */
+    @JsonIgnore
+    public OnshapeDocument getDocument();
 }
