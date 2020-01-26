@@ -32,6 +32,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.onshape.api.exceptions.OnshapeException;
 import com.onshape.api.types.AbstractBlob;
 import com.onshape.api.types.Blob;
+import com.onshape.api.types.ErrorResponse;
 import com.onshape.api.types.InputStreamWithHeaders;
 import com.onshape.api.types.JsonObjectOrArrayInputStream;
 import com.onshape.api.types.OAuthTokenResponse;
@@ -502,6 +503,17 @@ public class BaseClient {
             case REDIRECTION:
                 return call(method, response.getHeaderString("Location"), payload, buildMap(), buildMap(), jsonResponse);
             default:
+                // Attempt to read further details from the response from Onshape
+                ErrorResponse errorResponse = null;
+                try {
+                    errorResponse = response.readEntity(ErrorResponse.class);
+                } catch (Throwable ex) {
+                }
+                if (errorResponse != null && errorResponse.getMessage() != null
+                        && !errorResponse.getMessage().isEmpty()) {
+                    throw new OnshapeException(response.getStatusInfo().getStatusCode(), errorResponse.getMessage());
+                }
+                // Failed to deserialize an error message so just repond with the status code
                 throw new OnshapeException(response.getStatusInfo().getStatusCode(), response.getStatusInfo().getReasonPhrase());
         }
     }
