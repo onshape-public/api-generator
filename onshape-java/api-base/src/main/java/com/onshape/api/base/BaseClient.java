@@ -87,7 +87,6 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.media.multipart.Boundary;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
@@ -423,7 +422,7 @@ public class BaseClient {
                         }
                     } else if (Blob.class.equals(type.getDeclaredFields()[0].getType())) {
                         try {
-                            Blob blob = new Blob(input);
+                            Blob blob = new Blob(input, response.getHeaderString("Content-Disposition"));
                             Constructor<T> constructor = type.getDeclaredConstructor();
                             constructor.setAccessible(true);
                             T out = constructor.newInstance();
@@ -565,7 +564,8 @@ public class BaseClient {
                 multipart.bodyPart(new FileDataBodyPart("file", (File) fileField.get(payload), MediaType.WILDCARD_TYPE));
             } else if (blobField != null) {
                 blobField.setAccessible(true);
-                multipart.bodyPart(new FormDataBodyPart(FormDataContentDisposition.name("file").build(),
+                multipart.bodyPart(new FormDataBodyPart(
+                        ((AbstractBlob) blobField.get(payload)).getFormDataContentDisposition("file"),
                         ((AbstractBlob) blobField.get(payload)).getData(), MediaType.WILDCARD_TYPE));
             }
         } catch (IllegalArgumentException | IllegalAccessException ex) {
