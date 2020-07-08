@@ -371,7 +371,7 @@ public class JavaEndpointTarget extends EndpointTarget {
             Collection<Field> fields, boolean builder) throws GeneratorException, GeneratorException {
         Map<Field, TypeName> types = Maps.newLinkedHashMap();
         for (Field field : fields) {
-            if (field.getField().startsWith(prefix) && !field.getField().equals(prefix + "0")) {
+            if (field.getField().startsWith(prefix) && !field.getField().endsWith(".0")) {
                 String fieldName = field.getField().substring((field.getField().startsWith(prefix + "0.") ? 2 : 0) + prefix.length());
                 if (fieldName.indexOf('.') == -1) {
                     Class<?> fieldType = JavaLibraryTarget.guessClass(field.getType());
