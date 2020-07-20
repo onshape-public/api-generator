@@ -4,7 +4,9 @@ name: check-onshape-version
 on:
   schedule:
   - cron: "0 0 * * *"
-
+  push:
+    branches: [master]
+    
 jobs:
   check:
     runs-on: ubuntu-latest
