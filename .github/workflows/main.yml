@@ -20,10 +20,11 @@ jobs:
       - name: What is it
         run: echo "${{ steps.onshape-build.outputs.value }}"
       - name: Parse version
-        id: parse-semver
-        uses: booxmedialtd/ws-action-parse-semver@v1
+        id: parse-version
+        uses: actions-ecosystem/action-regex-match@v2
         with:
-          input_string: ${{ steps.onshape-build.outputs.value }}
+          text: ${{ steps.onshape-build.outputs.value }}
+          regex: '^v?([0-9]+)\.([0-9]+)\.[0-9]+\.[a-z0-9]+$'
       - name: Get Java Client version
         id: java-client
         uses: pozetroninc/github-action-get-latest-release@master
@@ -31,9 +32,10 @@ jobs:
             repository: onshape-public/java-client
       - name: Parse release
         id: parse-release
-        uses: booxmedialtd/ws-action-parse-semver@v1
+        uses: actions-ecosystem/action-regex-match@v2
         with:
-          input_string: ${{ steps.java-client.outputs.release }}
+          text: ${{ steps.java-client.outputs.value }}
+          regex: '^v?([0-9]+)\.([0-9]+)\.[0-9]+\.[a-z0-9]+$'
       - name: Spit it out
-        run: echo "Onshape build ${{ steps.parse-semver.outputs.major}}.${{ steps.parse-semver.outputs.minor}}, Java release ${{ steps.parse-release.outputs.major}}.${{ steps.parse-release.outputs.minor}}"
+        run: echo "Onshape build ${{ steps.parse-semver.outputs.group1}}.${{ steps.parse-semver.outputs.group2}}, Java release ${{ steps.parse-release.outputs.group1}}.${{ steps.parse-release.outputs.group2}}"
         
