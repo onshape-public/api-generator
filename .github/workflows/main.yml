@@ -17,6 +17,8 @@ jobs:
         with:
           url: 'https://cad.onshape.com/api/build'
           property_path: 'Implementation-Version'
+      - name: What is it
+        run: echo "${{ steps.onshape-build.outputs.value }}"
       - name: Parse version
         id: parse-semver
         uses: booxmedialtd/ws-action-parse-semver@v1
