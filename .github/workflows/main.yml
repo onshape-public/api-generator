@@ -1,0 +1,35 @@
+name: check-onshape-version
+
+# Run daily
+on:
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get current build of Onshape
+        id: onshape-build
+        uses: senmu/download-json-property-action@v1.0.0
+        with:
+          url: 'https://cad.onshape.com/api/build'
+          property_path: 'Implementation-Version'
+      - name: Parse version
+        id: parse-semver
+        uses: booxmedialtd/ws-action-parse-semver@v1
+        with:
+          input_string: ${{ steps.onshape-build.outputs.value }}
+      - name: Get Java Client version
+        id: java-client
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+            repository: onshape-public/java-client
+      - name: Parse release
+        id: parse-release
+        uses: booxmedialtd/ws-action-parse-semver@v1
+        with:
+          input_string: ${{ steps.java-client.outputs.release }}
+      - name: Spit it out
+        run: echo "Onshape build ${{ steps.parse-semver.outputs.major}}.${{ steps.parse-semver.outputs.minor}}, Java release ${{ steps.parse-release.outputs.major}}.${{ steps.parse-release.outputs.minor}}"
+        
