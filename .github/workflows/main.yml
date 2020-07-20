@@ -34,7 +34,7 @@ jobs:
         id: parse-release
         uses: actions-ecosystem/action-regex-match@v2
         with:
-          text: ${{ steps.java-client.outputs.value }}
+          text: ${{ steps.java-client.outputs.release }}
           regex: '^v?([0-9]+)\.([0-9]+)\.[0-9]+\.[a-z0-9]+$'
       - name: Spit it out
         run: echo "Onshape build ${{ steps.parse-semver.outputs.group1}}.${{ steps.parse-semver.outputs.group2}}, Java release ${{ steps.parse-release.outputs.group1}}.${{ steps.parse-release.outputs.group2}}"
