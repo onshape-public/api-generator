@@ -31,6 +31,7 @@ jobs:
         with:
             url: 'https://api.github.com/repos/onshape-public/java-client/tags'
             method: GET
+            customHeaders: '{"User-Agent": "Github Action"}'
       - name: Parse release
         id: parse-release
         run: echo "${{ steps.java-client.response }}"
