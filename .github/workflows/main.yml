@@ -34,7 +34,7 @@ jobs:
             customHeaders: '{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}'
       - name: Parse release
         id: parse-release
-        run: echo "${{ steps.java-client.response }}"
+        run: echo "${{ steps.java-client.outputs.response }}"
       - name: Spit it out
         run: echo "Onshape build ${{ steps.parse-semver.outputs.group1}}.${{ steps.parse-semver.outputs.group2}}"
         
