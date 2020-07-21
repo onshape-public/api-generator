@@ -27,16 +27,13 @@ jobs:
           regex: '^v?([0-9]+)\.([0-9]+)\.[0-9]+\.[a-z0-9]+$'
       - name: Get Java Client version
         id: java-client
-        uses: senmu/download-json-property-action@v1.0.0
+        uses: fjogeleit/http-request-action@v1.3.2
         with:
             url: 'https://api.github.com/repos/onshape-public/java-client/tags'
-            property_path: '0.name'
+            method: GET
       - name: Parse release
         id: parse-release
-        uses: actions-ecosystem/action-regex-match@v2
-        with:
-          text: ${{ steps.java-client.outputs.value }}
-          regex: '^v?([0-9]+)\.([0-9]+)\.[0-9]+\.[a-z0-9]+$'
+        run: echo "${{ steps.java-client.response }}"
       - name: Spit it out
-        run: echo "Onshape build ${{ steps.parse-semver.outputs.group1}}.${{ steps.parse-semver.outputs.group2}}, Java release ${{ steps.parse-release.outputs.group1}}.${{ steps.parse-release.outputs.group2}}"
+        run: echo "Onshape build ${{ steps.parse-semver.outputs.group1}}.${{ steps.parse-semver.outputs.group2}}"
         
