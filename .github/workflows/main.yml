@@ -32,9 +32,18 @@ jobs:
             url: 'https://api.github.com/repos/onshape-public/java-client/tags'
             method: GET
             customHeaders: '{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"}'
+      - name: Extract latest tag
+        id: extract-tag
+        uses: ashley-taylor/read-json-property-action@v1.0
+        with:
+         json: ${{ steps.java-client.outputs.response }}
+         property: '0.name'
       - name: Parse release
         id: parse-release
-        run: echo "${{ steps.java-client.outputs.response }}"
+        uses: actions-ecosystem/action-regex-match@v2
+        with:
+          text: ${{ steps.extract-tag.outputs.value }}
+          regex: '^v?([0-9]+)\.([0-9]+)\.[0-9]+\.[a-z0-9]+$'
       - name: Spit it out
-        run: echo "Onshape build ${{ steps.parse-semver.outputs.group1}}.${{ steps.parse-semver.outputs.group2}}"
+        run: echo "Onshape build ${{ steps.parse-version.outputs.group1}}.${{ steps.parse-version.outputs.group2}}, Java client ${{ steps.parse-release.outputs.group1}}.${{ steps.parse-release.outputs.group2}}"
         
