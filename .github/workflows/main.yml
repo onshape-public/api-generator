@@ -36,12 +36,12 @@ jobs:
         id: extract-tag
         env:
          tags: fromJson(${{ steps.java-client.outputs.response }})
-        run: echo "::set-output name=value::${{ steps.java-client.env.tags.*.name }}"
+        run: echo "::set-output name=value::${{ steps.java-client.env.tags[0].name }}"
       - name: Parse release
         id: parse-release
         uses: actions-ecosystem/action-regex-match@v2
         with:
-          text: ${{ steps.extract-tag.outputs.value[0] }}
+          text: ${{ steps.extract-tag.outputs.value }}
           regex: '^v?([0-9]+)\.([0-9]+)\.[0-9]+\.[a-z0-9]+$'
       - name: Spit it out
         run: echo "Onshape build ${{ steps.parse-version.outputs.group1}}.${{ steps.parse-version.outputs.group2}}, Java client ${{ steps.parse-release.outputs.group1}}.${{ steps.parse-release.outputs.group2}}"
