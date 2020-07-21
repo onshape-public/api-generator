@@ -36,7 +36,7 @@ jobs:
         id: extract-tag
         env:
          tags: fromJson(${{ steps.java-client.outputs.response }})
-        run: echo "::set-output name=value::${{ tags.0.name }}"
+        run: echo "::set-output name=value::${{ steps.java-client.env.tags.0.name }}"
       - name: Parse release
         id: parse-release
         uses: actions-ecosystem/action-regex-match@v2
