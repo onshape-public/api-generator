@@ -40,6 +40,7 @@ import com.onshape.api.generator.tests.TestsLibraryTarget;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Generator for API clients from Onshape JSON endpoint specification.
@@ -101,6 +102,10 @@ public class Generator {
             throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
         }
         BaseClient client = new BaseClient();
+        JsonNode specFileUrl = parameters.get("onshape-base-url");
+        if (specFileUrl != null && StringUtils.isNotEmpty(specFileUrl.asText())) {
+            client.setBaseURL(specFileUrl.asText());
+        }
         client.setAPICredentials(accessKey, secretKey);
         OnshapeVersion buildVersion = client.version();
         Group[] apiGroups = client.call("GET", "/endpoints", null, new HashMap<>(), new HashMap<>(), Group[].class);

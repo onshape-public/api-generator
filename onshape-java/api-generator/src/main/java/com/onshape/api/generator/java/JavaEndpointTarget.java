@@ -94,6 +94,7 @@ public class JavaEndpointTarget extends EndpointTarget {
     void createRequestType(String groupName, TypeSpec.Builder groupTypeBuilder, boolean includeStreamResponse) throws GeneratorException {
         String methodName = getEndpoint().getName();
         boolean deprecated = methodName.contains("Deprecated");
+        List<String> fieldsAdded = new ArrayList<>();
         // Create a new class for the request object
         String newClassName = getGroupTarget().getGroup().getGroup() + Utilities.toCamelCase(methodName) + "Request";
         TypeSpec.Builder requestBuilder = TypeSpec.classBuilder(newClassName)
@@ -130,6 +131,8 @@ public class JavaEndpointTarget extends EndpointTarget {
                         if (!field.isOptional()) {
                             fieldBuilder.addAnnotation(NotNull.class);
                         }
+                        FieldSpec fieldSpec = fieldBuilder.build();
+                        fieldsAdded.add(fieldSpec.name);
                         requestBuilder.addField(fieldBuilder.build());
                     } catch (IllegalArgumentException iae) {
                         throw new GeneratorException("Error adding field", iae);
@@ -291,6 +294,9 @@ public class JavaEndpointTarget extends EndpointTarget {
             Collection<Field> queryParams = getEndpoint().getParameters().getFields().get("QueryParam");
             int i = 0;
             for (Field field : queryParams) {
+                if (fieldsAdded.contains(field.getField())) {
+                    continue;
+                }
                 boolean isOptional = field.isOptional();
                 String name = field.getField();
                 Class<?> type = JavaLibraryTarget.guessClass(field.getType());
@@ -300,7 +306,9 @@ public class JavaEndpointTarget extends EndpointTarget {
                             .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                                     .addMember("value", "$S", getFieldName(field))
                                     .build());
-                    requestBuilder.addField(fieldBuilder.build());
+                    FieldSpec fieldSpec = fieldBuilder.build();
+                    fieldsAdded.add(fieldSpec.name);
+                    requestBuilder.addField(fieldSpec);
                 } else {
                     callBuilder.addParameter(JavaLibraryTarget.getTypeName(type), JavaLibraryTarget.safeName(name));
                     callBuilder2.addParameter(JavaLibraryTarget.getTypeName(type), JavaLibraryTarget.safeName(name));
