@@ -107,7 +107,7 @@ public class Generator {
             client.setBaseURL(specFileUrl.asText());
         }
         client.setAPICredentials(accessKey, secretKey);
-        OnshapeVersion buildVersion = client.version();
+        OnshapeVersion buildVersion = new BaseClient().version();
         Group[] apiGroups = client.call("GET", "/endpoints", null, new HashMap<>(), new HashMap<>(), Group[].class);
         Group[] augmentGroups;
         Group[] deleteGroups;
