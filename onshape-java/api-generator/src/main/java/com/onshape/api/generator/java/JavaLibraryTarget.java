@@ -102,7 +102,7 @@ public class JavaLibraryTarget extends LibraryTarget {
         if ("public".equals(name)) {
             return "isPublic";
         }
-        return name.replace('-', '_');
+        return name.replace('-', '_').replace("[]", "");
     }
 
     @Override
