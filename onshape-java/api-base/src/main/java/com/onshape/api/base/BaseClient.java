@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import com.github.nhenneaux.jersey.connector.httpclient.HttpClientConnector;
 import com.onshape.api.exceptions.OnshapeException;
 import com.onshape.api.types.AbstractBlob;
 import com.onshape.api.types.Blob;
@@ -143,6 +144,7 @@ public class BaseClient {
         clientConfig.property(ClientProperties.READ_TIMEOUT, TIMEOUT);
         clientConfig.register(MultiPartFeature.class);
         clientConfig.register(new CompressionReaderInterceptor());
+        clientConfig.connectorProvider(HttpClientConnector::new);
         client = ClientBuilder.newClient(clientConfig);
         workingDir = new File(System.getProperty("java.io.tmpdir"));
         usingValidation = true;
