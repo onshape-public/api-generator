@@ -71,6 +71,8 @@ import tech.cae.javabard.GetterSpec;
  */
 public class JavaEndpointTarget extends EndpointTarget {
 
+    private final Set<String> blobNames = Sets.newHashSet("file", "data", "image");
+
     public JavaEndpointTarget(GroupTarget groupTarget, Endpoint endpoint) {
         super(groupTarget, endpoint);
     }
@@ -540,7 +542,7 @@ public class JavaEndpointTarget extends EndpointTarget {
                             TypeName ref = createLocalType("com.onshape.api.responses", name, typeName, name + ".", allResponseFields, false);
                             fieldType = ArrayTypeName.of(ref);
                         }
-                    } else if (field.getField().equals("file") && t.equals(Base64Encoded.class) && allResponseFields.size() == 1) {
+                    } else if (blobNames.contains(field.getField()) && allResponseFields.size() == 1) {
                         // An object with single field called "file" is treated differently by the client, as the response is just the File content
                         fieldType = JavaLibraryTarget.getTypeName(Blob.class);
                     } else {
