@@ -20,11 +20,6 @@
             <version>2.26</version>
         </dependency>
         <dependency>
-            <groupId>com.github.nhenneaux.jersey.connector.httpclient</groupId>
-            <artifactId>jersey-httpclient-connector</artifactId>
-            <version>0.2.4</version>
-        </dependency>
-        <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
             <version>2.26</version>
