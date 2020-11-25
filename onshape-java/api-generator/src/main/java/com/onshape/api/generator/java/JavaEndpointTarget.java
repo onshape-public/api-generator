@@ -224,6 +224,36 @@ public class JavaEndpointTarget extends EndpointTarget {
                             javadoc3.append("\n@param wvType Type of Workspace or Version\n");
                             i++;
                             break;
+                        case "wm":
+                            if (i > 0) {
+                                callStatement.append(", ");
+                                callStatement2.append(", ");
+                                callStatement3.append(", ");
+                            }
+                            callStatement.append("\"wmType\", wmType");
+                            callStatement2.append("\"wmType\", document.getWM()");
+                            callStatement3.append("\"wmType\", wmType");
+                            callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WM"), "wmType");
+                            javadoc.append("\n@param wmType Type of Workspace or Microversion\n");
+                            callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "WM"), "wmType");
+                            javadoc3.append("\n@param wmType Type of Workspace or Microversion\n");
+                            i++;
+                            break;
+                        case "vm":
+                            if (i > 0) {
+                                callStatement.append(", ");
+                                callStatement2.append(", ");
+                                callStatement3.append(", ");
+                            }
+                            callStatement.append("\"vmType\", vmType");
+                            callStatement2.append("\"vmType\", document.getVM()");
+                            callStatement3.append("\"vmType\", vmType");
+                            callBuilder.addParameter(ClassName.get("com.onshape.api.types", "VM"), "vmType");
+                            javadoc.append("\n@param vmType Type of Version or Microversion\n");
+                            callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "VM"), "vmType");
+                            javadoc3.append("\n@param vmType Type of Version or Microversion\n");
+                            i++;
+                            break;
                         case "oid":
                             if (i > 0) {
                                 callStatement.append(", ");
@@ -273,6 +303,14 @@ public class JavaEndpointTarget extends EndpointTarget {
                             break;
                         case "wv":
                             callStatement2.append("\"wv\", document.getWVId()");
+                            includeCall2 = true;
+                            break;
+                        case "wm":
+                            callStatement2.append("\"wm\", document.getWMId()");
+                            includeCall2 = true;
+                            break;
+                        case "vm":
+                            callStatement2.append("\"vm\", document.getVMId()");
                             includeCall2 = true;
                             break;
                         case "wid":
