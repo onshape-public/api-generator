@@ -35,6 +35,7 @@ import com.onshape.api.generator.exceptions.GeneratorException;
 import com.onshape.api.generator.java.JavaLibraryTarget;
 import com.onshape.api.generator.model.Endpoint;
 import com.onshape.api.generator.model.Group;
+import com.onshape.api.generator.model.Permission;
 import com.onshape.api.generator.targets.LibraryTarget;
 import com.onshape.api.generator.tests.TestsLibraryTarget;
 import java.io.File;
@@ -143,6 +144,17 @@ public class Generator {
         GroupTarget groupTarget = target.group(group);
         groupTarget.start();
         for (Endpoint endpoint : group.getEndpoints()) {
+            boolean excludeEndpoint = false;
+            for (Permission permission : endpoint.getPermissions()) {
+                String permissionName = permission.getName();
+                if (permissionName.equals("OAuth2Deny") || permissionName.contains("internal") || permissionName.contains("deprecated") || permissionName.contains("undocumented")) {
+                    excludeEndpoint = true;
+                    break;
+                }
+            };
+            if (excludeEndpoint) {
+                continue;
+            }
             generateEndpoint(groupTarget, group, endpoint);
         }
         groupTarget.finish();
