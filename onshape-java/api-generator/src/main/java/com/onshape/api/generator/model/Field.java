@@ -86,6 +86,18 @@ public class Field {
         return out;
     }
 
+    @JsonIgnore
+    public Field asOptional() {
+        Field out = new Field();
+        out.defaultValue = defaultValue;
+        out.description = description;
+        out.field = field;
+        out.group = group;
+        out.optional = true;
+        out.type = type;
+        return out;
+    }
+
     public static Collection<Field> merge(Collection<Field> fields1, Collection<Field> fields2, boolean add) {
         Map<String, Field> map = Maps.newLinkedHashMap();
         fields1.forEach((field) -> {
