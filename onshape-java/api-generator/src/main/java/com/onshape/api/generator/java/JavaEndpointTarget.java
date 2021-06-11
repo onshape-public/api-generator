@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import javax.validation.constraints.NotNull;
 import org.junit.jupiter.api.DisplayName;
@@ -533,17 +534,19 @@ public class JavaEndpointTarget extends EndpointTarget {
             responseBuilder.addAnnotation(Deprecated.class);
         }
         Map<String, Collection<Field>> fieldMap = getEndpoint().getSuccess().getFields();
-        List<Field> allResponseFields = new ArrayList<>();
         boolean hasNextField = false;
         boolean hasPreviousField = false;
         boolean hasUrlField = false;
         boolean hasRequestStateField = false;
         boolean hasFileField = false;
         Set<String> hasDocumentFields = new HashSet<>();
-        // Merge all response fields
-        fieldMap.entrySet().stream().filter((fieldMapEntry) -> (fieldMapEntry.getKey().startsWith("Response"))).forEachOrdered((fieldMapEntry) -> {
-            allResponseFields.addAll(fieldMapEntry.getValue());
-        });
+        // Merge all response fields, additional sets of fields are marked as optional
+        List<Field> allResponseFields = fieldMap.entrySet().stream()
+                .filter(fieldMapEntry -> fieldMapEntry.getKey().startsWith("Response"))
+                .flatMap(fieldMapEntry -> fieldMapEntry.getKey().equals("Response")
+                ? fieldMapEntry.getValue().stream()
+                : fieldMapEntry.getValue().stream().map(field -> field.asOptional()))
+                .collect(Collectors.toList());
         for (Field field : allResponseFields) {
             hasNextField = hasNextField || field.getField().equals("next");
             hasPreviousField = hasPreviousField || field.getField().equals("previous");

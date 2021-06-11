@@ -37,9 +37,9 @@ import java.util.Map;
 public class FieldMap {
 
     @JsonProperty
-    private Map<String, Collection<Field>> fields = new HashMap<>();
+    private final Map<String, Collection<Field>> fields = new HashMap<>();
     @JsonProperty
-    private Collection<Example> examples = new ArrayList<>();
+    private final Collection<Example> examples = new ArrayList<>();
 
     public Map<String, Collection<Field>> getFields() {
         return fields;
