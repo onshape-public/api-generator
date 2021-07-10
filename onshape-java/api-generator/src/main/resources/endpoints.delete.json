@@ -9,8 +9,6 @@
                         "Response": [{
                                 "field": "features.0.message"
                             }, {
-                                "field": "featureStates.0"
-                            }, {
                                 "field": "featureStates.0.key"
                             }, {
                                 "field": "featureStates.0.value"
@@ -37,8 +35,6 @@
                     "fields": {
                         "Response": [{
                                 "field": "features.0.message"
-                            }, {
-                                "field": "featureStates.0"
                             }, {
                                 "field": "featureStates.0.key"
                             }, {

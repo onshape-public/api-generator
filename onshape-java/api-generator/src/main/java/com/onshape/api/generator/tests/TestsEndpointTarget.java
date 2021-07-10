@@ -32,6 +32,7 @@ import com.onshape.api.generator.targets.EndpointTarget;
 import com.onshape.api.generator.targets.GroupTarget;
 import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -130,6 +131,8 @@ public class TestsEndpointTarget extends EndpointTarget {
                 return Maps.newLinkedHashMap();
             case "File":
                 return "file://";
+            case "Date":
+                return new Date();
             default:
                 throw new GeneratorException("Could not create default value for type " + type);
         }
