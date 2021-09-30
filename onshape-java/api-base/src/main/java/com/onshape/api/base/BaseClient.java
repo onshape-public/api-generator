@@ -290,7 +290,8 @@ public class BaseClient {
     /**
      * Refresh the OAuth token previously fetched
      *
-     * @throws OnshapeException if no token previously set or if refresh call fails
+     * @throws OnshapeException if no token previously set or if refresh call
+     * fails
      */
     public void refreshOAuthToken() throws OnshapeException {
         if (token == null) {
@@ -539,6 +540,11 @@ public class BaseClient {
             case REDIRECTION:
                 return call(method, response.getHeaderString("Location"), payload, buildMap(), buildMap(), acceptCategory);
             default:
+                // Create a description of the call and payload
+                String callDescription = "\n\tMethod: " + method + "\n\tURL: " + url
+                        + (payload == null ? "" : "\n\tPayload: " + payload.toString().replace("\n", "\n\t"))
+                        + (urlParameters == null || urlParameters.isEmpty() ? "" : "\n\tPath parameters:" + urlParameters.entrySet().stream().map(entry -> "\n\t\t" + entry.getKey() + " = " + entry.getValue()).reduce("", (a, b) -> a + b))
+                        + (queryParameters == null || queryParameters.isEmpty() ? "" : "\n\tQuery parameters:" + queryParameters.entrySet().stream().map(entry -> "\n\t\t" + entry.getKey() + " = " + entry.getValue()).reduce("", (a, b) -> a + b));
                 // Attempt to read further details from the response from Onshape
                 ErrorResponse errorResponse = null;
                 try {
@@ -547,10 +553,10 @@ public class BaseClient {
                 }
                 if (errorResponse != null && errorResponse.getMessage() != null
                         && !errorResponse.getMessage().isEmpty()) {
-                    throw new OnshapeException(response.getStatusInfo().getStatusCode(), errorResponse.getMessage());
+                    throw new OnshapeException(response.getStatusInfo().getStatusCode(), errorResponse.getMessage() + callDescription);
                 }
                 // Failed to deserialize an error message so just repond with the status code
-                throw new OnshapeException(response.getStatusInfo().getStatusCode(), response.getStatusInfo().getReasonPhrase());
+                throw new OnshapeException(response.getStatusInfo().getStatusCode(), response.getStatusInfo().getReasonPhrase() + callDescription);
         }
     }
 
