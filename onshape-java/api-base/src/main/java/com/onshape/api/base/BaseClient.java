@@ -270,7 +270,7 @@ public class BaseClient {
      * serialization error.
      */
     public void setOAuthAccessCode(String code, String clientId, String clientSecret, String redirectURI) throws OnshapeException {
-        WebTarget target = client.target("https://oauth.onshape.com/oauth/token");
+        WebTarget target = client.target(oauthURL);
         MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
         formData.add("grant_type", "authorization_code");
         formData.add("code", code);
