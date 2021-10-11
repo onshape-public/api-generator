@@ -110,6 +110,7 @@ public class BaseClient {
     private Date tokenReceived;
     private String clientId;
     private String clientSecret;
+    private String redirectURI;
     private File workingDir;
     private PollingHandler pollingHandler;
     private boolean usingValidation;
@@ -235,10 +236,24 @@ public class BaseClient {
      * @param clientSecret Client secret of application
      */
     public void setOAuthTokenResponse(OAuthTokenResponse token, Date tokenReceived, String clientId, String clientSecret) {
+        setOAuthTokenResponse(token, tokenReceived, clientId, clientSecret, null);
+    }
+
+    /**
+     * Set a previously requested OAuth token
+     *
+     * @param token Token object from server
+     * @param tokenReceived Date that token was received
+     * @param clientId Client id of application
+     * @param clientSecret Client secret of application
+     * @param redirectURI Redirect URI used for OAuth
+     */
+    public void setOAuthTokenResponse(OAuthTokenResponse token, Date tokenReceived, String clientId, String clientSecret, String redirectURI) {
         this.token = token;
         this.tokenReceived = tokenReceived;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.redirectURI = redirectURI;
     }
 
     /**
@@ -280,7 +295,7 @@ public class BaseClient {
         Response response = target.request().post(Entity.form(formData));
         switch (response.getStatusInfo().getFamily()) {
             case SUCCESSFUL:
-                setOAuthTokenResponse(response.readEntity(OAuthTokenResponse.class), new Date(), clientId, clientSecret);
+                setOAuthTokenResponse(response.readEntity(OAuthTokenResponse.class), new Date(), clientId, clientSecret, redirectURI);
                 return;
             default:
                 throw new OnshapeException(response.getStatusInfo().getReasonPhrase());
@@ -303,10 +318,11 @@ public class BaseClient {
         formData.add("refresh_token", token.getRefreshToken());
         formData.add("client_id", clientId);
         formData.add("client_secret", clientSecret);
+        formData.add("redirect_uri", redirectURI);
         Response response = target.request().post(Entity.form(formData));
         switch (response.getStatusInfo().getFamily()) {
             case SUCCESSFUL:
-                setOAuthTokenResponse(response.readEntity(OAuthTokenResponse.class), new Date(), clientId, clientSecret);
+                setOAuthTokenResponse(response.readEntity(OAuthTokenResponse.class), new Date(), clientId, clientSecret, redirectURI);
                 return;
             default:
                 throw new OnshapeException(response.getStatusInfo().getReasonPhrase());
