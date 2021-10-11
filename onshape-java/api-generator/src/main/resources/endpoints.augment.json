@@ -141,20 +141,6 @@
                                 "group": "Response",
                                 "type": "Object",
                                 "optional": false,
-                                "field": "featureStates",
-                                "defaultValue": null,
-                                "description": "Map of feature state information"
-                            }, {
-                                "group": "Response",
-                                "type": "String",
-                                "optional": false,
-                                "field": "featureStates.key",
-                                "defaultValue": null,
-                                "description": "Feature id"
-                            }, {
-                                "group": "Response",
-                                "type": "Object",
-                                "optional": false,
                                 "field": "imports.0",
                                 "defaultValue": null,
                                 "description": "The import definition"
@@ -199,20 +185,6 @@
                                 "field": "features.0",
                                 "defaultValue": null,
                                 "description": "The serialized feature definition"
-                            }, {
-                                "group": "Response",
-                                "type": "Object",
-                                "optional": false,
-                                "field": "featureStates",
-                                "defaultValue": null,
-                                "description": "Map of feature state information"
-                            }, {
-                                "group": "Response",
-                                "type": "String",
-                                "optional": false,
-                                "field": "featureStates.key",
-                                "defaultValue": null,
-                                "description": "Feature id"
                             }, {
                                 "group": "Response",
                                 "type": "Object",

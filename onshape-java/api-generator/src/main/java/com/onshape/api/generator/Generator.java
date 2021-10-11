@@ -65,7 +65,7 @@ public class Generator {
         File targetDir = new File(args[0]);
         String userHome = System.getProperty("user.home");
         File onshapeBuildFile = new File(userHome, "/.onshape-build");
-        if(!onshapeBuildFile.exists()) {
+        if (!onshapeBuildFile.exists()) {
             throw new OnshapeException("Please define .onshape-build JSON file containing \"onshape-api-accesskey\" and \"onshape-api-secretkey\" variables");
         }
         JsonNode parameters = new ObjectMapper().readTree(onshapeBuildFile);
@@ -131,6 +131,7 @@ public class Generator {
             }
             target.finish(commit);
         }
+        System.out.println("Built version: " + buildVersion.getImplementationVersion());
     }
 
     /**
