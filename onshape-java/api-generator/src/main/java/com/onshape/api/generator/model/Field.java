@@ -50,6 +50,18 @@ public class Field {
     @JsonProperty
     private String description;
 
+    public Field() {
+    }
+
+    public Field(String group, String type, boolean optional, String field, String defaultValue, String description) {
+        this.group = group;
+        this.type = type;
+        this.optional = optional;
+        this.field = field;
+        this.defaultValue = defaultValue;
+        this.description = description;
+    }
+
     public String getGroup() {
         return group;
     }
