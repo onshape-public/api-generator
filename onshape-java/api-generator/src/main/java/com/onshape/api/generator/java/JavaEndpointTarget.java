@@ -51,6 +51,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -188,152 +189,151 @@ public class JavaEndpointTarget extends EndpointTarget {
                 .append(getEndpoint().getDescription())
                 .append("\n@return InputStreamWithHeaders stream with headers\n@throws OnshapeException On HTTP error\n");
 
-        if (getEndpoint().getParameters().getFields().containsKey("PathParam")) {
-            Collection<Field> pathParams = getEndpoint().getParameters().getFields().get("PathParam");
-            int i = 0;
-            for (Field field : pathParams) {
-                String name = field.getField();
-                if (null != name) {
-                    switch (name) {
-                        case "wvm":
-                            if (i > 0) {
-                                callStatement.append(", ");
-                                callStatement2.append(", ");
-                                callStatement3.append(", ");
-                            }
-                            callStatement.append("\"wvmType\", wvmType");
-                            callStatement2.append("\"wvmType\", document.getWVM()");
-                            callStatement3.append("\"wvmType\", wvmType");
-                            callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
-                            javadoc.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
-                            callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
-                            javadoc3.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
-                            i++;
-                            break;
-                        case "wv":
-                            if (i > 0) {
-                                callStatement.append(", ");
-                                callStatement2.append(", ");
-                                callStatement3.append(", ");
-                            }
-                            callStatement.append("\"wvType\", wvType");
-                            callStatement2.append("\"wvType\", document.getWV()");
-                            callStatement3.append("\"wvType\", wvType");
-                            callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
-                            javadoc.append("\n@param wvType Type of Workspace or Version\n");
-                            callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
-                            javadoc3.append("\n@param wvType Type of Workspace or Version\n");
-                            i++;
-                            break;
-                        case "wm":
-                            if (i > 0) {
-                                callStatement.append(", ");
-                                callStatement2.append(", ");
-                                callStatement3.append(", ");
-                            }
-                            callStatement.append("\"wmType\", wmType");
-                            callStatement2.append("\"wmType\", document.getWM()");
-                            callStatement3.append("\"wmType\", wmType");
-                            callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WM"), "wmType");
-                            javadoc.append("\n@param wmType Type of Workspace or Microversion\n");
-                            callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "WM"), "wmType");
-                            javadoc3.append("\n@param wmType Type of Workspace or Microversion\n");
-                            i++;
-                            break;
-                        case "vm":
-                            if (i > 0) {
-                                callStatement.append(", ");
-                                callStatement2.append(", ");
-                                callStatement3.append(", ");
-                            }
-                            callStatement.append("\"vmType\", vmType");
-                            callStatement2.append("\"vmType\", document.getVM()");
-                            callStatement3.append("\"vmType\", vmType");
-                            callBuilder.addParameter(ClassName.get("com.onshape.api.types", "VM"), "vmType");
-                            javadoc.append("\n@param vmType Type of Version or Microversion\n");
-                            callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "VM"), "vmType");
-                            javadoc3.append("\n@param vmType Type of Version or Microversion\n");
-                            i++;
-                            break;
-                        case "oid":
-                            if (i > 0) {
-                                callStatement.append(", ");
-                                callStatement2.append(", ");
-                                callStatement3.append(", ");
-                            }
-                            callStatement.append("\"cuType\", cuType");
-                            callStatement2.append("\"cuType\", CU.Company");
-                            callStatement3.append("\"cuType\", cuType");
-                            callBuilder.addParameter(ClassName.get("com.onshape.api.types", "CU"), "cuType");
-                            javadoc.append("\n@param cuType Type of Company or User\n");
-                            callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "CU"), "cuType");
-                            javadoc3.append("\n@param cuType Type of Company or User\n");
-                            i++;
-                            break;
-                        default:
-                            break;
-                    }
+        Collection<Field> pathParams = getPathParams();
+        int i = 0;
+        for (Field field : pathParams) {
+            String name = field.getField();
+            if (null != name) {
+                switch (name) {
+                    case "wvm":
+                        if (i > 0) {
+                            callStatement.append(", ");
+                            callStatement2.append(", ");
+                            callStatement3.append(", ");
+                        }
+                        callStatement.append("\"wvmType\", wvmType");
+                        callStatement2.append("\"wvmType\", document.getWVM()");
+                        callStatement3.append("\"wvmType\", wvmType");
+                        callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
+                        javadoc.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
+                        callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "WVM"), "wvmType");
+                        javadoc3.append("\n@param wvmType Type of Workspace, Version or Microversion\n");
+                        i++;
+                        break;
+                    case "wv":
+                        if (i > 0) {
+                            callStatement.append(", ");
+                            callStatement2.append(", ");
+                            callStatement3.append(", ");
+                        }
+                        callStatement.append("\"wvType\", wvType");
+                        callStatement2.append("\"wvType\", document.getWV()");
+                        callStatement3.append("\"wvType\", wvType");
+                        callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
+                        javadoc.append("\n@param wvType Type of Workspace or Version\n");
+                        callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "WV"), "wvType");
+                        javadoc3.append("\n@param wvType Type of Workspace or Version\n");
+                        i++;
+                        break;
+                    case "wm":
+                        if (i > 0) {
+                            callStatement.append(", ");
+                            callStatement2.append(", ");
+                            callStatement3.append(", ");
+                        }
+                        callStatement.append("\"wmType\", wmType");
+                        callStatement2.append("\"wmType\", document.getWM()");
+                        callStatement3.append("\"wmType\", wmType");
+                        callBuilder.addParameter(ClassName.get("com.onshape.api.types", "WM"), "wmType");
+                        javadoc.append("\n@param wmType Type of Workspace or Microversion\n");
+                        callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "WM"), "wmType");
+                        javadoc3.append("\n@param wmType Type of Workspace or Microversion\n");
+                        i++;
+                        break;
+                    case "vm":
+                        if (i > 0) {
+                            callStatement.append(", ");
+                            callStatement2.append(", ");
+                            callStatement3.append(", ");
+                        }
+                        callStatement.append("\"vmType\", vmType");
+                        callStatement2.append("\"vmType\", document.getVM()");
+                        callStatement3.append("\"vmType\", vmType");
+                        callBuilder.addParameter(ClassName.get("com.onshape.api.types", "VM"), "vmType");
+                        javadoc.append("\n@param vmType Type of Version or Microversion\n");
+                        callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "VM"), "vmType");
+                        javadoc3.append("\n@param vmType Type of Version or Microversion\n");
+                        i++;
+                        break;
+                    case "oid":
+                        if (i > 0) {
+                            callStatement.append(", ");
+                            callStatement2.append(", ");
+                            callStatement3.append(", ");
+                        }
+                        callStatement.append("\"cuType\", cuType");
+                        callStatement2.append("\"cuType\", CU.Company");
+                        callStatement3.append("\"cuType\", cuType");
+                        callBuilder.addParameter(ClassName.get("com.onshape.api.types", "CU"), "cuType");
+                        javadoc.append("\n@param cuType Type of Company or User\n");
+                        callBuilder3.addParameter(ClassName.get("com.onshape.api.types", "CU"), "cuType");
+                        javadoc3.append("\n@param cuType Type of Company or User\n");
+                        i++;
+                        break;
+                    default:
+                        break;
                 }
-                Class<?> type = JavaLibraryTarget.guessClass(field.getType());
-                if (i > 0) {
-                    callStatement.append(", ");
-                    callStatement2.append(", ");
-                    callStatement3.append(", ");
-                }
-                callStatement.append('"').append(name).append("\", ").append(name);
-                callBuilder.addParameter(JavaLibraryTarget.getTypeName(type), name);
-                javadoc.append("\n@param ").append(name)
-                        .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
-                callStatement3.append('"').append(name).append("\", ").append(name);
-                callBuilder3.addParameter(JavaLibraryTarget.getTypeName(type), name);
-                javadoc3.append("\n@param ").append(name)
-                        .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
-                if (null != name) {
-                    switch (name) {
-                        case "did":
-                            callStatement2.append("\"did\", document.getDocumentId()");
-                            includeCall2 = true;
-                            break;
-                        case "eid":
-                            callStatement2.append("\"eid\", document.getElementId()");
-                            includeCall2 = true;
-                            break;
-                        case "wvm":
-                            callStatement2.append("\"wvm\", document.getWVMId()");
-                            includeCall2 = true;
-                            break;
-                        case "wv":
-                            callStatement2.append("\"wv\", document.getWVId()");
-                            includeCall2 = true;
-                            break;
-                        case "wm":
-                            callStatement2.append("\"wm\", document.getWMId()");
-                            includeCall2 = true;
-                            break;
-                        case "vm":
-                            callStatement2.append("\"vm\", document.getVMId()");
-                            includeCall2 = true;
-                            break;
-                        case "wid":
-                            callStatement2.append("\"wid\", document.getWorkspaceId()");
-                            includeCall2 = true;
-                            break;
-                        default:
-                            callStatement2.append('"').append(name).append("\", ").append(name);
-                            callBuilder2.addParameter(JavaLibraryTarget.getTypeName(type), name);
-                            javadoc2.append("\n@param ").append(name)
-                                    .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
-                    }
-                }
-                i++;
             }
+            Class<?> type = JavaLibraryTarget.guessClass(field.getType());
+            if (i > 0) {
+                callStatement.append(", ");
+                callStatement2.append(", ");
+                callStatement3.append(", ");
+            }
+            callStatement.append('"').append(name).append("\", ").append(name);
+            callBuilder.addParameter(JavaLibraryTarget.getTypeName(type), name);
+            javadoc.append("\n@param ").append(name)
+                    .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
+            callStatement3.append('"').append(name).append("\", ").append(name);
+            callBuilder3.addParameter(JavaLibraryTarget.getTypeName(type), name);
+            javadoc3.append("\n@param ").append(name)
+                    .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
+            if (null != name) {
+                switch (name) {
+                    case "did":
+                        callStatement2.append("\"did\", document.getDocumentId()");
+                        includeCall2 = true;
+                        break;
+                    case "eid":
+                        callStatement2.append("\"eid\", document.getElementId()");
+                        includeCall2 = true;
+                        break;
+                    case "wvm":
+                        callStatement2.append("\"wvm\", document.getWVMId()");
+                        includeCall2 = true;
+                        break;
+                    case "wv":
+                        callStatement2.append("\"wv\", document.getWVId()");
+                        includeCall2 = true;
+                        break;
+                    case "wm":
+                        callStatement2.append("\"wm\", document.getWMId()");
+                        includeCall2 = true;
+                        break;
+                    case "vm":
+                        callStatement2.append("\"vm\", document.getVMId()");
+                        includeCall2 = true;
+                        break;
+                    case "wid":
+                        callStatement2.append("\"wid\", document.getWorkspaceId()");
+                        includeCall2 = true;
+                        break;
+                    default:
+                        callStatement2.append('"').append(name).append("\", ").append(name);
+                        callBuilder2.addParameter(JavaLibraryTarget.getTypeName(type), name);
+                        javadoc2.append("\n@param ").append(name)
+                                .append(" ").append(Utilities.escape(field.getDescription())).append("\n");
+                }
+            }
+            i++;
         }
+        
         callStatement.append("), onshape.buildMap(");
         callStatement2.append("), onshape.buildMap(");
         callStatement3.append("), onshape.buildMap(");
         if (getEndpoint().getParameters().getFields().containsKey("QueryParam")) {
             Collection<Field> queryParams = getEndpoint().getParameters().getFields().get("QueryParam");
-            int i = 0;
+            i = 0;
             for (Field field : queryParams) {
                 if (fieldsAdded.contains(field.getField())) {
                     continue;
@@ -413,6 +413,17 @@ public class JavaEndpointTarget extends EndpointTarget {
                 .returns(ClassName.get("com.onshape.api.requests", newClassName, "Builder"))
                 .addStatement("return " + newClassName + ".builder(onshape)");
         groupTypeBuilder.addMethod(rootMethod.build());
+    }
+
+    Collection<Field> getPathParams() {
+        Collection<Field> pathParams = getEndpoint().getParameters().getFields().containsKey("PathParam")
+                ? getEndpoint().getParameters().getFields().get("PathParam")
+                : Arrays.asList();
+        if (getEndpoint().getUrl().contains("p|pi")) {
+            pathParams = new ArrayList<>(pathParams);
+            pathParams.add(new Field("Path", "PPI", false, "ppi", "P", "PPI.P (Part) or PPI.PI (Part identity)"));
+        }
+        return pathParams;
     }
 
     TypeName createLocalType(String packageName, String name,
@@ -708,13 +719,11 @@ public class JavaEndpointTarget extends EndpointTarget {
             return;
         }
         StringBuilder callBuilder = new StringBuilder();
-        if (getEndpoint().getParameters().getFields().containsKey("PathParam")) {
-            for (Field field : getEndpoint().getParameters().getFields().get("PathParam")) {
-                if (callBuilder.length() > 0) {
-                    callBuilder.append(", ");
-                }
-                callBuilder.append(inputs.get(field.getField()).toString());
+        for (Field field : getPathParams()) {
+            if (callBuilder.length() > 0) {
+                callBuilder.append(", ");
             }
+            callBuilder.append(inputs.get(field.getField()).toString());
         }
         if (getEndpoint().getParameters().getFields().containsKey("QueryParam")) {
             for (Field field : getEndpoint().getParameters().getFields().get("QueryParam")) {

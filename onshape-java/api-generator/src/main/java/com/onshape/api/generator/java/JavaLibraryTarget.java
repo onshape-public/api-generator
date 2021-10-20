@@ -220,7 +220,7 @@ public class JavaLibraryTarget extends LibraryTarget {
             dim++;
         }
         Class<?> baseClass = null;
-        List<String> packages = Arrays.asList("", "java.lang.", "java.util.", "java.io.");
+        List<String> packages = Arrays.asList("", "java.lang.", "java.util.", "java.io.", "com.onshape.api.types.");
         for (String pkg : packages) {
             try {
                 baseClass = Class.forName(pkg + className);
