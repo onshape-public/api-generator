@@ -6,7 +6,7 @@
   "dependencies": {
     "@onshape/apikey": "^1.0.0",
     "grunt-run": "^0.8.1",
-    "npm": "^6.4.1",
+    "npm": "^6.14.18",
     "request": "^2.88.0"
   },
   "devDependencies": {
